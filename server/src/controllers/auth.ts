@@ -1,9 +1,9 @@
-import * as authService from "@services/auth";
-import { CustomError } from "@/utils/customError";
-import { generateAccessToken, generateRefreshToken } from "@utils/token";
+import * as authService from "../services/auth";
+import { CustomError } from "../utils/customError";
+import { generateAccessToken, generateRefreshToken } from "../utils/token";
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { validationErrorsUtil } from "@utils/validatorError";
+import { validationErrorsUtil } from "../utils/validatorError";
 
 export const register = async (
   req: Request,

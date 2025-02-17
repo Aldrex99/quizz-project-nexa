@@ -1,7 +1,7 @@
-import { CustomError } from "@/utils/customError";
-import { IUser } from "@/models/user";
-import { UserRepository } from "@/repositories/user";
-import { checkPassword, hashPassword } from "@utils/password";
+import { CustomError } from "../utils/customError";
+import { IUser } from "../models/user";
+import { UserRepository } from "../repositories/user";
+import { checkPassword, hashPassword } from "../utils/password";
 
 export const register = async (data: Partial<IUser>) => {
   try {

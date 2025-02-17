@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { checkRefreshToken } from "@middlewares/token";
-import * as authValidator from "@validators/auth";
-import * as authController from "@controllers/auth";
+import { checkRefreshToken } from "../middlewares/token";
+import * as authValidator from "../validators/auth";
+import * as authController from "../controllers/auth";
 
 const router = Router();
 

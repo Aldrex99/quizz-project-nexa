@@ -1,4 +1,4 @@
-import User, { IUserDocument } from "@/models/user";
+import User, { IUserDocument } from "../models/user";
 
 export const UserRepository = {
   async create(data: Partial<IUserDocument>) {

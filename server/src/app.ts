@@ -4,10 +4,10 @@
 
 /* Importing modules */
 import express, { Application } from "express";
-import applyMiddlewares from "@middlewares/index";
-import { errorHandler } from "@middlewares/errorHandler";
-import authRouter from "@routes/auth";
-import { CustomError } from "@utils/customError";
+import applyMiddlewares from "./middlewares/index";
+import { errorHandler } from "./middlewares/errorHandler";
+import authRouter from "./routes/auth";
+const path = require("path");
 
 /* Creating the application */
 const app: Application = express();
@@ -18,11 +18,11 @@ applyMiddlewares(app);
 /* Setting up the routes */
 app.use("/api/auth", authRouter);
 
-app.use("*", (req, res) => {
-  throw new CustomError("Route not found", 404, "NOT_FOUND", true, null);
-});
-
 app.use(errorHandler);
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/client", "index.html"));
+});
 
 /* Exporting the application */
 export default app;

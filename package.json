@@ -6,7 +6,7 @@
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "build": "cd client && npm run build",
+    "build": "cd client && npm run build && cd ../server && npm run build",
     "start": "cd server && npm run start",
     "prod": "npm run build && npm run start"
   },
@@ -14,6 +14,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "tsconfig-paths": "^4.2.0"
   }
 }
