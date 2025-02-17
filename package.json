@@ -1,0 +1,19 @@
+{
+  "name": "quizz-project-nexa",
+  "version": "0.1.0",
+  "scripts": {
+    "setup": "npm install && npm install --prefix ./client && npm install --prefix ./server && cd ..",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm run start",
+    "prod": "npm run build && npm run start"
+  },
+  "author": "Alexandre",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
