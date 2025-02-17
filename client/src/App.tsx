@@ -1,13 +1,16 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { UserProvider } from "@/contexts/UserProvider";
+import { UserProvider } from "@contexts/UserProvider";
 import { PrivateRoute } from "@utils/PrivateRoute";
 import { ThemeContext } from "@contexts/ThemeContext";
 import { useContext } from "react";
+import UserRouteWrapper from "@layouts/wrappers/UserRouteWrapper";
 
 import Login from "@pages/Login";
 import Register from "@pages/Register";
 import NotFound from "@pages/NotFound";
 import Logout from "@pages/Logout";
+
+import Home from "@pages/Home";
 
 function App() {
   const { theme, themeColor } = useContext(ThemeContext)!;
@@ -24,7 +27,15 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Route>
-            <Route element={<PrivateRoute acceptedRole={["user"]} />}>
+            <Route
+              element={
+                <PrivateRoute acceptedRole={["user", "moderator", "admin"]} />
+              }
+            >
+              <Route
+                path="/home"
+                element={<UserRouteWrapper children={<Home />} />}
+              />
               <Route path="/logout" element={<Logout />} />
             </Route>
             <Route path="*" element={<NotFound />} />

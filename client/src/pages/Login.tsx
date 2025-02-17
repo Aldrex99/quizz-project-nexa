@@ -18,7 +18,7 @@ export default function Login() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/post");
+      navigate("/home");
     }
   }, [isAuthenticated, navigate]);
 
@@ -37,7 +37,7 @@ export default function Login() {
 
       await getMe();
 
-      navigate("/quizz");
+      navigate("/home");
     } catch (error) {
       setError((error as Error).message ?? "Une erreur s'est produite");
     }
