@@ -13,6 +13,7 @@ export default {
         "nav-selected": "var(--color-nav-selected)",
 
         themedText: "var(--color-text)",
+        themedPlaceholder: "var(--color-placeholder)",
         themedBg: "var(--color-background)",
         themedFg: "var(--color-foreground)",
         themedBorder: "var(--color-border)",
