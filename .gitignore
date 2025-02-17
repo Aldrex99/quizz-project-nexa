@@ -1,4 +1,6 @@
 # Node.js
+dist/
+client/
 node_modules/
 npm-debug.log
 yarn-error.log

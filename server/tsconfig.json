@@ -6,17 +6,7 @@
     "esModuleInterop": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@controllers/*": ["./src/controllers/*"],
-      "@middlewares/*": ["./src/middlewares/*"],
-      "@models/*": ["./src/models/*"],
-      "@routes/*": ["./src/routes/*"],
-      "@services/*": ["./src/services/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@validators/*": ["./src/validators/*"]
-    }
+    "baseUrl": "./"
   },
   "include": ["src/**/*.ts"],
   "files": ["custom.d.ts"],

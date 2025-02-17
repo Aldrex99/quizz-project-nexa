@@ -24,5 +24,5 @@ const port: number = Number(process.env.PORT) || 8001;
 
 /* Starting the server */
 server.listen(port, () => {
-  console.log(`Todo-list server started on port ${port} at ${new Date()}!`);
+  console.log(`Quizz game server started on port ${port} at ${new Date()}!`);
 });
