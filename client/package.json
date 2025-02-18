@@ -8,13 +8,13 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "vite --port $PORT",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "preview": "vite preview",
-    "start": "vite --port $PORT"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
