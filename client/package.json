@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "vite --port $PORT"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",

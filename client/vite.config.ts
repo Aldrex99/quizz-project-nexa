@@ -21,4 +21,7 @@ export default defineConfig({
     outDir: "dist",
     sourcemap: false,
   },
+  server: {
+    host: "0.0.0.0",
+  },
 });
