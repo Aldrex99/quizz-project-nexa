@@ -5,14 +5,13 @@ export interface IQuizz {
   description: string;
   imageLink: string;
   questions: {
-    id: string;
     text: string;
     options: {
       key: string;
       value: string;
     };
     isMultipleChoice: boolean;
-    imageLink: string;
+    imageLink?: string;
     correctAnswer: string[];
     points: number;
   }[];
@@ -20,9 +19,9 @@ export interface IQuizz {
     _id: string | ObjectId;
     username?: string;
   };
-  categories?: {
+  categories: {
     _id: string | ObjectId;
-    name: string;
+    name?: string;
   }[];
   createdAt: Date;
   updatedAt: Date;
@@ -32,13 +31,14 @@ export interface IQuizzDocument extends IQuizz, Document {}
 
 export const QuizzSchema = new Schema<IQuizzDocument>({
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  categories: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+  categories: [
+    { type: Schema.Types.ObjectId, ref: "Category", required: true },
+  ],
   title: { type: String, required: true },
   description: { type: String, required: true },
   imageLink: { type: String, required: true },
   questions: [
     {
-      id: { type: String, required: true },
       text: { type: String, required: true },
       options: [
         {
@@ -47,7 +47,7 @@ export const QuizzSchema = new Schema<IQuizzDocument>({
         },
       ],
       isMultipleChoice: { type: Boolean, required: true },
-      imageLink: { type: String, required: true },
+      imageLink: { type: String },
       correctAnswer: { type: [String], required: true },
       points: { type: Number, required: true },
     },

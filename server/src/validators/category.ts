@@ -11,26 +11,11 @@ export const create = [
 ];
 
 export const getCategories = [
-  query("page")
-    .optional()
-    .isInt({ min: 1 })
-    .withMessage("La page doit être un nombre entier supérieur à 0."),
-  query("limit")
-    .optional()
-    .isInt({ min: 1 })
-    .withMessage("La limite doit être un nombre entier supérieur à 0."),
-  query("sortBy")
-    .optional()
-    .isString()
-    .withMessage("Le tri doit être une chaîne de caractères."),
-  query("sortOrder")
-    .optional()
-    .isIn(["asc", "desc"])
-    .withMessage("L'ordre de tri doit être 'asc' ou 'desc'."),
-  query("search")
-    .optional()
-    .isString()
-    .withMessage("La recherche doit être une chaîne de caractères."),
+  query("page").optional().isInt({ min: 1 }),
+  query("limit").optional().isInt({ min: 1 }),
+  query("sortBy").optional().isString(),
+  query("sortOrder").optional().isIn(["asc", "desc"]),
+  query("search").optional().isString(),
 ];
 
 export const getById = [param("id").isMongoId().withMessage("ID invalide.")];

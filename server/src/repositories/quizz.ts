@@ -19,7 +19,7 @@ export const QuizzRepository = {
     sortBy: string,
     sortOrder: SortOrder
   ) {
-    const quizzes = await Quizz.find(filter, { __v: 0 })
+    const quizzes = await Quizz.find(filter, { __v: 0, questions: 0 })
       .limit(limit)
       .skip(skip)
       .sort({ [sortBy]: sortOrder })
@@ -37,20 +37,21 @@ export const QuizzRepository = {
       .populate("categories", "name");
   },
 
-  async findByAuthorId(userId: string) {
-    return Quizz.find({ author: userId }, { __v: 0 })
+  async findByAuthorId(auhtorId: string) {
+    return Quizz.find({ author: auhtorId }, { __v: 0, questions: 0 })
       .populate("author", "username")
       .populate("categories", "name");
   },
 
-  async updateById(id: string, data: Partial<IQuizzDocument>) {
-    return Quizz.findByIdAndUpdate(id, data, { new: true })
+  // TODO : fix this error (Cast to ObjectId failed for value \"{\n  id: '67b506d31a39c3713153aa5b',\n  author: [Function: stringToObjectId]\n}\" (type Object) at path \"_id\" for model \"Quizz\")
+  async updateById(id: string, userId: string, data: Partial<IQuizzDocument>) {
+    return Quizz.findByIdAndUpdate({ id, author: userId }, data, { new: true })
       .populate("author", "username")
       .populate("categories", "name");
   },
 
-  async deleteById(id: string) {
-    return Quizz.findByIdAndDelete(id)
+  async deleteById(id: string, userId: string) {
+    return Quizz.findByIdAndDelete({ id, author: userId })
       .populate("author", "username")
       .populate("categories", "name");
   },

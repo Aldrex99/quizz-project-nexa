@@ -33,14 +33,18 @@ export const getQuizzById = async (id: string) => {
   return QuizzRepository.findById(id);
 };
 
-export const getQuizziesByAuthorId = async (userId: string) => {
-  return QuizzRepository.findByAuthorId(userId);
+export const getQuizziesByAuthorId = async (authorId: string) => {
+  return QuizzRepository.findByAuthorId(authorId);
 };
 
-export const updateQuizzById = async (id: string, data: Partial<IQuizz>) => {
-  return QuizzRepository.updateById(id, data);
+export const updateQuizzById = async (
+  id: string,
+  userId: string,
+  data: Partial<IQuizz>
+) => {
+  return QuizzRepository.updateById(id, userId, data);
 };
 
-export const deleteQuizzById = async (id: string) => {
-  return QuizzRepository.deleteById(id);
+export const deleteQuizzById = async (id: string, userId: string) => {
+  return QuizzRepository.deleteById(id, userId);
 };
