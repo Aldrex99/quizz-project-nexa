@@ -24,7 +24,7 @@ export const register = async (data: Partial<IUser>) => {
 
 export const login = async (email: string, password: string) => {
   try {
-    const user = await UserRepository.findOneByEmail(email);
+    const user = await UserRepository.findOneForLogin(email);
     if (!user) {
       throw new CustomError(
         "L'email ou le mot de passe est incorrect",
