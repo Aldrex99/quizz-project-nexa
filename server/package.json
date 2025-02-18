@@ -2,15 +2,15 @@
   "name": "server-quizz-project-nexa",
   "version": "0.1.0",
   "engines": {
-    "node": "22.13.0",
-    "npm": "11.0.0"
+    "node": "22",
+    "npm": "11"
   },
   "private": true,
   "main": "src/server.ts",
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",
-    "start": "node ./dist/server.js"
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "Alexandre",

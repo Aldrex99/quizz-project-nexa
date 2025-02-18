@@ -2,15 +2,15 @@
   "name": "client-quizz-project-nexa",
   "version": "0.1.0",
   "engines": {
-    "node": "22.13.0",
-    "npm": "11.0.0"
+    "node": "22",
+    "npm": "11"
   },
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "start": "vite --port $PORT",
-    "build": "tsc -b && vite build",
+    "dev": "vite",
+    "build": "vite build",
     "lint": "eslint .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
@@ -39,7 +39,7 @@
     "globals": "^15.14.0",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
-    "typescript": "~5.6.2",
+    "typescript": "^5.7.3",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5"
   }

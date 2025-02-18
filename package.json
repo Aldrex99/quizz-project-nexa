@@ -2,23 +2,25 @@
   "name": "quizz-project-nexa",
   "version": "0.1.0",
   "engines": {
-    "node": "22.13.0",
-    "npm": "11.0.0"
+    "node": "22",
+    "npm": "11"
   },
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "setup": "npm install && npm install --prefix ./client && npm install --prefix ./server && cd ..",
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "build": "npm run setup && cd client && npm run build && cd ../server && npm run build",
-    "start": "cd server && npm run start",
-    "prod": "npm run build && npm run start"
+    "build": "npm run build -w client && npm run build -w server",
+    "start": "npm run start -w server"
   },
   "author": "Alexandre",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "concurrently": "^9.1.2",
-    "tsconfig-paths": "^4.2.0"
+    "concurrently": "^9.1.2"
   }
 }
