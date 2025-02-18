@@ -6,7 +6,7 @@
     "npm": "11.0.0"
   },
   "scripts": {
-    "setup": "npm install && npm install --prefix ./client && npm install --prefix ./server && cd ..",
+    "setup": "npm install --legacy-peer-deps && npm install --prefix ./client && npm install --prefix ./server && cd ..",
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",

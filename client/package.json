@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite",
     "start": "vite --port $PORT",
-    "build": "tsc -b && vite build",
+    "build": "npx tsc -b && vite build",
     "lint": "eslint .",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
