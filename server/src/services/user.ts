@@ -7,7 +7,7 @@ export const getMe = async (id: string) => {
     const user = await UserRepository.findById(id);
 
     if (user && !user.profilePictureLink) {
-      user.profilePictureLink = `${process.env.AWS_S3_BUCKET_LINK}/default-avatar.webp`;
+      user.profilePictureLink = `${process.env.FILE_LINK}/default-avatar.webp`;
     }
 
     return user;

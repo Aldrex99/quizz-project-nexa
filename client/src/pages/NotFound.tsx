@@ -14,7 +14,7 @@ export default function NotFound() {
           <h1 className="mt-4 text-balance text-5xl font-semibold tracking-tight text-themedText sm:text-6xl">
             La page introuvable
           </h1>
-          <p className="text-themedPlaceholder mt-6 text-pretty text-lg font-medium sm:text-xl/8">
+          <p className="mt-6 text-pretty text-lg font-medium text-themedPlaceholder sm:text-xl/8">
             Désolé, nous n'avons pas pu trouver la page que vous cherchez.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">

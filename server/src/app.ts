@@ -29,6 +29,9 @@ app.use("/api/*", (req, res) => {
 
 app.use(errorHandler);
 
+/* Route for public files */
+app.use("/public", checkAccessToken, express.static("public"));
+
 /* Setting up the client */
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "public/client", "index.html"));

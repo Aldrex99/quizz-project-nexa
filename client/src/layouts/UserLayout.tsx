@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useUser } from "@/hooks/useUser";
 import {
-  Dialog,
-  DialogPanel,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -9,25 +8,11 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
 } from "@headlessui/react";
-import {
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  BellIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
-// import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
-// import { classNames } from "@utils/style";
-import { Link, useLocation } from "react-router-dom";
-import { useUser } from "@/hooks/useUser";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { AcademicCapIcon } from "@heroicons/react/24/solid";
+import { classNames } from "@utils/style";
+import ThemeSwitch from "@/components/buttons/ThemeSwitch";
 
 const navigation = [
   {
@@ -37,7 +22,7 @@ const navigation = [
     current: false,
   },
   {
-    name: "Signalement",
+    name: "Signalements",
     to: "/reports",
     authorizedRole: ["moderator", "admin"],
     current: false,
@@ -82,106 +67,71 @@ export default function UserLayout({
 
   return (
     <div>
-      <Disclosure as="nav" className="bg-gray-800">
+      <Disclosure as="nav" className="bg-themedFg shadow-theme">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
               <div className="shrink-0">
-                <img
-                  alt="Your Company"
-                  src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                  className="h-8 w-auto"
-                />
+                <AcademicCapIcon className="h-8 w-8 text-primary" />
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                  <a
-                    href="#"
-                    className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                  >
-                    Dashboard
-                  </a>
-                  <a
-                    href="#"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >
-                    Team
-                  </a>
-                  <a
-                    href="#"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >
-                    Projects
-                  </a>
-                  <a
-                    href="#"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >
-                    Calendar
-                  </a>
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.to}
+                      className={classNames(
+                        item.current
+                          ? "bg-themedBg text-themedText"
+                          : "text-themedText hover:text-primary",
+                        "rounded-md px-3 py-2 text-sm font-medium text-themedText",
+                      )}
+                      aria-current={item.current ? "page" : undefined}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex items-center">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon aria-hidden="true" className="size-6" />
-                </button>
+                <ThemeSwitch />
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
-                    <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <MenuButton className="relative flex rounded-full bg-themedFg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-themedBg">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       <img
-                        alt=""
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt="your profile picture"
+                        src={user?.profilePictureLink}
                         className="size-8 rounded-full"
                       />
                     </MenuButton>
                   </div>
                   <MenuItems
                     transition
-                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-themedFg py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                   >
-                    <MenuItem>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                      >
-                        Your Profile
-                      </a>
-                    </MenuItem>
-                    <MenuItem>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                      >
-                        Settings
-                      </a>
-                    </MenuItem>
-                    <MenuItem>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none"
-                      >
-                        Sign out
-                      </a>
-                    </MenuItem>
+                    {userNavigation.map((item) => (
+                      <MenuItem key={item.name}>
+                        <Link
+                          to={item.to}
+                          className="block px-4 py-2 text-sm text-themedText data-[focus]:bg-primary data-[focus]:text-primary-text data-[focus]:outline-none"
+                        >
+                          {item.name}
+                        </Link>
+                      </MenuItem>
+                    ))}
                   </MenuItems>
                 </Menu>
               </div>
             </div>
             <div className="-mr-2 flex sm:hidden">
               {/* Mobile menu button */}
-              <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+              <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-themedText hover:bg-themedBg hover:text-primary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary">
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Open main menu</span>
                 <Bars3Icon
@@ -206,7 +156,12 @@ export default function UserLayout({
                   <Link
                     key={item.name}
                     to={item.to}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-white"
+                    className={classNames(
+                      item.current
+                        ? "bg-themedBg text-themedText"
+                        : "text-themedText hover:text-primary",
+                      "block rounded-md px-3 py-2 text-base font-medium",
+                    )}
                     aria-current={item.current ? "page" : undefined}
                   >
                     {item.name}
@@ -214,60 +169,43 @@ export default function UserLayout({
                 ),
             )}
           </div>
-          <div className="border-t border-gray-700 pb-3 pt-4">
-            <div className="flex items-center px-5">
-              <div className="shrink-0">
-                <img
-                  alt=""
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  className="size-10 rounded-full"
-                />
-              </div>
-              <div className="ml-3">
-                <div className="text-base font-medium text-white">Tom Cook</div>
-                <div className="text-sm font-medium text-gray-400">
-                  tom@example.com
+          <div className="border-t border-themedBorder pb-3 pt-4">
+            <div className="flex items-center justify-between px-5">
+              <div className="flex items-center">
+                <div className="shrink-0">
+                  <img
+                    alt="your profile picture"
+                    src={user?.profilePictureLink}
+                    className="size-10 rounded-full"
+                  />
+                </div>
+                <div className="ml-3">
+                  <div className="text-base font-medium text-themedText">
+                    {user?.username}
+                  </div>
+                  <div className="text-sm font-medium text-themedPlaceholder">
+                    {user?.email}
+                  </div>
                 </div>
               </div>
-              <button
-                type="button"
-                className="relative ml-auto shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-              >
-                <span className="absolute -inset-1.5" />
-                <span className="sr-only">View notifications</span>
-                <BellIcon aria-hidden="true" className="size-6" />
-              </button>
+              <ThemeSwitch />
             </div>
             <div className="mt-3 space-y-1 px-2">
-              <DisclosureButton
-                as="a"
-                href="#"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-              >
-                Your Profile
-              </DisclosureButton>
-              <DisclosureButton
-                as="a"
-                href="#"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-              >
-                Settings
-              </DisclosureButton>
-              <DisclosureButton
-                as="a"
-                href="#"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-              >
-                Sign out
-              </DisclosureButton>
+              {userNavigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.to}
+                  className="block rounded-md px-3 py-2 text-base font-medium text-themedText hover:bg-primary hover:text-primary-text"
+                >
+                  <DisclosureButton>{item.name}</DisclosureButton>
+                </Link>
+              ))}
             </div>
           </div>
         </DisclosurePanel>
       </Disclosure>
-      <div className="min-h-screen">
-        <div className="mx-auto max-w-6xl">
-          <main>{children}</main>
-        </div>
+      <div className="mx-auto max-w-6xl px-4 pt-4 sm:px-6 lg:px-8">
+        <main>{children}</main>
       </div>
     </div>
   );
