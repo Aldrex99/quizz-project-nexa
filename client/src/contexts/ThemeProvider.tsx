@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { ThemeContext, IThemeContextValue } from "@contexts/ThemeContext";
 
+const navigatorTheme = window.matchMedia("(prefers-color-scheme: dark)")
+  ? "dark"
+  : "light";
+
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useState<string>("light");
   const [themeColor, setThemeColor] = useState<string>("");
@@ -11,6 +15,8 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (localTheme) {
       setTheme(localTheme);
+    } else {
+      changeTheme(navigatorTheme);
     }
 
     if (localThemeColor) {

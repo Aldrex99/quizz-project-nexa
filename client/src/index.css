@@ -27,6 +27,7 @@
     ); /* color of hover an unselected nav */
     --color-nav-selected: rgb(245, 245, 245); /* color of selected text*/
     --color-text: rgba(58, 53, 65, 0.87); /* color of text */
+    --color-placeholder: rgba(58, 53, 65, 0.5); /* color of placeholder text */
     --color-background: rgb(248, 245, 255); /* general background color */
     --color-foreground: rgb(255, 255, 253); /* general feature block color */
     --color-border: rgba(177, 177, 177, 0.33); /* color of borders */
@@ -73,6 +74,12 @@
     ); /* color of hover an unselected nav */
     --color-nav-selected: rgb(245, 245, 245); /* color of selected text*/
     --color-text: rgb(231, 231, 231); /* color of text */
+    --color-placeholder: rgba(
+      231,
+      231,
+      231,
+      0.5
+    ); /* color of placeholder text */
     --color-background: rgb(27, 36, 48);
     --color-foreground: rgb(37, 45, 58);
     --box-shadow: 0px 2px 10px 0px rgba(27, 36, 48, 0.23);

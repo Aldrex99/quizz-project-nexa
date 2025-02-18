@@ -1,6 +1,5 @@
 # Node.js
 dist/
-client/
 node_modules/
 npm-debug.log
 yarn-error.log
@@ -34,6 +33,7 @@ build/
 
 # Server files
 server/public/uploads/
+server/public/client/
 
 # Logs
 logs/
