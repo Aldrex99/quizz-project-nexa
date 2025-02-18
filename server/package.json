@@ -9,8 +9,8 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "nodemon",
-    "build": "npx tsc -b",
-    "start": "node ./dist/server.js"
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "Alexandre",

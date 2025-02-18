@@ -32,9 +32,11 @@ app.use(errorHandler);
 /* Route for public files */
 app.use("/public", checkAccessToken, express.static("public"));
 
+app.use(express.static(path.join(__dirname, "../../client/dist")));
+
 /* Setting up the client */
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/client", "index.html"));
+  res.sendFile(path.join(__dirname, "../../client/dist", "index.html"));
 });
 
 /* Exporting the application */
