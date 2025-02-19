@@ -1,4 +1,8 @@
 import { CustomError } from "../utils/customError";
+import {
+  generateResetPasswordToken,
+  verifyResetPasswordToken,
+} from "../utils/token";
 import { IUser } from "../models/user";
 import { UserRepository } from "../repositories/user";
 import { checkPassword, hashPassword } from "../utils/password";
@@ -46,6 +50,43 @@ export const login = async (email: string, password: string) => {
     user.resetPasswordToken = undefined;
 
     return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const forgotPassword = async (email: string) => {
+  try {
+    const user = await UserRepository.findOneForLogin(email);
+    if (!user) {
+      throw new CustomError(
+        "Aucun utilisateur trouvé avec cette adresse email",
+        404,
+        "USER_NOT_FOUND"
+      );
+    }
+
+    const resetToken = generateResetPasswordToken(user.id);
+
+    await UserRepository.updateResetPasswordToken(user.email, resetToken);
+
+    return resetToken;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const resetPassword = async (token: string, password: string) => {
+  try {
+    const rawToken = verifyResetPasswordToken(token);
+    if (!rawToken) {
+      throw new CustomError("Token invalide", 400, "INVALID_TOKEN");
+    }
+
+    const hashedPassword = await hashPassword(password);
+    await UserRepository.updatePasswordWithToken(token, hashedPassword);
+
+    return;
   } catch (error) {
     throw error;
   }

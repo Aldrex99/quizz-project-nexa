@@ -7,10 +7,14 @@ import UserRouteWrapper from "@layouts/wrappers/UserRouteWrapper";
 
 import Login from "@pages/Login";
 import Register from "@pages/Register";
-import NotFound from "@pages/NotFound";
-import Logout from "@pages/Logout";
+import ForgotPassword from "@pages/ForgotPassword";
+import ResetPassword from "@/pages/ResetPassword";
 
+import NotFound from "@pages/NotFound";
+
+import Logout from "@pages/Logout";
 import Home from "@pages/Home";
+import Me from "@pages/Me";
 
 function App() {
   const { theme, themeColor } = useContext(ThemeContext)!;
@@ -26,6 +30,11 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route
+                path="/reset-password/:token"
+                element={<ResetPassword />}
+              />
             </Route>
             <Route
               element={
@@ -35,6 +44,10 @@ function App() {
               <Route
                 path="/home"
                 element={<UserRouteWrapper children={<Home />} />}
+              />
+              <Route
+                path="/me"
+                element={<UserRouteWrapper children={<Me />} />}
               />
               <Route path="/logout" element={<Logout />} />
             </Route>

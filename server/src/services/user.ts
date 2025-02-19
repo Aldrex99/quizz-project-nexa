@@ -1,4 +1,5 @@
 import { CustomError } from "../utils/customError";
+import { IUser } from "../models/user";
 import { UserRepository } from "../repositories/user";
 
 export const getMe = async (id: string) => {
@@ -25,6 +26,14 @@ export const getMe = async (id: string) => {
 export const updateAvatar = async (id: string, avatarLink: string) => {
   try {
     await UserRepository.updateAvatar(id, avatarLink);
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const updateProfile = async (id: string, data: Partial<IUser>) => {
+  try {
+    return await UserRepository.updateProfile(id, data);
   } catch (error: any) {
     throw error;
   }

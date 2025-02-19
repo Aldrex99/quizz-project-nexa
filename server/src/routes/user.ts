@@ -6,5 +6,6 @@ const router = Router();
 
 router.get("/me", userController.getMe);
 router.post("/avatar", uploadAvatar, userController.updateAvatar);
+router.put("/me", userController.updateProfile);
 
 export default router;

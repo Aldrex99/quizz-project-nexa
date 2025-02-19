@@ -32,8 +32,8 @@ build/
 *.sln
 
 # Server files
-server/public/uploads/
-server/public/client/
+server/public/avatar/
+server/public/quizz/
 
 # Logs
 logs/

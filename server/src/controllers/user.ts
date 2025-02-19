@@ -44,3 +44,28 @@ export const updateAvatar = async (
     );
   }
 };
+
+export const updateProfile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { username, email } = req.body;
+
+    const user = await userService.updateProfile(req.user?.id ?? "", {
+      username,
+      email,
+    });
+
+    res.status(200).json(user);
+  } catch (error) {
+    next(
+      new CustomError(
+        "An error occurred while updating the profile.",
+        500,
+        "UPDATE_PROFILE_ERROR"
+      )
+    );
+  }
+};

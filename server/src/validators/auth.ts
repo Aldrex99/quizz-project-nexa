@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 const passwordValidator = body("password")
   .isString()
@@ -51,4 +51,28 @@ export const login = [
       icloud_remove_subaddress: false,
     })
     .withMessage("Adresse email invalide."),
+];
+
+export const forgotPassword = [
+  body("email")
+    .isEmail()
+    .normalizeEmail({
+      gmail_remove_dots: false,
+      gmail_remove_subaddress: false,
+      outlookdotcom_remove_subaddress: false,
+      yahoo_remove_subaddress: false,
+      icloud_remove_subaddress: false,
+    })
+    .withMessage("Adresse email invalide."),
+];
+
+export const resetPassword = [
+  param("token").isString().withMessage("Token invalide."),
+  passwordValidator,
+  body("confirmPassword").custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error("Les deux mots de passe ne correspondent pas.");
+    }
+    return true;
+  }),
 ];

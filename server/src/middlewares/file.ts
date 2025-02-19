@@ -29,7 +29,7 @@ export const uploadAvatar = multer({
   storage: storageAvatar,
   fileFilter,
   limits: {
-    fileSize: 1024 * 1024 * 2,
+    fileSize: 1024 * 1024 * 10,
   },
 }).single("avatar");
 
@@ -49,6 +49,6 @@ export const uploadQuizz = multer({
   storage: storageQuizz,
   fileFilter,
   limits: {
-    fileSize: 1024 * 1024 * 2,
+    fileSize: 1024 * 1024 * 10,
   },
 }).single("quizz");

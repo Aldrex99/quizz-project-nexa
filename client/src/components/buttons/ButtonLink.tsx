@@ -1,11 +1,9 @@
-import { MouseEventHandler } from "react";
 import { classNames } from "@utils/style";
+import { Link } from "react-router-dom";
 
-type TButtonProps = {
+type TButtonLinkProps = {
   children: React.ReactNode;
-  type: "button" | "submit" | "reset";
-  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
-  disabled?: boolean;
+  to: string;
   className?: string;
   variant?: "primary" | "secondary" | "primaryFlat" | "none";
   defaultPadding?: boolean;
@@ -21,21 +19,17 @@ const variants = {
   none: "",
 };
 
-export default function Button({
+export default function ButtonLink({
   children,
-  type,
-  onClick,
-  disabled,
+  to,
   title,
   className = "",
   defaultPadding = true,
   variant = "primary",
-}: TButtonProps) {
+}: TButtonLinkProps) {
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
+    <Link
+      to={to}
       className={classNames(
         "flex h-fit w-fit items-center justify-center font-medium",
         defaultPadding ? "px-4 py-2" : "",
@@ -45,6 +39,6 @@ export default function Button({
       title={title}
     >
       {children}
-    </button>
+    </Link>
   );
 }
