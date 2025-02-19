@@ -11,7 +11,6 @@ export interface IQuizz {
       value: string;
     };
     isMultipleChoice: boolean;
-    imageLink?: string;
     correctAnswer: string[];
     points: number;
   }[];

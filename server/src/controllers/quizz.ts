@@ -16,12 +16,11 @@ export const createQuizz = async (
   }
 
   try {
-    const { title, description, categories, questions, imageLink } = req.body;
+    const { title, description, categories, questions } = req.body;
 
     await quizzService.createQuizz({
       title,
       description,
-      imageLink,
       category_ids: categories,
       questions,
       author_id: req.user?.id as string,
@@ -29,6 +28,31 @@ export const createQuizz = async (
     res.status(201).json({ message: "Quizz created" });
   } catch (error) {
     next(new CustomError((error as Error).message, 500, "CREATE_QUIZZ_ERROR"));
+  }
+};
+
+export const uploadQuizzImage = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const imageLink = `${process.env.FILE_LINK}/quizz/${req.file?.filename}`;
+
+    await quizzService.updateQuizzById(id, req.user?.id ?? "", {
+      imageLink,
+    });
+
+    res.status(200).json({ imageLink });
+  } catch (error) {
+    next(
+      new CustomError(
+        "An error occurred while uploading the quizz image.",
+        500,
+        "UPLOAD_QUIZZ_IMAGE_ERROR"
+      )
+    );
   }
 };
 

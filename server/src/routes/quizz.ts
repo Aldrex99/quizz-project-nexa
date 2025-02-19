@@ -1,10 +1,12 @@
 import { Router } from "express";
+import { uploadQuizz } from "../middlewares/file";
 import * as quizzValidator from "../validators/quizz";
 import * as quizzController from "../controllers/quizz";
 
 const router = Router();
 
 router.post("/create", quizzValidator.create, quizzController.createQuizz);
+router.post("/upload", uploadQuizz, quizzController.uploadQuizzImage);
 router.get("/all", quizzValidator.getQuizzes, quizzController.getQuizzes);
 router.get(
   "/for-user/:id",

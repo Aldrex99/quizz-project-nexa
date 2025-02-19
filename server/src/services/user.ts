@@ -1,5 +1,4 @@
 import { CustomError } from "../utils/customError";
-import { IUser } from "../models/user";
 import { UserRepository } from "../repositories/user";
 
 export const getMe = async (id: string) => {
@@ -19,6 +18,14 @@ export const getMe = async (id: string) => {
       );
     }
 
+    throw error;
+  }
+};
+
+export const updateAvatar = async (id: string, avatarLink: string) => {
+  try {
+    await UserRepository.updateAvatar(id, avatarLink);
+  } catch (error: any) {
     throw error;
   }
 };
