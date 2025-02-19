@@ -4,18 +4,12 @@ import { QuizzRepository } from "../repositories/quizz";
 const quizzFormatter = (quizz: IQuizzDocument): IQuizz => {
   const quizzObject = quizz.toObject();
 
-  const formattedQuizz = {
+  return {
     ...quizzObject,
     author: quizzObject.author_id,
     categories: quizzObject.category_ids,
-  };
-
-  return {
-    ...formattedQuizz,
-    author_id: quizzObject.author?._id,
-    category_ids: quizzObject.categories?.map(
-      (category: { _id: string; name: string }) => category._id
-    ),
+    author_id: quizzObject.author_id._id,
+    category_ids: quizzObject.category_ids.map((category: any) => category._id),
   };
 };
 
@@ -72,11 +66,11 @@ export const updateQuizzById = async (
   data: Partial<IQuizz>
 ) => {
   console.log("On passe le service");
-  const quizzToUpdate = await QuizzRepository.updateById(id, userId, data);
+  const quizzToUpdate = await QuizzRepository.updateQuizzById(id, userId, data);
   console.log("quizzToUpdate", quizzToUpdate);
   return;
 };
 
 export const deleteQuizzById = async (id: string, userId: string) => {
-  return await QuizzRepository.deleteById(id, userId);
+  return await QuizzRepository.deleteQuizzById(id, userId);
 };

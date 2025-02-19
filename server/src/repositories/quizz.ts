@@ -1,6 +1,5 @@
 import { SortOrder } from "mongoose";
 import Quizz, { IQuizzDocument } from "../models/quizz";
-import { console } from "inspector";
 
 export const QuizzRepository = {
   async create(data: Partial<IQuizzDocument>) {
@@ -40,8 +39,8 @@ export const QuizzRepository = {
     return { quizzes, total };
   },
 
-  async findById(id: string) {
-    return Quizz.findById(id, { __v: 0 })
+  async findById(_id: string) {
+    return Quizz.findById(_id, { __v: 0 })
       .populate({
         path: "author_id",
         select: "username avatarLink",
@@ -54,8 +53,8 @@ export const QuizzRepository = {
       });
   },
 
-  async findByAuthorId(auhtorId: string) {
-    return Quizz.find({ author_id: auhtorId }, { __v: 0 })
+  async findByAuthorId(author_id: string) {
+    return Quizz.find({ author_id }, { __v: 0, questions: 0 })
       .populate({
         path: "author_id",
         select: "username avatarLink",
@@ -68,22 +67,17 @@ export const QuizzRepository = {
       });
   },
 
-  async updateById(id: string, userId: string, data: Partial<IQuizzDocument>) {
-    console.log("On passe par ici");
-    const quizzToUpdate = await Quizz.findOne({ id, author_id: userId });
-
-    if (!quizzToUpdate) {
-      console.log("Quizz not found");
-    }
-
-    console.log("quizzToUpdate :", quizzToUpdate);
-
-    return Quizz.findOneAndUpdate({ id, author_id: userId }, data, {
+  async updateQuizzById(
+    _id: string,
+    author_id: string,
+    data: Partial<IQuizzDocument>
+  ) {
+    return Quizz.findOneAndUpdate({ _id, author_id }, data, {
       new: true,
     });
   },
 
-  async deleteById(id: string, userId: string) {
-    return Quizz.findOneAndDelete({ _id: id, author_id: userId });
+  async deleteQuizzById(_id: string, author_id: string) {
+    return Quizz.findOneAndDelete({ _id, author_id });
   },
 };
