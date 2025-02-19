@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@/hooks/useUser";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { fetcher } from "@utils/fetch";
 import TextInput from "@components/inputs/TextInput";
 import Button from "@components/buttons/Button";
@@ -14,7 +14,7 @@ export default function ResetPassword() {
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  const resetToken = useLocation().pathname.split("/")[2];
+  const resetToken = useParams().token;
 
   useEffect(() => {
     document.title = "Quizz universe | Réinitialiser le mot de passe";

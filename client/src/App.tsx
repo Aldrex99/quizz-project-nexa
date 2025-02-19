@@ -15,6 +15,7 @@ import NotFound from "@pages/NotFound";
 import Logout from "@pages/Logout";
 import Home from "@pages/Home";
 import Me from "@pages/Me";
+import UpsertQuizz from "@/pages/UpsertQuizz";
 
 function App() {
   const { theme, themeColor } = useContext(ThemeContext)!;
@@ -44,6 +45,14 @@ function App() {
               <Route
                 path="/home"
                 element={<UserRouteWrapper children={<Home />} />}
+              />
+              <Route
+                path="/quizz/create"
+                element={<UserRouteWrapper children={<UpsertQuizz />} />}
+              />
+              <Route
+                path="/quizz/update/:quizzId"
+                element={<UserRouteWrapper children={<UpsertQuizz />} />}
               />
               <Route
                 path="/me"
