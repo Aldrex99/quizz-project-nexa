@@ -20,7 +20,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
           email: response.email,
           username: response.username,
           role: response.role,
-          profilePictureLink: response.profilePictureLink,
+          avatarLink: response.avatarLink,
         };
         setUser(data);
       }

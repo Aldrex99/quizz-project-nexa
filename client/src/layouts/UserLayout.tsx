@@ -109,7 +109,7 @@ export default function UserLayout({
                       <span className="sr-only">Open user menu</span>
                       <img
                         alt="your profile picture"
-                        src={user?.profilePictureLink}
+                        src={user?.avatarLink}
                         className="size-8 rounded-full"
                       />
                     </MenuButton>
@@ -178,7 +178,7 @@ export default function UserLayout({
                 <div className="shrink-0">
                   <img
                     alt="your profile picture"
-                    src={user?.profilePictureLink}
+                    src={user?.avatarLink}
                     className="size-10 rounded-full"
                   />
                 </div>

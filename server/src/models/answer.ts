@@ -1,13 +1,16 @@
 import { Document, Model, model, ObjectId, Schema } from "mongoose";
 
 export interface IAnswer {
-  user: {
-    _id: string | ObjectId;
-    username: string;
+  user_id: string | ObjectId;
+  user?: {
+    _id?: string | ObjectId;
+    username?: string;
   };
-  quizz: {
-    _id: string | ObjectId;
-    title: string;
+  quizz_id: string | ObjectId;
+  quizz?: {
+    _id?: string | ObjectId;
+    title?: string;
+    imageLink?: string;
   };
   answers: {
     question_id: string;

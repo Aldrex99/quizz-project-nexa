@@ -6,8 +6,8 @@ export const getMe = async (id: string) => {
   try {
     const user = await UserRepository.findById(id);
 
-    if (user && !user.profilePictureLink) {
-      user.profilePictureLink = `${process.env.FILE_LINK}/default-avatar.webp`;
+    if (user && !user.avatarLink) {
+      user.avatarLink = `${process.env.FILE_LINK}/default-avatar.webp`;
     }
 
     return user;

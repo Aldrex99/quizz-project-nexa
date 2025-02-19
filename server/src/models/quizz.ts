@@ -3,7 +3,7 @@ import { Document, Model, model, ObjectId, Schema } from "mongoose";
 export interface IQuizz {
   title: string;
   description: string;
-  imageLink: string;
+  imageLink?: string;
   questions: {
     text: string;
     options: {
@@ -15,12 +15,15 @@ export interface IQuizz {
     correctAnswer: string[];
     points: number;
   }[];
-  author: {
-    _id: string | ObjectId;
+  author_id: string | ObjectId;
+  author?: {
+    _id?: string | ObjectId;
     username?: string;
+    avatarLink?: string;
   };
-  categories: {
-    _id: string | ObjectId;
+  category_ids: (string | ObjectId)[];
+  categories?: {
+    _id?: string | ObjectId;
     name?: string;
   }[];
   createdAt: Date;
@@ -30,10 +33,8 @@ export interface IQuizz {
 export interface IQuizzDocument extends IQuizz, Document {}
 
 export const QuizzSchema = new Schema<IQuizzDocument>({
-  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  categories: [
-    { type: Schema.Types.ObjectId, ref: "Category", required: true },
-  ],
+  author_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  category_ids: [{ type: Schema.Types.ObjectId, ref: "Category" }],
   title: { type: String, required: true },
   description: { type: String, required: true },
   imageLink: { type: String, required: true },

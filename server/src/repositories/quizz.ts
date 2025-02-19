@@ -1,5 +1,6 @@
 import { SortOrder } from "mongoose";
 import Quizz, { IQuizzDocument } from "../models/quizz";
+import { console } from "inspector";
 
 export const QuizzRepository = {
   async create(data: Partial<IQuizzDocument>) {
@@ -23,8 +24,16 @@ export const QuizzRepository = {
       .limit(limit)
       .skip(skip)
       .sort({ [sortBy]: sortOrder })
-      .populate("author", "username")
-      .populate("categories", "name");
+      .populate({
+        path: "author_id",
+        select: "username avatarLink",
+        model: "User",
+      })
+      .populate({
+        path: "category_ids",
+        select: "name",
+        model: "Category",
+      });
 
     const total = await Quizz.countDocuments(filter);
 
@@ -33,26 +42,48 @@ export const QuizzRepository = {
 
   async findById(id: string) {
     return Quizz.findById(id, { __v: 0 })
-      .populate("author", "username")
-      .populate("categories", "name");
+      .populate({
+        path: "author_id",
+        select: "username avatarLink",
+        model: "User",
+      })
+      .populate({
+        path: "category_ids",
+        select: "name",
+        model: "Category",
+      });
   },
 
   async findByAuthorId(auhtorId: string) {
-    return Quizz.find({ author: auhtorId }, { __v: 0, questions: 0 })
-      .populate("author", "username")
-      .populate("categories", "name");
+    return Quizz.find({ author_id: auhtorId }, { __v: 0 })
+      .populate({
+        path: "author_id",
+        select: "username avatarLink",
+        model: "User",
+      })
+      .populate({
+        path: "category_ids",
+        select: "name",
+        model: "Category",
+      });
   },
 
-  // TODO : fix this error (Cast to ObjectId failed for value \"{\n  id: '67b506d31a39c3713153aa5b',\n  author: [Function: stringToObjectId]\n}\" (type Object) at path \"_id\" for model \"Quizz\")
   async updateById(id: string, userId: string, data: Partial<IQuizzDocument>) {
-    return Quizz.findByIdAndUpdate({ id, author: userId }, data, { new: true })
-      .populate("author", "username")
-      .populate("categories", "name");
+    console.log("On passe par ici");
+    const quizzToUpdate = await Quizz.findOne({ id, author_id: userId });
+
+    if (!quizzToUpdate) {
+      console.log("Quizz not found");
+    }
+
+    console.log("quizzToUpdate :", quizzToUpdate);
+
+    return Quizz.findOneAndUpdate({ id, author_id: userId }, data, {
+      new: true,
+    });
   },
 
   async deleteById(id: string, userId: string) {
-    return Quizz.findByIdAndDelete({ id, author: userId })
-      .populate("author", "username")
-      .populate("categories", "name");
+    return Quizz.findOneAndDelete({ _id: id, author_id: userId });
   },
 };

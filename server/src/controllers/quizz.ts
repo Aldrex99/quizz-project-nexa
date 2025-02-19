@@ -3,7 +3,6 @@ import { CustomError } from "../utils/customError";
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { validationErrorsUtil } from "../utils/validatorError";
-import { randomUUID } from "crypto";
 
 export const createQuizz = async (
   req: Request,
@@ -23,13 +22,9 @@ export const createQuizz = async (
       title,
       description,
       imageLink,
-      categories: categories.map((category: string) => ({
-        _id: category,
-      })),
+      category_ids: categories,
       questions,
-      author: {
-        _id: req.user?.id ?? "",
-      },
+      author_id: req.user?.id as string,
     });
     res.status(201).json({ message: "Quizz created" });
   } catch (error) {
@@ -80,8 +75,6 @@ export const getQuizzForUserAnswer = async (
     const { id } = req.params;
 
     const quizz = await quizzService.getQuizzById(id);
-
-    console.log(quizz);
 
     // Remove the correct answer from the questions
     quizz?.questions.forEach((question) => {
@@ -150,9 +143,7 @@ export const updateQuizzById = async (
     await quizzService.updateQuizzById(id, req.user?.id ?? "", {
       title,
       description,
-      categories: categories.map((category: string) => ({
-        _id: category,
-      })),
+      category_ids: categories,
       questions,
     });
 
