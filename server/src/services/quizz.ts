@@ -21,7 +21,7 @@ const quizzesFormatter = (quizzes: IQuizzDocument[]) => {
 
 export const createQuizz = async (data: Partial<IQuizz>) => {
   try {
-    await QuizzRepository.create(data);
+    return await QuizzRepository.create(data);
   } catch (error: any) {
     throw error;
   }
@@ -65,10 +65,7 @@ export const updateQuizzById = async (
   userId: string,
   data: Partial<IQuizz>
 ) => {
-  console.log("On passe le service");
-  const quizzToUpdate = await QuizzRepository.updateQuizzById(id, userId, data);
-  console.log("quizzToUpdate", quizzToUpdate);
-  return;
+  return await QuizzRepository.updateQuizzById(id, userId, data);
 };
 
 export const deleteQuizzById = async (id: string, userId: string) => {

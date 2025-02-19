@@ -36,7 +36,7 @@ export const QuizzSchema = new Schema<IQuizzDocument>({
   category_ids: [{ type: Schema.Types.ObjectId, ref: "Category" }],
   title: { type: String, required: true },
   description: { type: String, required: true },
-  imageLink: { type: String, required: true },
+  imageLink: { type: String },
   questions: [
     {
       text: { type: String, required: true },

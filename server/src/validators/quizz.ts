@@ -1,4 +1,3 @@
-import exp from "constants";
 import { body, query, param } from "express-validator";
 
 export const create = [
@@ -46,12 +45,6 @@ export const create = [
   body("questions.*.isMultipleChoice")
     .isBoolean()
     .withMessage("isMultipleChoice doit être un booléen."),
-  body("questions.*.imageLink")
-    .isString()
-    .isLength({ min: 3, max: 250 })
-    .withMessage(
-      "Le lien de l'image doit être une chaîne de caractères entre 3 et 250 caractères."
-    ),
   body("questions.*.correctAnswer")
     .isArray({ min: 1 })
     .withMessage("La question doit avoir au moins une réponse correcte."),
@@ -129,12 +122,6 @@ export const updateQuizzById = [
   body("questions.*.isMultipleChoice")
     .isBoolean()
     .withMessage("isMultipleChoice doit être un booléen."),
-  body("questions.*.imageLink")
-    .isString()
-    .isLength({ min: 3, max: 250 })
-    .withMessage(
-      "Le lien de l'image doit être une chaîne de caractères entre 3 et 250 caractères."
-    ),
   body("questions.*.correctAnswer")
     .isArray({ min: 1 })
     .withMessage("La question doit avoir au moins une réponse correcte."),

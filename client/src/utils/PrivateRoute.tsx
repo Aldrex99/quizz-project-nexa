@@ -1,4 +1,4 @@
-import Loading from "@pages/Loading";
+import Loading from "@/pages/common/Loading";
 import { Navigate, Outlet } from "react-router-dom";
 import { useUser } from "@hooks/useUser";
 

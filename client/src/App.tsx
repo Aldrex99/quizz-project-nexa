@@ -5,17 +5,17 @@ import { ThemeContext } from "@contexts/ThemeContext";
 import { useContext } from "react";
 import UserRouteWrapper from "@layouts/wrappers/UserRouteWrapper";
 
-import Login from "@pages/Login";
-import Register from "@pages/Register";
-import ForgotPassword from "@pages/ForgotPassword";
-import ResetPassword from "@/pages/ResetPassword";
+import Login from "@/pages/visitor/Login";
+import Register from "@/pages/visitor/Register";
+import ForgotPassword from "@/pages/visitor/ForgotPassword";
+import ResetPassword from "@/pages/visitor/ResetPassword";
 
-import NotFound from "@pages/NotFound";
+import NotFound from "@/pages/common/NotFound";
 
-import Logout from "@pages/Logout";
-import Home from "@pages/Home";
-import Me from "@pages/Me";
-import UpsertQuizz from "@/pages/UpsertQuizz";
+import Logout from "@/pages/user/Logout";
+import Home from "@/pages/user/Home";
+import Me from "@/pages/user/Me";
+import UpsertQuizz from "@/pages/user/UpsertQuizz";
 
 function App() {
   const { theme, themeColor } = useContext(ThemeContext)!;

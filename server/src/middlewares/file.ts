@@ -1,5 +1,6 @@
 import path from "path";
 import multer from "multer";
+import { randomUUID } from "crypto";
 
 const fileFilter = (
   req: Express.Request,
@@ -38,7 +39,8 @@ const storageQuizz = multer.diskStorage({
     cb(null, path.join(__dirname, "../../public/quizz"));
   },
   filename: (req, file, cb) => {
-    const { quizzId } = req.body;
+    // TODO : Verify why req.body is empty here (before destructuring ?)
+    const quizzId = req.body.quizzId || randomUUID();
     const newFileName = `${quizzId}${path.extname(file.originalname)}`;
     req.fileName = newFileName;
     cb(null, newFileName);

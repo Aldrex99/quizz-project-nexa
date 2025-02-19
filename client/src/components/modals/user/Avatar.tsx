@@ -45,7 +45,6 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
       setFileUrl(response.link);
       getMe();
       setUploadStatus("Photo de profil mise à jour");
-      setOpen(false);
     } catch (error) {
       setUploadStatus((error as Error).message ?? "Une erreur s'est produite");
     }

@@ -18,14 +18,15 @@ export const createQuizz = async (
   try {
     const { title, description, categories, questions } = req.body;
 
-    await quizzService.createQuizz({
+    const quizzId = await quizzService.createQuizz({
       title,
       description,
       category_ids: categories,
       questions,
       author_id: req.user?.id as string,
     });
-    res.status(201).json({ message: "Quizz created" });
+
+    res.status(201).json({ message: "Quizz created", quizzId });
   } catch (error) {
     next(new CustomError((error as Error).message, 500, "CREATE_QUIZZ_ERROR"));
   }
@@ -37,10 +38,10 @@ export const uploadQuizzImage = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    const { quizzId } = req.body;
     const imageLink = `${process.env.FILE_LINK}/quizz/${req.file?.filename}`;
 
-    await quizzService.updateQuizzById(id, req.user?.id ?? "", {
+    await quizzService.updateQuizzById(quizzId, req.user?.id ?? "", {
       imageLink,
     });
 

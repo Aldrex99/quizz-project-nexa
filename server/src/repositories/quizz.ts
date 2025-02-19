@@ -6,7 +6,7 @@ export const QuizzRepository = {
     try {
       const quizz = new Quizz(data);
       await quizz.save();
-      return;
+      return quizz._id;
     } catch (error: any) {
       throw error;
     }
