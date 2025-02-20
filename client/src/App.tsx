@@ -3,6 +3,7 @@ import { UserProvider } from "@contexts/UserProvider";
 import { PrivateRoute } from "@utils/PrivateRoute";
 import { ThemeContext } from "@contexts/ThemeContext";
 import { useContext } from "react";
+import { ToastContainer } from "react-toastify";
 import UserRouteWrapper from "@layouts/wrappers/UserRouteWrapper";
 
 import Login from "@/pages/visitor/Login";
@@ -26,6 +27,7 @@ function App() {
       <div
         className={`${theme} ${themeColor} min-h-screen overflow-y-auto overflow-x-hidden bg-themedBg`}
       >
+        <ToastContainer />
         <Router>
           <Routes>
             <Route>

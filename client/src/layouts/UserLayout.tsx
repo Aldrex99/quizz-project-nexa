@@ -164,7 +164,7 @@ export default function UserLayout({
                       <img
                         alt="your profile picture"
                         src={user?.avatarLink}
-                        className="size-8 rounded-full"
+                        className="size-8 rounded-full object-cover"
                       />
                     </MenuButton>
                   </div>
@@ -253,7 +253,7 @@ export default function UserLayout({
                   <img
                     alt="your profile picture"
                     src={user?.avatarLink}
-                    className="size-10 rounded-full"
+                    className="size-10 rounded-full object-cover"
                   />
                 </div>
                 <div className="ml-3">

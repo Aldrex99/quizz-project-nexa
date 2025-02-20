@@ -5,6 +5,7 @@ import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/buttons/Button";
 import { DialogTitle } from "@headlessui/react";
 import { fetcher } from "@/utils/fetch";
+import { toast } from "react-toastify";
 
 type TAvatarProps = {
   open: boolean;
@@ -13,8 +14,6 @@ type TAvatarProps = {
 
 export default function Avatar({ open, setOpen }: TAvatarProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [uploadStatus, setUploadStatus] = useState<string | null>(null);
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
   const { getMe } = useUser();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +25,15 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
   const handleUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!selectedFile) {
-      setUploadStatus("Veuillez sélectionner un fichier");
+      toast.error("Veuillez sélectionner un fichier", {
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        closeButton: false,
+        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+      });
       return;
     }
 
@@ -34,7 +41,7 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
     formData.append("avatar", selectedFile);
 
     try {
-      const response = await fetcher(`/user/avatar`, {
+      await fetcher(`/user/avatar`, {
         method: "POST",
         body: formData,
         headers: {
@@ -42,11 +49,28 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
         },
       });
 
-      setFileUrl(response.link);
-      getMe();
-      setUploadStatus("Photo de profil mise à jour");
+      await getMe();
+
+      toast.success("Avatar changé", {
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        closeButton: false,
+        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+      });
     } catch (error) {
-      setUploadStatus((error as Error).message ?? "Une erreur s'est produite");
+      toast.error((error as Error).message ?? "Une erreur s'est produite", {
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        closeButton: false,
+        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+      });
     }
   };
 
@@ -60,18 +84,25 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
           Modifier ma photo de profil
         </DialogTitle>
         <div className="flex flex-col space-y-4">
-          <div className="flex w-full items-center justify-center object-cover">
+          <div className="flex w-full flex-col items-center justify-center space-y-2 object-cover">
+            {selectedFile && (
+              <p className="flex flex-col text-center text-lg text-themedText">
+                Mettre comme photo de profil :{" "}
+                <span className="font-semibold text-primary">
+                  {selectedFile?.name}
+                </span>
+              </p>
+            )}
             <label
               htmlFor="dropzone-file"
               className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-themedBorder hover:bg-themedBg"
             >
               {selectedFile ? (
-                <p className="flex flex-col text-center text-lg text-themedText">
-                  Mettre comme photo de profil :{" "}
-                  <span className="font-semibold text-primary">
-                    {selectedFile?.name}
-                  </span>
-                </p>
+                <img
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Photo de profil de votre compte"
+                  className="size-36 rounded-full object-cover"
+                />
               ) : (
                 <div className="flex flex-col items-center justify-center pb-6 pt-5">
                   <CloudArrowUpIcon className="h-8 w-8 text-primary" />
@@ -94,14 +125,6 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
               />
             </label>
           </div>
-          {uploadStatus && <p className="text-primary">{uploadStatus}</p>}
-          {fileUrl && (
-            <img
-              src={fileUrl}
-              alt="Photo de profil de votre compte"
-              className="size-36 rounded-full"
-            />
-          )}
         </div>
       </div>
       <div className="flex flex-col items-center justify-center space-y-4">
