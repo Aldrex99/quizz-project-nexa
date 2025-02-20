@@ -5,7 +5,7 @@ import TextInputLength from "@/components/inputs/TextInputLength";
 import TextAreaLength from "@/components/inputs/TextAreaLength";
 import MultiSelect from "@/components/inputs/MultiSelect";
 import FileZone from "@/components/inputs/FileZone";
-import QuizzQuestions from "@/components/QuizzQuestions";
+import QuizzQuestions from "@/components/quizz/QuizzQuestions";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 
 export type TQuestion = {
