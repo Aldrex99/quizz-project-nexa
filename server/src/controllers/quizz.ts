@@ -38,10 +38,10 @@ export const uploadQuizzImage = async (
   next: NextFunction
 ) => {
   try {
-    const { quizzId } = req.body;
+    const { quizz_id } = req.params;
     const imageLink = `${process.env.FILE_LINK}/quizz/${req.file?.filename}`;
 
-    await quizzService.updateQuizzById(quizzId, req.user?.id ?? "", {
+    await quizzService.updateQuizzById(quizz_id, req.user?.id ?? "", {
       imageLink,
     });
 

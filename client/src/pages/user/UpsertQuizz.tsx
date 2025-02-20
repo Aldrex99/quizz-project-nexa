@@ -159,9 +159,8 @@ export default function UpsertQuizz() {
       const formData = new FormData();
       if (selectedFile) {
         formData.append("quizz", selectedFile!);
-        formData.append("quizzId", quizzToEdit ? quizzId : data.quizzId);
 
-        await fetcher(`/quizz/upload`, {
+        await fetcher(`/quizz/upload/${quizzToEdit ? quizzId : data.quizzId}`, {
           method: "POST",
           body: formData,
           headers: {
