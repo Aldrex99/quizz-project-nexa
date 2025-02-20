@@ -61,13 +61,13 @@ export default function ResultPart({ result, questions }: TResultPartProps) {
                           answer.correctAnswer.includes(option.key) &&
                           answer.answer.includes(option.key)
                             ? "text-black"
-                            : ""
+                            : "text-themedText"
                         } ${
                           answer.correctAnswer.includes(option.key) &&
                           !answer.answer.includes(option.key)
                             ? "text-black"
-                            : ""
-                        } font-semibold text-themedText`}
+                            : "text-themedText"
+                        } font-semibold`}
                       >
                         {option.value}
                       </p>
