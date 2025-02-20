@@ -60,7 +60,11 @@ export default function QuizzQuestions({
                     ])
                   }
                 />
-                <span className="text-primary">Choix multiples</span>
+                <span className="w-28 text-primary">
+                  {question.isMultipleChoice
+                    ? "Choix multiple"
+                    : "Choix unique"}
+                </span>
               </div>
               <Button
                 type="button"

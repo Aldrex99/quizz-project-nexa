@@ -42,6 +42,10 @@ export default function UpsertQuizz() {
           key: "A",
           value: "",
         },
+        {
+          key: "B",
+          value: "",
+        },
       ],
       correctAnswer: [],
     },
@@ -80,7 +84,16 @@ export default function UpsertQuizz() {
         text: "",
         points: 1,
         isMultipleChoice: false,
-        options: [],
+        options: [
+          {
+            key: "A",
+            value: "",
+          },
+          {
+            key: "B",
+            value: "",
+          },
+        ],
         correctAnswer: [],
       },
     ]);
