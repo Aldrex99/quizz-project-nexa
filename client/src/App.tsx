@@ -19,6 +19,8 @@ import Me from "@/pages/user/Me";
 import UpsertQuizz from "@/pages/user/UpsertQuizz";
 import UserQuizz from "@/pages/user/UserQuizz";
 
+import Stats from "@/pages/admin/Stats";
+
 function App() {
   const { theme, themeColor } = useContext(ThemeContext)!;
 
@@ -66,6 +68,12 @@ function App() {
                 element={<UserRouteWrapper children={<Me />} />}
               />
               <Route path="/logout" element={<Logout />} />
+            </Route>
+            <Route element={<PrivateRoute acceptedRole={["admin"]} />}>
+              <Route
+                path="/stats"
+                element={<UserRouteWrapper children={<Stats />} />}
+              />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

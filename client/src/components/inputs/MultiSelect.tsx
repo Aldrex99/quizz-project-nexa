@@ -52,7 +52,7 @@ export default function MultiSelect({
           <ChevronDownIcon className="h-6 w-6 text-themedText" />
         </button>
         {isOpen && (
-          <div className="absolute z-10 w-full rounded-b-md border border-t-0 border-themedBorder bg-themedFg shadow-lg">
+          <div className="absolute z-10 max-h-40 w-full overflow-y-scroll rounded-b-md border border-t-0 border-themedBorder bg-themedFg shadow-lg">
             {options.map((option) => (
               <button
                 key={option.key}
