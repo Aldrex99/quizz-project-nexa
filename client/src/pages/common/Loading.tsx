@@ -3,7 +3,7 @@ export default function Loading() {
     <div role="status" className="flex h-screen w-screen">
       <div className="mx-auto my-auto flex">
         <svg
-          className={`mr-2 inline h-16 w-16 animate-spin fill-blue-500 text-gray-200`}
+          className={`mr-2 inline h-16 w-16 animate-spin fill-primary text-gray-200`}
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +17,7 @@ export default function Loading() {
             fill="currentFill"
           />
         </svg>
-        <span className="my-auto flex text-xl text-gray-600">
+        <span className="my-auto flex text-xl text-themedText">
           Chargement...
         </span>
       </div>

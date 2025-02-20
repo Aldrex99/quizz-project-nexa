@@ -6,8 +6,8 @@ export const getMe = async (id: string) => {
   try {
     const user = await UserRepository.findById(id);
 
-    if (user && !user.profilePictureLink) {
-      user.profilePictureLink = `${process.env.FILE_LINK}/default-avatar.webp`;
+    if (user && !user.avatarLink) {
+      user.avatarLink = `${process.env.FILE_LINK}/default-avatar.webp`;
     }
 
     return user;
@@ -19,6 +19,22 @@ export const getMe = async (id: string) => {
       );
     }
 
+    throw error;
+  }
+};
+
+export const updateAvatar = async (id: string, avatarLink: string) => {
+  try {
+    await UserRepository.updateAvatar(id, avatarLink);
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const updateProfile = async (id: string, data: Partial<IUser>) => {
+  try {
+    return await UserRepository.updateProfile(id, data);
+  } catch (error: any) {
     throw error;
   }
 };

@@ -13,5 +13,15 @@ router.get(
   checkRefreshToken,
   authController.newAccessTokenFromRefreshToken
 );
+router.post(
+  "/forgot-password",
+  authValidator.forgotPassword,
+  authController.forgotPassword
+);
+router.post(
+  "/reset-password/:token",
+  authValidator.resetPassword,
+  authController.resetPassword
+);
 
 export default router;

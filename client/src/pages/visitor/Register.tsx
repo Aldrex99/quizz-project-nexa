@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@/hooks/useUser";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { fetcher } from "@utils/fetch";
 import TextInput from "@components/inputs/TextInput";
 import Button from "@components/buttons/Button";
+import ButtonLink from "@/components/buttons/ButtonLink";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -111,9 +112,9 @@ export default function Register() {
             {error}
           </div>
         )}
-        <Link to="/login" className="text-primary hover:text-primary-gradient">
+        <ButtonLink to="/login" className="w-full" variant="primaryFlat">
           Se connecter
-        </Link>
+        </ButtonLink>
       </div>
     </div>
   );

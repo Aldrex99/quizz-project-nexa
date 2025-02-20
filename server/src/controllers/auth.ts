@@ -4,6 +4,7 @@ import { generateAccessToken, generateRefreshToken } from "../utils/token";
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
 import { validationErrorsUtil } from "../utils/validatorError";
+import { sendEmail } from "../utils/mail";
 
 export const register = async (
   req: Request,
@@ -122,5 +123,67 @@ export const logout = async (
     res.status(200).json({ message: "Logged out" });
   } catch (error) {
     next(new CustomError((error as Error).message, 500, "LOGOUT_ERROR"));
+  }
+};
+
+export const forgotPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    await validationErrorsUtil(errors, res);
+    return;
+  }
+
+  try {
+    const { email } = req.body;
+
+    const resetToken = await authService.forgotPassword(email);
+
+    await sendEmail(
+      email,
+      "Réinitialisation du mot de passe | Quizz Universe",
+      "Vous recevez cet email car vous (ou quelqu'un d'autre) avez demandé la réinitialisation du mot de passe de votre compte.\n\n" +
+        "Veuillez cliquer sur le lien suivant, ou collez-le dans votre navigateur pour terminer le processus:\n\n" +
+        `${process.env.CLIENT_URL}/reset-password/${resetToken}\n\n` +
+        "Si vous n'avez pas demandé cela, veuillez ignorer cet email et votre mot de passe restera inchangé.",
+      `<p>Vous recevez cet email car vous (ou quelqu'un d'autre) avez demandé la réinitialisation du mot de passe de votre compte.</p>
+      <p>Veuillez cliquer sur le lien suivant, ou collez-le dans votre navigateur pour terminer le processus:</p>
+      <a href="${process.env.CLIENT_URL}/reset-password/${resetToken}">Réinitialiser le mot de passe</a>
+      <p>Si vous n'avez pas demandé cela, veuillez ignorer cet email et votre mot de passe restera inchangé.</p>`
+    );
+
+    res.status(200).json({ message: "Password reset email sent" });
+  } catch (error) {
+    next(
+      new CustomError((error as Error).message, 500, "FORGOT_PASSWORD_ERROR")
+    );
+  }
+};
+
+export const resetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    await validationErrorsUtil(errors, res);
+    return;
+  }
+
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    await authService.resetPassword(token, password);
+
+    res.status(200).json({ message: "Password reset" });
+  } catch (error) {
+    next(
+      new CustomError((error as Error).message, 500, "RESET_PASSWORD_ERROR")
+    );
   }
 };

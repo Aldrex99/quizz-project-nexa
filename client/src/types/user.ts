@@ -3,5 +3,5 @@ export interface IUser {
   email: string;
   username: string;
   role: string;
-  profilePictureLink?: string;
+  avatarLink?: string;
 }

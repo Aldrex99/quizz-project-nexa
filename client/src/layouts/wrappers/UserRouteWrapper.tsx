@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import UserLayout from "@layouts/UserLayout";
-import Loading from "@pages/Loading";
+import Loading from "@/pages/common/Loading";
 
 export default function UserRouteWrapper({
   children,

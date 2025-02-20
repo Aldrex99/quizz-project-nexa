@@ -8,8 +8,15 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
 } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  ChevronDownIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { AcademicCapIcon } from "@heroicons/react/24/solid";
 import { classNames } from "@utils/style";
 import ThemeSwitch from "@/components/buttons/ThemeSwitch";
@@ -22,6 +29,15 @@ const navigation = [
     current: false,
   },
   {
+    name: "Vos quiz",
+    to: "/my-quizzes",
+    authorizedRole: ["user", "moderator", "admin"],
+    current: false,
+  },
+];
+
+const staffNavigation = [
+  {
     name: "Signalements",
     to: "/reports",
     authorizedRole: ["moderator", "admin"],
@@ -30,7 +46,7 @@ const navigation = [
   {
     name: "Commentaires",
     to: "/comments",
-    authorized: ["moderator", "admin"],
+    authorizedRole: ["moderator", "admin"],
     current: false,
   },
   {
@@ -65,6 +81,11 @@ export default function UserLayout({
     return item;
   });
 
+  staffNavigation.map((item) => {
+    item.current = item.to === actualPath;
+    return item;
+  });
+
   return (
     <div>
       <Disclosure as="nav" className="bg-themedFg shadow-theme">
@@ -75,7 +96,7 @@ export default function UserLayout({
                 <AcademicCapIcon className="h-8 w-8 text-primary" />
               </div>
               <div className="hidden sm:ml-6 sm:block">
-                <div className="flex space-x-4">
+                <div className="flex items-center space-x-4">
                   {navigation.map(
                     (item) =>
                       item.authorizedRole?.includes(user!.role) && (
@@ -94,6 +115,39 @@ export default function UserLayout({
                         </Link>
                       ),
                   )}
+                  {user?.role === "moderator" || user?.role === "admin" ? (
+                    <Popover className="relative">
+                      <PopoverButton className="inline-flex items-center gap-x-1 text-sm/6 text-themedText hover:text-primary focus:outline-none focus:ring-0 focus:ring-offset-themedBg">
+                        <span>Staff</span>
+                        <ChevronDownIcon
+                          aria-hidden="true"
+                          className="size-4"
+                        />
+                      </PopoverButton>
+
+                      <PopoverPanel
+                        transition
+                        className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+                      >
+                        <div className="w-56 shrink rounded-xl bg-themedFg p-4 text-sm/6 font-semibold text-themedText shadow-theme ring-1 ring-gray-900/5">
+                          {staffNavigation.map((item) => (
+                            <Link
+                              key={item.name}
+                              to={item.to}
+                              className={classNames(
+                                item.current
+                                  ? "text-primary"
+                                  : "text-themedText hover:text-primary",
+                                "block py-1",
+                              )}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </PopoverPanel>
+                    </Popover>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -109,7 +163,7 @@ export default function UserLayout({
                       <span className="sr-only">Open user menu</span>
                       <img
                         alt="your profile picture"
-                        src={user?.profilePictureLink}
+                        src={user?.avatarLink}
                         className="size-8 rounded-full"
                       />
                     </MenuButton>
@@ -171,6 +225,26 @@ export default function UserLayout({
                   </Link>
                 ),
             )}
+            {user?.role === "moderator" || user?.role === "admin"
+              ? staffNavigation.map(
+                  (item) =>
+                    item.authorizedRole?.includes(user!.role) && (
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className={classNames(
+                          item.current
+                            ? "bg-themedBg text-themedText"
+                            : "text-themedText hover:text-primary",
+                          "block rounded-md px-3 py-2 text-base font-medium",
+                        )}
+                        aria-current={item.current ? "page" : undefined}
+                      >
+                        {item.name}
+                      </Link>
+                    ),
+                )
+              : null}
           </div>
           <div className="border-t border-themedBorder pb-3 pt-4">
             <div className="flex items-center justify-between px-5">
@@ -178,7 +252,7 @@ export default function UserLayout({
                 <div className="shrink-0">
                   <img
                     alt="your profile picture"
-                    src={user?.profilePictureLink}
+                    src={user?.avatarLink}
                     className="size-10 rounded-full"
                   />
                 </div>

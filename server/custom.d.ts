@@ -6,5 +6,6 @@ declare namespace Express {
       iat: number;
       exp: number;
     };
+    fileName?: string;
   }
 }
