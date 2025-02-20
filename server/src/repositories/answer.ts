@@ -1,6 +1,5 @@
 import { SortOrder } from "mongoose";
 import Answer, { IAnswerDocument } from "../models/answer";
-import path from "path";
 
 export const AnswerRepository = {
   async create(data: Partial<IAnswerDocument>) {

@@ -27,15 +27,13 @@ export const answerQuizz = async (
       throw new CustomError("Quizz not found", 404, "QUIZZ_NOT_FOUND");
     }
 
-    const { score, totalScore } = await answerService.verifyAnswers(
-      answers,
-      quizz.questions
-    );
+    const { score, totalScore, updatedAnswers } =
+      await answerService.verifyAnswers(answers, quizz.questions);
 
     const data = {
       user_id,
       quizz_id,
-      answers,
+      answers: updatedAnswers,
       score,
       totalScore,
     };

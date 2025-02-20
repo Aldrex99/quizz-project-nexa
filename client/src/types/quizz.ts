@@ -3,18 +3,7 @@ export interface IQuizz {
   title: string;
   description: string;
   imageLink?: string;
-  questions?: {
-    _id?: string;
-    text: string;
-    options: {
-      _id?: string;
-      key: string;
-      value: string;
-    };
-    isMultipleChoice: boolean;
-    correctAnswer: string[];
-    points: number;
-  }[];
+  questions?: IQuestion[];
   author_id: string;
   author?: {
     _id?: string;
@@ -28,4 +17,17 @@ export interface IQuizz {
   }[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface IQuestion {
+  _id?: string;
+  text: string;
+  options: {
+    _id?: string;
+    key: string;
+    value: string;
+  }[];
+  isMultipleChoice: boolean;
+  correctAnswer: string[];
+  points: number;
 }

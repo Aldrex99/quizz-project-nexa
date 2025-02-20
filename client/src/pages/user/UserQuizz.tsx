@@ -19,11 +19,12 @@ export default function UserQuizz() {
         setQuizz(data);
         setLoading(false);
       } catch (error) {
+        console.error(error);
         setLoading(false);
       }
     };
     fetchQuizz();
-  }, []);
+  }, [user?.id]);
 
   return (
     <div className="flex flex-col space-y-4 pb-4">
