@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { fetcher } from "@utils/fetch";
 import TextInput from "@components/inputs/TextInput";
 import Button from "@components/buttons/Button";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -13,9 +14,7 @@ export default function ForgotPassword() {
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = "Quizz universe | Mot de passe oublié";
-  }, []);
+  useDocumentTitle("Mot de passe oublié");
 
   useEffect(() => {
     if (isAuthenticated) {

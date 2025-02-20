@@ -1,6 +1,9 @@
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 import ButtonLink from "@/components/buttons/ButtonLink";
 
 export default function Home() {
+  useDocumentTitle("Accueil");
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center space-y-4">
       <section className="flex w-full justify-end">

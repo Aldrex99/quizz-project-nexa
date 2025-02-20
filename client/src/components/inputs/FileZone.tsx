@@ -39,7 +39,7 @@ export default function FileZone({
               <img
                 src={URL.createObjectURL(selectedFile)}
                 alt="Image du quizz"
-                className="h-60 w-full rounded-lg object-contain"
+                className="h-56 w-56 rounded-lg object-cover text-themedText"
               />
             </div>
           ) : (

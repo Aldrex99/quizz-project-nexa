@@ -1,6 +1,14 @@
-export default function Loading() {
+type TLoadingProps = {
+  width?: string;
+  height?: string;
+};
+
+export default function Loading({
+  width = "screen",
+  height = "screen",
+}: TLoadingProps) {
   return (
-    <div role="status" className="flex h-screen w-screen">
+    <div role="status" className={`flex h-${height} w-${width}`}>
       <div className="mx-auto my-auto flex">
         <svg
           className={`mr-2 inline h-16 w-16 animate-spin fill-primary text-gray-200`}

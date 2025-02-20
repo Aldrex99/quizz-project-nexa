@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { fetcher } from "@/utils/fetch";
+import { useParams } from "react-router-dom";
 import Button from "@/components/buttons/Button";
 import TextInputLength from "@/components/inputs/TextInputLength";
 import TextAreaLength from "@/components/inputs/TextAreaLength";
 import MultiSelect from "@/components/inputs/MultiSelect";
 import FileZone from "@/components/inputs/FileZone";
-import QuizzQuestions from "@/components/QuizzQuestions";
+import QuizzQuestions from "@/components/quizz/QuizzQuestions";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
+import { toast } from "react-toastify";
 
 export type TQuestion = {
   text: string;
@@ -50,7 +53,11 @@ export default function UpsertQuizz() {
       correctAnswer: [],
     },
   ]);
-  const [error, setError] = useState("");
+  const [quizzToEdit, setQuizzToEdit] = useState<any>(false);
+
+  useDocumentTitle("Créer un quizz");
+
+  const { quizzId } = useParams<{ quizzId: string }>();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -64,11 +71,46 @@ export default function UpsertQuizz() {
         );
         setAvailableCategories(formattedData);
       } catch (error) {
-        setError((error as Error).message ?? "Une erreur s'est produite");
+        toast.error((error as Error).message ?? "Une erreur s'est produite", {
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          closeButton: false,
+          className:
+            "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+        });
       }
     };
 
     fetchCategories();
+
+    if (quizzId) {
+      setQuizzToEdit(true);
+      const fetchQuizz = async () => {
+        try {
+          const data = await fetcher(`/quizz/one/${quizzId}`);
+          setTitle(data.title);
+          setDescription(data.description);
+          setCategories(data.category_ids);
+          setQuestions(data.questions);
+        } catch (error) {
+          toast.error((error as Error).message ?? "Une erreur s'est produite", {
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            closeButton: false,
+            className:
+              "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+          });
+        }
+      };
+
+      fetchQuizz();
+    }
   }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,11 +143,11 @@ export default function UpsertQuizz() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    setError("");
+    const postUrl = quizzToEdit ? `/quizz/update/${quizzId}` : "/quizz/create";
 
     try {
-      const data = await fetcher("/quizz/create", {
-        method: "POST",
+      const data = await fetcher(postUrl, {
+        method: quizzToEdit ? "PUT" : "POST",
         body: JSON.stringify({
           title,
           description,
@@ -115,23 +157,44 @@ export default function UpsertQuizz() {
       });
 
       const formData = new FormData();
-      formData.append("quizz", selectedFile!);
-      formData.append("quizzId", data.quizzId);
+      if (selectedFile) {
+        formData.append("quizz", selectedFile!);
+        formData.append("quizzId", quizzToEdit ? quizzId : data.quizzId);
 
-      await fetcher(`/quizz/upload`, {
-        method: "POST",
-        body: formData,
-        headers: {
-          Accept: "application/json",
-        },
+        await fetcher(`/quizz/upload`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+      }
+
+      toast.success(quizzToEdit ? "Quizz modifié" : "Quizz créé", {
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        closeButton: false,
+        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
       });
     } catch (error) {
-      setError((error as Error).message ?? "Une erreur s'est produite");
+      toast.error((error as Error).message ?? "Une erreur s'est produite", {
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        closeButton: false,
+        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+      });
     }
   };
 
   return (
-    <div className="flex flex-col space-y-4 pb-4">
+    <div className="relative flex flex-col space-y-4 pb-4">
       <section
         id="upsert-quizz-general"
         className="space-y-6 rounded-lg bg-themedFg p-4"
@@ -189,13 +252,8 @@ export default function UpsertQuizz() {
       </section>
       <section id="upsert-quizz-submit" className="flex flex-col space-y-4">
         <Button type="submit" onClick={handleSubmit} className="w-full">
-          Créer le quizz
+          {quizzToEdit ? "Modifier le quizz" : "Créer le quizz"}
         </Button>
-        {error && (
-          <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">
-            {error}
-          </div>
-        )}
       </section>
     </div>
   );
