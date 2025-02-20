@@ -5,6 +5,7 @@ import { fetcher } from "@utils/fetch";
 import TextInput from "@components/inputs/TextInput";
 import Button from "@components/buttons/Button";
 import ButtonLink from "@/components/buttons/ButtonLink";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -17,9 +18,7 @@ export default function Register() {
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = "Quizz universe | Créer un compte";
-  }, []);
+  useDocumentTitle("Créer un compte");
 
   useEffect(() => {
     if (isAuthenticated) {

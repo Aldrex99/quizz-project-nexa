@@ -5,6 +5,7 @@ import { useUser } from "@/hooks/useUser";
 import TextInput from "@components/inputs/TextInput";
 import Button from "@components/buttons/Button";
 import ButtonLink from "@/components/buttons/ButtonLink";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -13,9 +14,7 @@ export default function Login() {
   const { getMe, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.title = "Quizz universe | Se connecter";
-  }, []);
+  useDocumentTitle("Se connecter");
 
   useEffect(() => {
     if (isAuthenticated) {

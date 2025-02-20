@@ -1,4 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
+import { useState, useContext } from "react";
 import { useUser } from "@/hooks/useUser";
 import Button from "@/components/buttons/Button";
 import Avatar from "@/components/modals/user/Avatar";
@@ -13,9 +14,7 @@ export default function Me() {
   const { user } = useUser();
   const { changeThemeColor } = useContext(ThemeContext)!;
 
-  useEffect(() => {
-    document.title = "Quizz Universe | Mon profil";
-  }, []);
+  useDocumentTitle("Mon profil");
 
   const handleThemeColorChange = (color: string) => {
     changeThemeColor(color);

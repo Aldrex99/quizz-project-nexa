@@ -6,6 +6,7 @@ import TextAreaLength from "@/components/inputs/TextAreaLength";
 import MultiSelect from "@/components/inputs/MultiSelect";
 import FileZone from "@/components/inputs/FileZone";
 import QuizzQuestions from "@/components/QuizzQuestions";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 
 export type TQuestion = {
   text: string;
@@ -51,6 +52,8 @@ export default function UpsertQuizz() {
     },
   ]);
   const [error, setError] = useState("");
+
+  useDocumentTitle("Créer un quizz");
 
   useEffect(() => {
     const fetchCategories = async () => {

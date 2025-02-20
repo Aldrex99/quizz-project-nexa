@@ -1,10 +1,8 @@
-import { useEffect } from "react";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { Link } from "react-router-dom";
 
 export default function NotFound() {
-  useEffect(() => {
-    document.title = "Quizz universe | Page introuvable";
-  }, []);
+  useDocumentTitle("Page introuvable");
 
   return (
     <>
