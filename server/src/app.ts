@@ -34,7 +34,7 @@ app.use("/api/*", (req, res) => {
 app.use(errorHandler);
 
 /* Route for public files */
-app.use("/public", checkAccessToken, express.static("public"));
+app.use("/public", express.static("public"));
 
 app.use(express.static(path.join(__dirname, "../../client/dist")));
 
