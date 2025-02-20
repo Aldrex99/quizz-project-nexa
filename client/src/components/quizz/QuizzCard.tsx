@@ -16,7 +16,7 @@ export default function QuizzCard({
   forReponse = false,
 }: TQuizzCardProps) {
   return (
-    <article className="relative flex flex-col space-y-2 rounded-lg bg-themedBg p-4 shadow-theme md:max-w-64">
+    <article className="lg:max-w-auto relative mx-auto flex max-w-64 flex-col space-y-2 rounded-lg bg-themedBg p-4 shadow-theme">
       {forUpdate && (
         <Link
           to={quizzLink}
@@ -37,8 +37,8 @@ export default function QuizzCard({
       </div>
       <p className="text-sm text-themedText">{quizz.description}</p>
       <div className="flex flex-col justify-between space-y-4">
-        <div>
-          {quizz.categories.map((category) => (
+        <div className="flex flex-wrap space-x-2">
+          {quizz.categories?.map((category) => (
             <span
               key={category._id}
               className="rounded-full bg-primary px-2 py-1 text-xs font-semibold text-primary-text"
@@ -51,7 +51,7 @@ export default function QuizzCard({
           <span>Par</span>
           <span className="font-semibold text-primary">
             {" "}
-            {quizz.author.username}
+            {quizz.author?.username}
           </span>
         </p>
       </div>

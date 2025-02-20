@@ -1,17 +1,31 @@
 export interface IQuizz {
   _id: string;
-  author_id: string;
-  author: {
-    _id: string;
-    username: string;
-    avatarLink: string;
-  };
-  categories: {
-    _id: string;
-    name: string;
-  }[];
-  category_ids: string[];
-  description: string;
-  imageLink: string;
   title: string;
+  description: string;
+  imageLink?: string;
+  questions?: {
+    _id?: string;
+    text: string;
+    options: {
+      _id?: string;
+      key: string;
+      value: string;
+    };
+    isMultipleChoice: boolean;
+    correctAnswer: string[];
+    points: number;
+  }[];
+  author_id: string;
+  author?: {
+    _id?: string;
+    username?: string;
+    avatarLink?: string;
+  };
+  category_ids: string[];
+  categories?: {
+    _id?: string;
+    name?: string;
+  }[];
+  createdAt: Date;
+  updatedAt: Date;
 }

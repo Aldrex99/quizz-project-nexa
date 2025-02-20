@@ -26,24 +26,26 @@ export default function UserQuizz() {
   }, []);
 
   return (
-    <div className="flex w-full flex-col space-y-4 pb-4">
+    <div className="flex flex-col space-y-4 pb-4">
       <section
         id="upsert-quizz-general"
-        className="w-full space-y-6 rounded-lg bg-themedFg p-4"
+        className="space-y-6 rounded-lg bg-themedFg p-4"
       >
         <h1 className="text-2xl font-bold text-primary">Vos quizz</h1>
         {loading ? (
           <Loading width="full" height="full" />
         ) : (
-          quizz.map((item) => (
-            <QuizzCard
-              key={item._id}
-              quizz={item}
-              forUpdate={user?.id === item.author._id}
-              forReponse={user?.id !== item.author._id}
-              quizzLink={`/quizz/update/${item._id}`}
-            />
-          ))
+          <div className="grid grid-cols-1 gap-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
+            {quizz.map((item) => (
+              <QuizzCard
+                key={item._id}
+                quizz={item}
+                forUpdate={user?.id === item.author?._id}
+                forReponse={user?.id !== item.author?._id}
+                quizzLink={`/quizz/update/${item._id}`}
+              />
+            ))}
+          </div>
         )}
       </section>
     </div>
