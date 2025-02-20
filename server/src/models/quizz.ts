@@ -5,8 +5,10 @@ export interface IQuizz {
   description: string;
   imageLink?: string;
   questions: {
+    _id?: string | ObjectId;
     text: string;
     options: {
+      _id?: string | ObjectId;
       key: string;
       value: string;
     };

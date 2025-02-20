@@ -53,6 +53,10 @@ export const QuizzRepository = {
       });
   },
 
+  async findQuizzQuestionsByQuizzId(_id: string) {
+    return Quizz.findById(_id, { questions: 1 });
+  },
+
   async findByAuthorId(author_id: string) {
     return Quizz.find({ author_id }, { __v: 0, questions: 0 })
       .populate({
