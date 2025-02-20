@@ -55,6 +55,10 @@ export const getQuizzById = async (id: string) => {
   return quizz ? quizzFormatter(quizz) : null;
 };
 
+export const getQuizzCorrectAnswers = async (id: string) => {
+  return await QuizzRepository.findQuizzQuestionsByQuizzId(id);
+};
+
 export const getQuizziesByAuthorId = async (authorId: string) => {
   const quizzies = await QuizzRepository.findByAuthorId(authorId);
   return quizzesFormatter(quizzies);
