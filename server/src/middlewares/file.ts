@@ -39,8 +39,7 @@ const storageQuizz = multer.diskStorage({
     cb(null, path.join(__dirname, "../../public/quizz"));
   },
   filename: (req, file, cb) => {
-    // TODO : Verify why req.body is empty here (before destructuring ?)
-    const quizzId = req.body.quizzId || randomUUID();
+    const quizzId = req.params.quizz_id || randomUUID();
     const newFileName = `${quizzId}${path.extname(file.originalname)}`;
     req.fileName = newFileName;
     cb(null, newFileName);

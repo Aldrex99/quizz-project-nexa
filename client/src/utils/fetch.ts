@@ -13,6 +13,7 @@ export const fetcher = async (
   const queryOptions: RequestInit = {
     credentials: needAuth ? "include" : "omit",
     headers: {
+      ...options.headers,
       "Content-Type": "application/json",
     },
     ...options,

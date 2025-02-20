@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    overscroll-behavior: none;
     --color-primary: rgb(52, 152, 219); /* button color */
     --color-primary-gradient: rgba(
       52,

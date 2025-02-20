@@ -1,25 +1,60 @@
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import ButtonLink from "@/components/buttons/ButtonLink";
+import { fetcher } from "@/utils/fetch";
+import { IQuizz } from "@/types/quizz";
+import { useState, useEffect } from "react";
+import QuizzCard from "@/components/quizz/QuizzCard";
+import Loading from "../common/Loading";
+import { useUser } from "@/hooks/useUser";
 
 export default function Home() {
+  const [quizz, setQuizz] = useState<IQuizz[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { user } = useUser();
+
   useDocumentTitle("Accueil");
+
+  useEffect(() => {
+    setLoading(true);
+    const fetchQuizz = async () => {
+      try {
+        const data = await fetcher("/quizz/all?limit=5");
+        setQuizz(data.quizzes);
+      } catch (error) {
+        console.error(error);
+      }
+      setLoading(false);
+    };
+    fetchQuizz();
+  }, []);
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center space-y-4">
       <section className="flex w-full justify-end">
         <ButtonLink to="/quizz/create">Créer un quizz</ButtonLink>
       </section>
-      <div className="flex w-full flex-col space-y-6 rounded-lg border border-transparent bg-themedFg px-6 py-12 shadow-theme sm:m-0 sm:w-1/2 sm:px-12 lg:w-full">
-        <h1 className="mb-4 flex justify-center text-2xl font-semibold text-primary">
-          Quizz universe
-        </h1>
-        <p className="text-center text-lg text-themedText">
-          Bienvenue sur Quizz universe, le meilleur endroit pour tester vos
-          connaissances.
-        </p>
-        <div className="flex justify-center">
-          Et ici un petit bouton pour commencer à jouer
-        </div>
+      <div className="flex w-full flex-col space-y-4 pb-4">
+        <section
+          id="upsert-quizz-general"
+          className="space-y-6 rounded-lg bg-themedFg p-4"
+        >
+          <h1 className="text-2xl font-bold text-primary">Vos quizz</h1>
+          {loading ? (
+            <Loading width="full" height="full" />
+          ) : (
+            <div className="grid grid-cols-1 gap-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
+              {quizz?.map((item) => (
+                <QuizzCard
+                  key={item._id}
+                  quizz={item}
+                  forUpdate={user?.id === item.author?._id}
+                  forReponse={user?.id !== item.author?._id}
+                  quizzLink={`/quizz/update/${item._id}`}
+                />
+              ))}
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );

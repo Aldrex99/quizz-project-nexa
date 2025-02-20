@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetcher } from "@/utils/fetch";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from "@/components/buttons/Button";
 import TextInputLength from "@/components/inputs/TextInputLength";
 import TextAreaLength from "@/components/inputs/TextAreaLength";
@@ -9,6 +9,7 @@ import FileZone from "@/components/inputs/FileZone";
 import QuizzQuestions from "@/components/quizz/QuizzQuestions";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { toast } from "react-toastify";
+import { useUser } from "@/hooks/useUser";
 
 export type TQuestion = {
   text: string;
@@ -27,12 +28,12 @@ type TAvailableCategory = {
 };
 
 export default function UpsertQuizz() {
+  const { user } = useUser();
   const [availableCategories, setAvailableCategories] = useState<
     TAvailableCategory[]
   >([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  // const [imageLink, setImageLink] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
   const [questions, setQuestions] = useState<TQuestion[]>([
@@ -53,11 +54,12 @@ export default function UpsertQuizz() {
       correctAnswer: [],
     },
   ]);
-  const [quizzToEdit, setQuizzToEdit] = useState<any>(false);
+  const [quizzToEdit, setQuizzToEdit] = useState<boolean>(false);
 
   useDocumentTitle("Créer un quizz");
 
   const { quizzId } = useParams<{ quizzId: string }>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -91,6 +93,11 @@ export default function UpsertQuizz() {
       const fetchQuizz = async () => {
         try {
           const data = await fetcher(`/quizz/one/${quizzId}`);
+
+          if (data.author_id !== user?.id) {
+            navigate(`/quizz/response/${quizzId}`);
+          }
+
           setTitle(data.title);
           setDescription(data.description);
           setCategories(data.category_ids);
@@ -111,7 +118,7 @@ export default function UpsertQuizz() {
 
       fetchQuizz();
     }
-  }, []);
+  }, [navigate, quizzId, user?.id]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -159,9 +166,8 @@ export default function UpsertQuizz() {
       const formData = new FormData();
       if (selectedFile) {
         formData.append("quizz", selectedFile!);
-        formData.append("quizzId", quizzToEdit ? quizzId : data.quizzId);
 
-        await fetcher(`/quizz/upload`, {
+        await fetcher(`/quizz/upload/${quizzToEdit ? quizzId : data.quizzId}`, {
           method: "POST",
           body: formData,
           headers: {

@@ -15,6 +15,8 @@ export interface IAnswer {
   answers: {
     question_id: string;
     answer: string[];
+    isCorrect: boolean;
+    correctAnswer: string[];
   }[];
   score: number;
   totalScore: number;
@@ -31,6 +33,8 @@ export const AnswerSchema = new Schema<IAnswerDocument>({
     {
       question_id: { type: String, required: true },
       answer: { type: [String], required: true },
+      isCorrect: { type: Boolean, required: true },
+      correctAnswer: { type: [String], required: true },
     },
   ],
   score: { type: Number, required: true },

@@ -18,6 +18,7 @@ import Home from "@/pages/user/Home";
 import Me from "@/pages/user/Me";
 import UpsertQuizz from "@/pages/user/UpsertQuizz";
 import UserQuizz from "@/pages/user/UserQuizz";
+import AnswerQuizz from "@/pages/user/AnswerQuizz";
 
 import Stats from "@/pages/admin/Stats";
 
@@ -60,8 +61,12 @@ function App() {
                 element={<UserRouteWrapper children={<UpsertQuizz />} />}
               />
               <Route
-                path="my-quizzes"
+                path="/my-quizzes"
                 element={<UserRouteWrapper children={<UserQuizz />} />}
+              />
+              <Route
+                path="/quizz/response/:quizzId"
+                element={<UserRouteWrapper children={<AnswerQuizz />} />}
               />
               <Route
                 path="/me"

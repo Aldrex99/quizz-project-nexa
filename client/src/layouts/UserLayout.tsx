@@ -96,7 +96,7 @@ export default function UserLayout({
                 <AcademicCapIcon className="h-8 w-8 text-primary" />
               </div>
               <div className="hidden sm:ml-6 sm:block">
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center">
                   {navigation.map(
                     (item) =>
                       item.authorizedRole?.includes(user!.role) && (
@@ -116,7 +116,7 @@ export default function UserLayout({
                       ),
                   )}
                   {user?.role === "moderator" || user?.role === "admin" ? (
-                    <Popover className="relative">
+                    <Popover className="relative px-3 py-2">
                       <PopoverButton className="inline-flex items-center gap-x-1 text-sm/6 text-themedText hover:text-primary focus:outline-none focus:ring-0 focus:ring-offset-themedBg">
                         <span>Staff</span>
                         <ChevronDownIcon
@@ -127,7 +127,7 @@ export default function UserLayout({
 
                       <PopoverPanel
                         transition
-                        className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+                        className="absolute left-1/2 z-30 mt-5 flex w-screen max-w-min -translate-x-1/2 px-4 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
                       >
                         <div className="w-56 shrink rounded-xl bg-themedFg p-4 text-sm/6 font-semibold text-themedText shadow-theme ring-1 ring-gray-900/5">
                           {staffNavigation.map((item) => (

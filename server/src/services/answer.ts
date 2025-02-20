@@ -44,9 +44,12 @@ export const verifyAnswers = async (
     if (isCorrect) {
       score += question.points;
     }
+
+    answer.isCorrect = isCorrect;
+    answer.correctAnswer = correctAnswer;
   });
 
-  return { score, totalScore };
+  return { score, totalScore, updatedAnswers: answers };
 };
 
 export const createAnswer = async (data: Partial<IAnswer>) => {
