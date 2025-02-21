@@ -1,5 +1,6 @@
 import * as userService from '../services/user';
 import { Request, Response, NextFunction } from 'express';
+import { utapi } from '../utils/uploadthing';
 import { CustomError } from '../utils/customError';
 
 export const getMe = async (req: Request, res: Response, next: NextFunction) => {
@@ -13,13 +14,14 @@ export const getMe = async (req: Request, res: Response, next: NextFunction) => 
 
 export const updateAvatar = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const fileName = req.file?.filename ?? null;
+    const files = req.files;
 
-    const avatarLink = `${process.env.FILE_LINK}/avatar/${fileName}`;
+    if (!files) {
+      next(new CustomError('No file uploaded.', 400, 'NO_FILE_UPLOADED'));
+      return;
+    }
 
-    await userService.updateAvatar(req.user?.id ?? '', avatarLink);
-
-    res.status(200).json({ avatarLink });
+    res.status(200).json({});
   } catch (error) {
     next(
       new CustomError('An error occurred while updating the avatar.', 500, 'UPDATE_AVATAR_ERROR'),

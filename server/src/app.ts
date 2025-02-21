@@ -8,7 +8,7 @@ import applyMiddlewares from './middlewares/index';
 import { checkAccessToken } from './middlewares/token';
 import { errorHandler } from './middlewares/errorHandler';
 import { CustomError } from './utils/customError';
-const path = require('path');
+import path from 'path';
 
 import authRouter from './routes/auth';
 import userRouter from './routes/user';
