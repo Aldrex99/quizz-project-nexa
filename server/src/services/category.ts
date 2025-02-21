@@ -1,5 +1,5 @@
-import { ICategory } from "../models/category";
-import { CategoryRepository } from "../repositories/category";
+import { ICategory } from '../models/category';
+import { CategoryRepository } from '../repositories/category';
 
 export const createCategory = async (data: Partial<ICategory>) => {
   try {
@@ -13,8 +13,8 @@ export const getCategories = async (
   filter: Record<string, any>,
   limit: number,
   page: number,
-  sortBy: string = "name",
-  sortOrder: "asc" | "desc" = "asc"
+  sortBy: string = 'name',
+  sortOrder: 'asc' | 'desc' = 'asc',
 ) => {
   const skip = limit * (page - 1);
 
@@ -23,7 +23,7 @@ export const getCategories = async (
     skip,
     limit,
     sortBy,
-    sortOrder
+    sortOrder,
   );
 
   return categories;

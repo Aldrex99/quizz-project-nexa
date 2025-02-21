@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { useUser } from "@/hooks/useUser";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { fetcher } from "@utils/fetch";
-import TextInput from "@components/inputs/TextInput";
-import Button from "@components/buttons/Button";
-import useDocumentTitle from "@/hooks/useDocumentTitle";
+import { useEffect, useState } from 'react';
+import { useUser } from '@/hooks/useUser';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { fetcher } from '@utils/fetch';
+import TextInput from '@components/inputs/TextInput';
+import Button from '@components/buttons/Button';
+import useDocumentTitle from '@/hooks/useDocumentTitle';
 
 export default function ResetPassword() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const { isAuthenticated } = useUser();
@@ -17,11 +17,11 @@ export default function ResetPassword() {
 
   const resetToken = useParams().token;
 
-  useDocumentTitle("Réinitialiser le mot de passe");
+  useDocumentTitle('Réinitialiser le mot de passe');
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/home");
+      navigate('/home');
     }
   }, [isAuthenticated, navigate]);
 
@@ -29,11 +29,11 @@ export default function ResetPassword() {
     e.preventDefault();
     setLoading(true);
     if (!password || !confirmPassword) {
-      setError("Veuillez remplir tous les champs");
+      setError('Veuillez remplir tous les champs');
       return;
     }
     if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas");
+      setError('Les mots de passe ne correspondent pas');
       return;
     }
 
@@ -41,13 +41,13 @@ export default function ResetPassword() {
       await fetcher(
         `/auth/reset-password/${resetToken}`,
         {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({ password, confirmPassword }),
         },
-        false,
+        false
       );
 
-      navigate("/login");
+      navigate('/login');
     } catch (error) {
       setError((error as Error).message ?? "Une erreur s'est produite");
     } finally {
@@ -85,7 +85,7 @@ export default function ResetPassword() {
           className="w-full"
           variant="primary"
         >
-          {loading ? "Chargement..." : "Réinitialiser"}
+          {loading ? 'Chargement...' : 'Réinitialiser'}
         </Button>
         {error && (
           <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">

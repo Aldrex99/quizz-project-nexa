@@ -6,9 +6,9 @@ export class CustomError extends Error {
   constructor(
     message: string,
     status: number = 500,
-    code: string = "UNKNOWN_ERROR",
+    code: string = 'UNKNOWN_ERROR',
     isOperational: boolean = true,
-    details?: any
+    details?: any,
   ) {
     super(message);
     this.name = this.constructor.name;

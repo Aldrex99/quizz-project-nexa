@@ -1,8 +1,8 @@
-import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { Link } from "react-router-dom";
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+import { Link } from 'react-router-dom';
 
 export default function NotFound() {
-  useDocumentTitle("Page introuvable");
+  useDocumentTitle('Page introuvable');
 
   return (
     <>

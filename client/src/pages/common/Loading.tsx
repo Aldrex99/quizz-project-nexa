@@ -4,8 +4,8 @@ type TLoadingProps = {
 };
 
 export default function Loading({
-  width = "screen",
-  height = "screen",
+  width = 'screen',
+  height = 'screen',
 }: TLoadingProps) {
   return (
     <div role="status" className={`flex h-${height} w-${width}`}>

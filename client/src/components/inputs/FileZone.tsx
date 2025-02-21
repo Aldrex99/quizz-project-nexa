@@ -1,4 +1,4 @@
-import { TrashIcon, CloudArrowUpIcon } from "@heroicons/react/24/outline";
+import { TrashIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline';
 
 type TFileZoneProps = {
   selectedFile: File | null;
@@ -16,7 +16,7 @@ export default function FileZone({
       <div className="flex w-full flex-col items-center justify-center space-y-2 object-cover">
         {selectedFile && (
           <p className="flex flex-col text-center text-lg text-themedText">
-            Mettre comme photo pour le quizz :{" "}
+            Mettre comme photo pour le quizz :{' '}
             <span className="font-semibold text-primary">
               {selectedFile?.name}
             </span>
@@ -56,7 +56,7 @@ export default function FileZone({
           <input
             id="dropzone-file"
             type="file"
-            accept="image/*"
+            accept="image/png, image/jpeg, image/webp"
             className="hidden"
             disabled={!!selectedFile}
             onChange={handleFileChange}

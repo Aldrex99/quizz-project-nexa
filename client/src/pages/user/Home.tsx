@@ -1,24 +1,24 @@
-import useDocumentTitle from "@/hooks/useDocumentTitle";
-import ButtonLink from "@/components/buttons/ButtonLink";
-import { fetcher } from "@/utils/fetch";
-import { IQuizz } from "@/types/quizz";
-import { useState, useEffect } from "react";
-import QuizzCard from "@/components/quizz/QuizzCard";
-import Loading from "../common/Loading";
-import { useUser } from "@/hooks/useUser";
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+import ButtonLink from '@/components/buttons/ButtonLink';
+import { fetcher } from '@/utils/fetch';
+import { IQuizz } from '@/types/quizz';
+import { useState, useEffect } from 'react';
+import QuizzCard from '@/components/quizz/QuizzCard';
+import Loading from '../common/Loading';
+import { useUser } from '@/hooks/useUser';
 
 export default function Home() {
   const [quizz, setQuizz] = useState<IQuizz[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useUser();
 
-  useDocumentTitle("Accueil");
+  useDocumentTitle('Accueil');
 
   useEffect(() => {
     setLoading(true);
     const fetchQuizz = async () => {
       try {
-        const data = await fetcher("/quizz/all?limit=5");
+        const data = await fetcher('/quizz/all?limit=5');
         setQuizz(data.quizzes);
       } catch (error) {
         console.error(error);

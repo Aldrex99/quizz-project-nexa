@@ -1,5 +1,5 @@
-import { SortOrder } from "mongoose";
-import Category, { ICategoryDocument } from "../models/category";
+import { SortOrder } from 'mongoose';
+import Category, { ICategoryDocument } from '../models/category';
 
 export const CategoryRepository = {
   async create(data: Partial<ICategoryDocument>) {
@@ -17,7 +17,7 @@ export const CategoryRepository = {
     skip: number,
     limit: number,
     sortBy: string,
-    sortOrder: SortOrder
+    sortOrder: SortOrder,
   ) {
     const categories = await Category.find(filter, { __v: 0 })
       .limit(limit)

@@ -1,7 +1,7 @@
-import { IAnswer } from "@/types/answer";
-import { IQuestion } from "@/types/quizz";
-import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import { useEffect, useState } from "react";
+import { IAnswer } from '@/types/answer';
+import { IQuestion } from '@/types/quizz';
+import { Field, Label, Radio, RadioGroup } from '@headlessui/react';
+import { useEffect, useState } from 'react';
 
 type TMultipleAnswerProps = {
   question: IQuestion;
@@ -19,7 +19,7 @@ export default function UniqueAnswer({
   useEffect(() => {
     const newAnswers = [...answers];
     const answerIndex = newAnswers.findIndex(
-      (a) => a.question_id === question._id,
+      (a) => a.question_id === question._id
     );
 
     if (answerIndex === -1) {

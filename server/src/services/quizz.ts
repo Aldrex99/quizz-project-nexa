@@ -1,5 +1,5 @@
-import { IQuizzDocument, IQuizz } from "../models/quizz";
-import { QuizzRepository } from "../repositories/quizz";
+import { IQuizzDocument, IQuizz } from '../models/quizz';
+import { QuizzRepository } from '../repositories/quizz';
 
 const quizzFormatter = (quizz: IQuizzDocument): IQuizz => {
   const quizzObject = quizz.toObject();
@@ -31,8 +31,8 @@ export const getQuizzes = async (
   filter: Record<string, any>,
   limit: number,
   page: number,
-  sortBy: string = "createdAt",
-  sortOrder: "asc" | "desc" = "desc"
+  sortBy: string = 'createdAt',
+  sortOrder: 'asc' | 'desc' = 'desc',
 ) => {
   const skip = limit * (page - 1);
 
@@ -41,7 +41,7 @@ export const getQuizzes = async (
     skip,
     limit,
     sortBy,
-    sortOrder
+    sortOrder,
   );
 
   return {
@@ -64,11 +64,7 @@ export const getQuizziesByAuthorId = async (authorId: string) => {
   return quizzesFormatter(quizzies);
 };
 
-export const updateQuizzById = async (
-  id: string,
-  userId: string,
-  data: Partial<IQuizz>
-) => {
+export const updateQuizzById = async (id: string, userId: string, data: Partial<IQuizz>) => {
   return await QuizzRepository.updateQuizzById(id, userId, data);
 };
 

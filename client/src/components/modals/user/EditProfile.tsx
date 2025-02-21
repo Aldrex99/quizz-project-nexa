@@ -1,10 +1,10 @@
-import { DialogTitle } from "@headlessui/react";
-import { fetcher } from "@/utils/fetch";
-import { useState } from "react";
-import { useUser } from "@/hooks/useUser";
-import BaseModal from "@components/modals/BaseModal";
-import Button from "@components/buttons/Button";
-import TextInput from "@components/inputs/TextInput";
+import { DialogTitle } from '@headlessui/react';
+import { fetcher } from '@/utils/fetch';
+import { useState } from 'react';
+import { useUser } from '@/hooks/useUser';
+import BaseModal from '@components/modals/BaseModal';
+import Button from '@components/buttons/Button';
+import TextInput from '@components/inputs/TextInput';
 
 type TEditProfileProps = {
   open: boolean;
@@ -13,14 +13,14 @@ type TEditProfileProps = {
 
 export default function EditProfile({ open, setOpen }: TEditProfileProps) {
   const { user, getMe } = useUser();
-  const [username, setUsername] = useState(user?.username ?? "");
-  const [email, setEmail] = useState(user?.email ?? "");
+  const [username, setUsername] = useState(user?.username ?? '');
+  const [email, setEmail] = useState(user?.email ?? '');
 
   const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
       await fetcher(`/user/me`, {
-        method: "PUT",
+        method: 'PUT',
         body: JSON.stringify({ username, email }),
       });
 

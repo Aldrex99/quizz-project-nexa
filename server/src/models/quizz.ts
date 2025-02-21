@@ -1,9 +1,10 @@
-import { Document, Model, model, ObjectId, Schema } from "mongoose";
+import { Document, Model, model, ObjectId, Schema } from 'mongoose';
 
 export interface IQuizz {
   title: string;
   description: string;
   imageLink?: string;
+  imageKey?: string;
   questions: {
     _id?: string | ObjectId;
     text: string;
@@ -11,7 +12,7 @@ export interface IQuizz {
       _id?: string | ObjectId;
       key: string;
       value: string;
-    };
+    }[];
     isMultipleChoice: boolean;
     correctAnswer: string[];
     points: number;
@@ -34,11 +35,12 @@ export interface IQuizz {
 export interface IQuizzDocument extends IQuizz, Document {}
 
 export const QuizzSchema = new Schema<IQuizzDocument>({
-  author_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  category_ids: [{ type: Schema.Types.ObjectId, ref: "Category" }],
+  author_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  category_ids: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
   title: { type: String, required: true },
   description: { type: String, required: true },
   imageLink: { type: String },
+  imageKey: { type: String },
   questions: [
     {
       text: { type: String, required: true },
@@ -56,9 +58,6 @@ export const QuizzSchema = new Schema<IQuizzDocument>({
   ],
 });
 
-const QuizzModel: Model<IQuizzDocument> = model<IQuizzDocument>(
-  "Quizz",
-  QuizzSchema
-);
+const QuizzModel: Model<IQuizzDocument> = model<IQuizzDocument>('Quizz', QuizzSchema);
 
 export default QuizzModel;

@@ -14,13 +14,15 @@
     "dev:client": "npm run dev -w client",
     "dev:server": "npm run dev -w server",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "check": "npm run prettier:check -w client && npm run prettier:check -w server",
+    "fix": "npm run prettier:fix -w client && npm run prettier:fix -w server",
     "build": "npm run build -w client && npm run build -w server",
     "start": "npm run start -w server"
   },
   "author": "Alexandre",
   "license": "ISC",
   "description": "",
-  "dependencies": {
+  "devDependencies": {
     "concurrently": "^9.1.2"
   }
 }

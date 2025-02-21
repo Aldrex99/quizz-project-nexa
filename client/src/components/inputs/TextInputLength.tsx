@@ -1,4 +1,4 @@
-import { classNames } from "@/utils/style";
+import { classNames } from '@/utils/style';
 
 type TTextInputLengthProps = {
   label: string;
@@ -20,7 +20,7 @@ export default function TextInputLength({
   maxLength,
 }: TTextInputLengthProps) {
   return (
-    <div className={`relative ${className ?? ""}`}>
+    <div className={`relative ${className ?? ''}`}>
       <label
         htmlFor={label}
         className="absolute -top-2 left-2 inline-block rounded-lg bg-themedFg px-1 text-xs font-medium text-themedText"
@@ -37,8 +37,8 @@ export default function TextInputLength({
       />
       <p
         className={classNames(
-          value.length > maxLength! ? "text-red-500" : "text-themedText",
-          "absolute bottom-2 right-2 text-xs",
+          value.length > maxLength! ? 'text-red-500' : 'text-themedText',
+          'absolute bottom-2 right-2 text-xs'
         )}
       >
         {value.length}/{maxLength}

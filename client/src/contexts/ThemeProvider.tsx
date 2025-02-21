@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { ThemeContext, IThemeContextValue } from "@contexts/ThemeContext";
+import React, { useState, useEffect } from 'react';
+import { ThemeContext, IThemeContextValue } from '@contexts/ThemeContext';
 
-const navigatorTheme = window.matchMedia("(prefers-color-scheme: dark)")
-  ? "dark"
-  : "light";
+const navigatorTheme = window.matchMedia('(prefers-color-scheme: dark)')
+  ? 'dark'
+  : 'light';
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<string>("light");
-  const [themeColor, setThemeColor] = useState<string>("");
+  const [theme, setTheme] = useState<string>('light');
+  const [themeColor, setThemeColor] = useState<string>('');
 
   useEffect(() => {
-    const localTheme = localStorage.getItem("theme");
-    const localThemeColor = localStorage.getItem("themeColor");
+    const localTheme = localStorage.getItem('theme');
+    const localThemeColor = localStorage.getItem('themeColor');
 
     if (localTheme) {
       setTheme(localTheme);
@@ -26,12 +26,12 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   const changeTheme = (theme: string) => {
     setTheme(theme);
-    localStorage.setItem("theme", theme);
+    localStorage.setItem('theme', theme);
   };
 
   const changeThemeColor = (themeColor: string) => {
     setThemeColor(themeColor);
-    localStorage.setItem("themeColor", themeColor);
+    localStorage.setItem('themeColor', themeColor);
   };
 
   const value: IThemeContextValue = {

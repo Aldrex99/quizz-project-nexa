@@ -1,5 +1,5 @@
-import { createContext } from "react";
-import { IUser } from "@/types/user";
+import { createContext } from 'react';
+import { IUser } from '@/types/user';
 
 interface IUserContextValue {
   user: IUser | null;

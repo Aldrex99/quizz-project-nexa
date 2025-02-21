@@ -1,14 +1,14 @@
-import { useState, useContext, useEffect } from "react";
-import { SunIcon, MoonIcon } from "@heroicons/react/16/solid";
-import { ThemeContext } from "@/contexts/ThemeContext";
-import { Switch } from "@headlessui/react";
+import { useState, useContext, useEffect } from 'react';
+import { SunIcon, MoonIcon } from '@heroicons/react/16/solid';
+import { ThemeContext } from '@/contexts/ThemeContext';
+import { Switch } from '@headlessui/react';
 
 export default function ThemeSwitch() {
   const { theme, changeTheme } = useContext(ThemeContext)!;
-  const [enabled, setEnabled] = useState(theme === "dark");
+  const [enabled, setEnabled] = useState(theme === 'dark');
 
   useEffect(() => {
-    changeTheme(enabled ? "dark" : "light");
+    changeTheme(enabled ? 'dark' : 'light');
   }, [changeTheme, enabled]);
 
   return (

@@ -1,12 +1,8 @@
-import { Request, NextFunction, Response } from "express";
-import { verifyAccessToken, verifyRefreshToken } from "../utils/token";
+import { Request, NextFunction, Response } from 'express';
+import { verifyAccessToken, verifyRefreshToken } from '../utils/token';
 
-export const checkAccessToken = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const accessToken = req.cookies["accessToken"];
+export const checkAccessToken = async (req: Request, res: Response, next: NextFunction) => {
+  const accessToken = req.cookies['accessToken'];
   if (!accessToken) {
     res.status(401).json({
       code: 401,
@@ -18,7 +14,7 @@ export const checkAccessToken = async (
   try {
     const rawUser = await verifyAccessToken(accessToken);
 
-    if (typeof rawUser === "string") {
+    if (typeof rawUser === 'string') {
       res.status(403).json({
         code: 403,
         message: "Votre token n'est pas valide",
@@ -36,10 +32,10 @@ export const checkAccessToken = async (
     next();
   } catch (err) {
     if (err) {
-      if ((err as Error).name === "TokenExpiredError") {
+      if ((err as Error).name === 'TokenExpiredError') {
         res.status(403).json({
           code: 432,
-          message: "accessToken expiré",
+          message: 'accessToken expiré',
         });
         return;
       }
@@ -53,12 +49,8 @@ export const checkAccessToken = async (
   }
 };
 
-export const checkRefreshToken = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const refreshToken = req.cookies["refreshToken"];
+export const checkRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
+  const refreshToken = req.cookies['refreshToken'];
   if (!refreshToken) {
     res.status(401).json({
       code: 401,
@@ -70,7 +62,7 @@ export const checkRefreshToken = async (
   try {
     const rawUser = await verifyRefreshToken(refreshToken);
 
-    if (typeof rawUser === "string") {
+    if (typeof rawUser === 'string') {
       res.status(403).json({
         code: 403,
         message: "Votre token n'est pas valide",
@@ -88,10 +80,10 @@ export const checkRefreshToken = async (
     next();
   } catch (err) {
     if (err) {
-      if ((err as Error).name === "TokenExpiredError") {
+      if ((err as Error).name === 'TokenExpiredError') {
         res.status(403).json({
           code: 433,
-          message: "refreshToken expiré",
+          message: 'refreshToken expiré',
         });
         return;
       }

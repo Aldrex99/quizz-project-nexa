@@ -1,5 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
-import { useUser } from "@/hooks/useUser";
+import { Link, useLocation } from 'react-router-dom';
+import { useUser } from '@/hooks/useUser';
 import {
   Disclosure,
   DisclosureButton,
@@ -11,61 +11,61 @@ import {
   Popover,
   PopoverButton,
   PopoverPanel,
-} from "@headlessui/react";
+} from '@headlessui/react';
 import {
   Bars3Icon,
   ChevronDownIcon,
   XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { AcademicCapIcon } from "@heroicons/react/24/solid";
-import { classNames } from "@utils/style";
-import ThemeSwitch from "@/components/buttons/ThemeSwitch";
+} from '@heroicons/react/24/outline';
+import { AcademicCapIcon } from '@heroicons/react/24/solid';
+import { classNames } from '@utils/style';
+import ThemeSwitch from '@/components/buttons/ThemeSwitch';
 
 const navigation = [
   {
-    name: "Accueil",
-    to: "/home",
-    authorizedRole: ["user", "moderator", "admin"],
+    name: 'Accueil',
+    to: '/home',
+    authorizedRole: ['user', 'moderator', 'admin'],
     current: false,
   },
   {
-    name: "Vos quiz",
-    to: "/my-quizzes",
-    authorizedRole: ["user", "moderator", "admin"],
+    name: 'Vos quiz',
+    to: '/my-quizzes',
+    authorizedRole: ['user', 'moderator', 'admin'],
     current: false,
   },
 ];
 
 const staffNavigation = [
   {
-    name: "Signalements",
-    to: "/reports",
-    authorizedRole: ["moderator", "admin"],
+    name: 'Signalements',
+    to: '/reports',
+    authorizedRole: ['moderator', 'admin'],
     current: false,
   },
   {
-    name: "Commentaires",
-    to: "/comments",
-    authorizedRole: ["moderator", "admin"],
+    name: 'Commentaires',
+    to: '/comments',
+    authorizedRole: ['moderator', 'admin'],
     current: false,
   },
   {
-    name: "Utilisateurs",
-    to: "/users",
-    authorizedRole: ["moderator", "admin"],
+    name: 'Utilisateurs',
+    to: '/users',
+    authorizedRole: ['moderator', 'admin'],
     current: false,
   },
   {
-    name: "Statistiques",
-    to: "/stats",
-    authorizedRole: ["admin"],
+    name: 'Statistiques',
+    to: '/stats',
+    authorizedRole: ['admin'],
     current: false,
   },
 ];
 
 const userNavigation = [
-  { name: "Votre profil", to: "/me" },
-  { name: "Déconnexion", to: "/logout" },
+  { name: 'Votre profil', to: '/me' },
+  { name: 'Déconnexion', to: '/logout' },
 ];
 
 export default function UserLayout({
@@ -105,17 +105,17 @@ export default function UserLayout({
                           to={item.to}
                           className={classNames(
                             item.current
-                              ? "bg-themedBg text-themedText"
-                              : "text-themedText hover:text-primary",
-                            "rounded-md px-3 py-2 text-sm font-medium text-themedText",
+                              ? 'bg-themedBg text-themedText'
+                              : 'text-themedText hover:text-primary',
+                            'rounded-md px-3 py-2 text-sm font-medium text-themedText'
                           )}
-                          aria-current={item.current ? "page" : undefined}
+                          aria-current={item.current ? 'page' : undefined}
                         >
                           {item.name}
                         </Link>
-                      ),
+                      )
                   )}
-                  {user?.role === "moderator" || user?.role === "admin" ? (
+                  {user?.role === 'moderator' || user?.role === 'admin' ? (
                     <Popover className="relative px-3 py-2">
                       <PopoverButton className="inline-flex items-center gap-x-1 text-sm/6 text-themedText hover:text-primary focus:outline-none focus:ring-0 focus:ring-offset-themedBg">
                         <span>Staff</span>
@@ -136,9 +136,9 @@ export default function UserLayout({
                               to={item.to}
                               className={classNames(
                                 item.current
-                                  ? "text-primary"
-                                  : "text-themedText hover:text-primary",
-                                "block py-1",
+                                  ? 'text-primary'
+                                  : 'text-themedText hover:text-primary',
+                                'block py-1'
                               )}
                             >
                               {item.name}
@@ -215,17 +215,17 @@ export default function UserLayout({
                     to={item.to}
                     className={classNames(
                       item.current
-                        ? "bg-themedBg text-themedText"
-                        : "text-themedText hover:text-primary",
-                      "block rounded-md px-3 py-2 text-base font-medium",
+                        ? 'bg-themedBg text-themedText'
+                        : 'text-themedText hover:text-primary',
+                      'block rounded-md px-3 py-2 text-base font-medium'
                     )}
-                    aria-current={item.current ? "page" : undefined}
+                    aria-current={item.current ? 'page' : undefined}
                   >
                     {item.name}
                   </Link>
-                ),
+                )
             )}
-            {user?.role === "moderator" || user?.role === "admin"
+            {user?.role === 'moderator' || user?.role === 'admin'
               ? staffNavigation.map(
                   (item) =>
                     item.authorizedRole?.includes(user!.role) && (
@@ -234,15 +234,15 @@ export default function UserLayout({
                         to={item.to}
                         className={classNames(
                           item.current
-                            ? "bg-themedBg text-themedText"
-                            : "text-themedText hover:text-primary",
-                          "block rounded-md px-3 py-2 text-base font-medium",
+                            ? 'bg-themedBg text-themedText'
+                            : 'text-themedText hover:text-primary',
+                          'block rounded-md px-3 py-2 text-base font-medium'
                         )}
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
                       </Link>
-                    ),
+                    )
                 )
               : null}
           </div>

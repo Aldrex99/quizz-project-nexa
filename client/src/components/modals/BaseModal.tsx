@@ -1,6 +1,6 @@
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { useContext } from "react";
-import { ThemeContext } from "@contexts/ThemeContext";
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
+import { useContext } from 'react';
+import { ThemeContext } from '@contexts/ThemeContext';
 
 type TBaseModalProps = {
   children: React.ReactNode;

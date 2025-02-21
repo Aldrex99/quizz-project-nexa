@@ -1,6 +1,6 @@
-import { classNames } from "@/utils/style";
-import { CheckCircleIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { classNames } from '@/utils/style';
+import { CheckCircleIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { useState } from 'react';
 
 type TMultiSelectProps = {
   text: string;
@@ -36,8 +36,8 @@ export default function MultiSelect({
       <div className="relative">
         <button
           className={classNames(
-            isOpen ? "rounded-t-md border-b-0" : "rounded-md",
-            "flex w-full items-center justify-between border border-themedBorder bg-themedFg p-2",
+            isOpen ? 'rounded-t-md border-b-0' : 'rounded-md',
+            'flex w-full items-center justify-between border border-themedBorder bg-themedFg p-2'
           )}
           onClick={() => setIsOpen((prev) => !prev)}
         >
@@ -46,7 +46,7 @@ export default function MultiSelect({
               ? selectedOptions
                   .map((option) => options.find((o) => o.key === option)?.value)
                   .sort()
-                  .join(", ")
+                  .join(', ')
               : text}
           </span>
           <ChevronDownIcon className="h-6 w-6 text-themedText" />
@@ -58,8 +58,8 @@ export default function MultiSelect({
                 key={option.key}
                 className={classNames(
                   option.key === options[options.length - 1].key &&
-                    "rounded-b-md",
-                  "flex w-full items-center space-x-2 p-2 text-themedText hover:bg-themedBg",
+                    'rounded-b-md',
+                  'flex w-full items-center space-x-2 p-2 text-themedText hover:bg-themedBg'
                 )}
                 onClick={() => handleSelect(option.key)}
               >

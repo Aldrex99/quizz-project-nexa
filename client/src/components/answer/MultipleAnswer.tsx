@@ -1,6 +1,6 @@
-import { IAnswer } from "@/types/answer";
-import { IQuestion } from "@/types/quizz";
-import { Checkbox } from "@headlessui/react";
+import { IAnswer } from '@/types/answer';
+import { IQuestion } from '@/types/quizz';
+import { Checkbox } from '@headlessui/react';
 
 type TMultipleAnswerProps = {
   question: IQuestion;
@@ -16,7 +16,7 @@ export default function MultipleAnswer({
   const handleCheckboxChange = (checked: boolean, value: string) => {
     const newAnswers = [...answers];
     const answerIndex = newAnswers.findIndex(
-      (a) => a.question_id === question._id,
+      (a) => a.question_id === question._id
     );
 
     if (answerIndex === -1) {
@@ -29,7 +29,7 @@ export default function MultipleAnswer({
         newAnswers[answerIndex].answer.push(value);
       } else {
         newAnswers[answerIndex].answer = newAnswers[answerIndex].answer.filter(
-          (a) => a !== value,
+          (a) => a !== value
         );
       }
     }
@@ -44,7 +44,7 @@ export default function MultipleAnswer({
           <Checkbox
             checked={answers.some(
               (a) =>
-                a.question_id === question._id && a.answer.includes(option.key),
+                a.question_id === question._id && a.answer.includes(option.key)
             )}
             onChange={(checked) => handleCheckboxChange(checked, option.key)}
             value={option.key}

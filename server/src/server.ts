@@ -3,10 +3,10 @@
  */
 
 /* Importing modules */
-import * as http from "http";
-import * as app from "./app";
-import * as dotenv from "dotenv";
-import mongoose from "mongoose";
+import * as http from 'http';
+import * as app from './app';
+import * as dotenv from 'dotenv';
+import mongoose from 'mongoose';
 
 dotenv.config();
 
@@ -15,9 +15,9 @@ const server: http.Server = http.createServer(app.default);
 
 /* Connecting to the database */
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/test-db")
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Could not connect to MongoDB", err));
+  .connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/test-db')
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('Could not connect to MongoDB', err));
 
 /* Setting up the server */
 const port: number = Number(process.env.PORT) || 8001;

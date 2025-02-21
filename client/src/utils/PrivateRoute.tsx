@@ -1,6 +1,6 @@
-import Loading from "@/pages/common/Loading";
-import { Navigate, Outlet } from "react-router-dom";
-import { useUser } from "@hooks/useUser";
+import Loading from '@/pages/common/Loading';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useUser } from '@hooks/useUser';
 
 export const PrivateRoute = ({ acceptedRole }: { acceptedRole: string[] }) => {
   const { user, isAuthenticated, userIsLoaded } = useUser();

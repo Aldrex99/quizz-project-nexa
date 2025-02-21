@@ -1,8 +1,8 @@
 // UserProvider.tsx
-import React, { useState, useEffect } from "react";
-import { fetcher } from "@utils/fetch";
-import { UserContext, IUserContextValue } from "@contexts/UserContext";
-import { IUser } from "@/types/user";
+import React, { useState, useEffect } from 'react';
+import { fetcher } from '@utils/fetch';
+import { UserContext, IUserContextValue } from '@contexts/UserContext';
+import { IUser } from '@/types/user';
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -12,7 +12,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const getMe = async () => {
     setUserIsLoaded(false);
     try {
-      const response = await fetcher("/user/me");
+      const response = await fetcher('/user/me');
 
       if (response) {
         const data: IUser = {
@@ -27,7 +27,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
       setIsAuthenticated(true);
     } catch (error) {
-      console.log("Failed to get user", error);
+      console.log('Failed to get user', error);
     } finally {
       setUserIsLoaded(true);
     }
@@ -35,13 +35,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = async (): Promise<boolean> => {
     try {
-      await fetcher("/auth/logout");
+      await fetcher('/auth/logout');
       setUser(null);
       setIsAuthenticated(false);
 
       return true;
     } catch (error) {
-      console.log("Failed to logout", error);
+      console.log('Failed to logout', error);
       return false;
     }
   };

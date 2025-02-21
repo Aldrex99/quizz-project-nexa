@@ -1,24 +1,24 @@
-import { useState } from "react";
-import { fetcher } from "@/utils/fetch";
-import TextInput from "@/components/inputs/TextInput";
-import Button from "@/components/buttons/Button";
-import { toast } from "react-toastify";
+import { useState } from 'react';
+import { fetcher } from '@/utils/fetch';
+import TextInput from '@/components/inputs/TextInput';
+import Button from '@/components/buttons/Button';
+import { toast } from 'react-toastify';
 
 export default function Stats() {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState('');
 
   const handleSubmitCategory = async (
-    e: React.MouseEvent<HTMLButtonElement>,
+    e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
 
     try {
-      await fetcher("/category/create", {
-        method: "POST",
+      await fetcher('/category/create', {
+        method: 'POST',
         body: JSON.stringify({ name: category }),
       });
 
-      toast.success("Catégorie ajoutée", {
+      toast.success('Catégorie ajoutée', {
         autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -26,10 +26,10 @@ export default function Stats() {
         draggable: true,
         progress: undefined,
         closeButton: false,
-        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+        className: 'bg-themedFg text-themedText shadow-theme top-14 sm:right-1',
       });
 
-      setCategory("");
+      setCategory('');
     } catch (error) {
       toast.error((error as Error).message ?? "Une erreur s'est produite", {
         hideProgressBar: false,
@@ -38,7 +38,7 @@ export default function Stats() {
         draggable: true,
         progress: undefined,
         closeButton: false,
-        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+        className: 'bg-themedFg text-themedText shadow-theme top-14 sm:right-1',
       });
     }
   };

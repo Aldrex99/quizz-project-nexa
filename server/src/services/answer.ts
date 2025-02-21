@@ -1,6 +1,6 @@
-import { IQuizz } from "src/models/quizz";
-import { IAnswerDocument, IAnswer } from "../models/answer";
-import { AnswerRepository } from "../repositories/answer";
+import { IQuizz } from 'src/models/quizz';
+import { IAnswerDocument, IAnswer } from '../models/answer';
+import { AnswerRepository } from '../repositories/answer';
 
 export const answerFormatter = (answer: IAnswerDocument): IAnswer => {
   const answerObject = answer.toObject();
@@ -21,19 +21,17 @@ export const answersFormatter = (answers: IAnswerDocument[]) => {
 };
 
 export const verifyAnswers = async (
-  answers: IAnswer["answers"],
-  questions: IQuizz["questions"]
+  answers: IAnswer['answers'],
+  questions: IQuizz['questions'],
 ) => {
   let totalScore = 0;
   let score = 0;
 
   answers.map((answer) => {
-    const question = questions.find(
-      (q) => q._id?.toString() === answer.question_id
-    );
+    const question = questions.find((q) => q._id?.toString() === answer.question_id);
 
     if (!question) {
-      throw new Error("Question not found");
+      throw new Error('Question not found');
     }
 
     totalScore += question.points;
@@ -69,8 +67,8 @@ export const getAnswers = async (
   filter: Record<string, any>,
   limit: number,
   page: number,
-  sortBy: string = "createdAt",
-  sortOrder: "asc" | "desc" = "desc"
+  sortBy: string = 'createdAt',
+  sortOrder: 'asc' | 'desc' = 'desc',
 ) => {
   const skip = limit * (page - 1);
 
@@ -79,7 +77,7 @@ export const getAnswers = async (
     skip,
     limit,
     sortBy,
-    sortOrder
+    sortOrder,
   );
 
   return {
