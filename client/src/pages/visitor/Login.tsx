@@ -69,12 +69,12 @@ export default function Login() {
               setPassword(e.target.value)
             }
           />
-          <Link
+          {/* <Link
             to="/forgot-password"
             className="pt-1 text-sm text-primary hover:text-primary-gradient"
           >
             Mot de passe oublié ?
-          </Link>
+          </Link> */}
         </div>
         {error && (
           <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">

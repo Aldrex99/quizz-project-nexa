@@ -37,11 +37,11 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
+              {/* <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route
                 path="/reset-password/:token"
                 element={<ResetPassword />}
-              />
+              /> */}
             </Route>
             <Route
               element={
@@ -78,6 +78,11 @@ function App() {
               <Route
                 path="/stats"
                 element={<UserRouteWrapper children={<Stats />} />}
+              />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route
+                path="/reset-password/:token"
+                element={<ResetPassword />}
               />
             </Route>
             <Route path="*" element={<NotFound />} />
