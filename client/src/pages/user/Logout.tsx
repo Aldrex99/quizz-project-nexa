@@ -1,13 +1,13 @@
-import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useUser } from "@/hooks/useUser";
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '@/hooks/useUser';
 
 export default function Logout() {
   const { logout } = useUser();
   const navigate = useNavigate();
 
-  useDocumentTitle("Se déconnecter");
+  useDocumentTitle('Se déconnecter');
 
   useEffect(() => {
     const logoutUser = async () => {
@@ -15,7 +15,7 @@ export default function Logout() {
 
       if (!isLogout) return;
 
-      navigate("/");
+      navigate('/');
     };
 
     logoutUser();

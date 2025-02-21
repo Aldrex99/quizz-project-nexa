@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
-import { useUser } from "@/hooks/useUser";
-import { Link, useNavigate } from "react-router-dom";
-import { fetcher } from "@utils/fetch";
-import TextInput from "@components/inputs/TextInput";
-import Button from "@components/buttons/Button";
-import useDocumentTitle from "@/hooks/useDocumentTitle";
+import { useEffect, useState } from 'react';
+import { useUser } from '@/hooks/useUser';
+import { Link, useNavigate } from 'react-router-dom';
+import { fetcher } from '@utils/fetch';
+import TextInput from '@components/inputs/TextInput';
+import Button from '@components/buttons/Button';
+import useDocumentTitle from '@/hooks/useDocumentTitle';
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  useDocumentTitle("Mot de passe oublié");
+  useDocumentTitle('Mot de passe oublié');
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/home");
+      navigate('/home');
     }
   }, [isAuthenticated, navigate]);
 
@@ -26,18 +26,18 @@ export default function ForgotPassword() {
     e.preventDefault();
     setLoading(true);
     if (!email) {
-      setError("Veuillez remplir tous les champs");
+      setError('Veuillez remplir tous les champs');
       return;
     }
 
     try {
       await fetcher(
-        "/auth/forgot-password",
+        '/auth/forgot-password',
         {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({ email }),
         },
-        false,
+        false
       );
     } catch (error) {
       setError((error as Error).message ?? "Une erreur s'est produite");
@@ -67,7 +67,7 @@ export default function ForgotPassword() {
           className="w-full"
           variant="primary"
         >
-          {loading ? "Chargement..." : "Envoyer"}
+          {loading ? 'Chargement...' : 'Envoyer'}
         </Button>
         {error && (
           <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">

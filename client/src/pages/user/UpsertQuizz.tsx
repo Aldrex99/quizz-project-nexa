@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { fetcher } from "@/utils/fetch";
-import { useNavigate, useParams } from "react-router-dom";
-import Button from "@/components/buttons/Button";
-import TextInputLength from "@/components/inputs/TextInputLength";
-import TextAreaLength from "@/components/inputs/TextAreaLength";
-import MultiSelect from "@/components/inputs/MultiSelect";
-import FileZone from "@/components/inputs/FileZone";
-import QuizzQuestions from "@/components/quizz/QuizzQuestions";
-import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { toast } from "react-toastify";
-import { useUser } from "@/hooks/useUser";
+import { useState, useEffect } from 'react';
+import { fetcher } from '@/utils/fetch';
+import { useNavigate, useParams } from 'react-router-dom';
+import Button from '@/components/buttons/Button';
+import TextInputLength from '@/components/inputs/TextInputLength';
+import TextAreaLength from '@/components/inputs/TextAreaLength';
+import MultiSelect from '@/components/inputs/MultiSelect';
+import FileZone from '@/components/inputs/FileZone';
+import QuizzQuestions from '@/components/quizz/QuizzQuestions';
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+import { toast } from 'react-toastify';
+import { useUser } from '@/hooks/useUser';
 
 export type TQuestion = {
   text: string;
@@ -32,23 +32,23 @@ export default function UpsertQuizz() {
   const [availableCategories, setAvailableCategories] = useState<
     TAvailableCategory[]
   >([]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
   const [questions, setQuestions] = useState<TQuestion[]>([
     {
-      text: "",
+      text: '',
       points: 1,
       isMultipleChoice: false,
       options: [
         {
-          key: "A",
-          value: "",
+          key: 'A',
+          value: '',
         },
         {
-          key: "B",
-          value: "",
+          key: 'B',
+          value: '',
         },
       ],
       correctAnswer: [],
@@ -56,7 +56,7 @@ export default function UpsertQuizz() {
   ]);
   const [quizzToEdit, setQuizzToEdit] = useState<boolean>(false);
 
-  useDocumentTitle("Créer un quizz");
+  useDocumentTitle('Créer un quizz');
 
   const { quizzId } = useParams<{ quizzId: string }>();
   const navigate = useNavigate();
@@ -64,12 +64,12 @@ export default function UpsertQuizz() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const data = await fetcher("/category/all?limit=100");
+        const data = await fetcher('/category/all?limit=100');
         const formattedData = data.categories?.map(
           (category: { _id: string; name: string }) => ({
             key: category._id,
             value: category.name,
-          }),
+          })
         );
         setAvailableCategories(formattedData);
       } catch (error) {
@@ -81,7 +81,7 @@ export default function UpsertQuizz() {
           progress: undefined,
           closeButton: false,
           className:
-            "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+            'bg-themedFg text-themedText shadow-theme top-14 sm:right-1',
         });
       }
     };
@@ -111,7 +111,7 @@ export default function UpsertQuizz() {
             progress: undefined,
             closeButton: false,
             className:
-              "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+              'bg-themedFg text-themedText shadow-theme top-14 sm:right-1',
           });
         }
       };
@@ -130,17 +130,17 @@ export default function UpsertQuizz() {
     setQuestions([
       ...questions,
       {
-        text: "",
+        text: '',
         points: 1,
         isMultipleChoice: false,
         options: [
           {
-            key: "A",
-            value: "",
+            key: 'A',
+            value: '',
           },
           {
-            key: "B",
-            value: "",
+            key: 'B',
+            value: '',
           },
         ],
         correctAnswer: [],
@@ -150,11 +150,11 @@ export default function UpsertQuizz() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const postUrl = quizzToEdit ? `/quizz/update/${quizzId}` : "/quizz/create";
+    const postUrl = quizzToEdit ? `/quizz/update/${quizzId}` : '/quizz/create';
 
     try {
       const data = await fetcher(postUrl, {
-        method: quizzToEdit ? "PUT" : "POST",
+        method: quizzToEdit ? 'PUT' : 'POST',
         body: JSON.stringify({
           title,
           description,
@@ -165,18 +165,18 @@ export default function UpsertQuizz() {
 
       const formData = new FormData();
       if (selectedFile) {
-        formData.append("quizz", selectedFile!);
+        formData.append('quizz', selectedFile!);
 
         await fetcher(`/quizz/upload/${quizzToEdit ? quizzId : data.quizzId}`, {
-          method: "POST",
+          method: 'POST',
           body: formData,
           headers: {
-            Accept: "application/json",
+            Accept: 'application/json',
           },
         });
       }
 
-      toast.success(quizzToEdit ? "Quizz modifié" : "Quizz créé", {
+      toast.success(quizzToEdit ? 'Quizz modifié' : 'Quizz créé', {
         autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -184,7 +184,7 @@ export default function UpsertQuizz() {
         draggable: true,
         progress: undefined,
         closeButton: false,
-        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+        className: 'bg-themedFg text-themedText shadow-theme top-14 sm:right-1',
       });
     } catch (error) {
       toast.error((error as Error).message ?? "Une erreur s'est produite", {
@@ -194,7 +194,7 @@ export default function UpsertQuizz() {
         draggable: true,
         progress: undefined,
         closeButton: false,
-        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+        className: 'bg-themedFg text-themedText shadow-theme top-14 sm:right-1',
       });
     }
   };
@@ -258,7 +258,7 @@ export default function UpsertQuizz() {
       </section>
       <section id="upsert-quizz-submit" className="flex flex-col space-y-4">
         <Button type="submit" onClick={handleSubmit} className="w-full">
-          {quizzToEdit ? "Modifier le quizz" : "Créer le quizz"}
+          {quizzToEdit ? 'Modifier le quizz' : 'Créer le quizz'}
         </Button>
       </section>
     </div>

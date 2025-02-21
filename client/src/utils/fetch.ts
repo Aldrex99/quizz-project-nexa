@@ -1,20 +1,20 @@
 export const fetcher = async (
   url: string,
   options: RequestInit = {
-    method: "GET",
+    method: 'GET',
   },
-  needAuth = true,
+  needAuth = true
 ) => {
   const API_URL =
-    import.meta.env.MODE === "development"
+    import.meta.env.MODE === 'development'
       ? import.meta.env.VITE_API_URL
-      : "/api";
+      : '/api';
 
   const queryOptions: RequestInit = {
-    credentials: needAuth ? "include" : "omit",
+    credentials: needAuth ? 'include' : 'omit',
     headers: {
       ...options.headers,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     ...options,
   };
@@ -31,14 +31,14 @@ export const fetcher = async (
     switch (json.code) {
       case 432: {
         const refreshResponse = await fetch(`${API_URL}/auth/refresh-token`, {
-          method: "GET",
-          credentials: "include",
+          method: 'GET',
+          credentials: 'include',
         });
 
         if (!refreshResponse.ok) {
           const refreshJson = await refreshResponse.json();
           if (refreshJson.code === 433) {
-            throw new Error("Refresh token is invalid");
+            throw new Error('Refresh token is invalid');
           } else if (!refreshResponse.ok) {
             throw new Error(refreshJson);
           }
@@ -55,7 +55,7 @@ export const fetcher = async (
       case 422: {
         const errorMessage = json.errors
           .map((error: { msg: string }) => error.msg)
-          .join("\n");
+          .join('\n');
         throw new Error(errorMessage);
       }
       default: {

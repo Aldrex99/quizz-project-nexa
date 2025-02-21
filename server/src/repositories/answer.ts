@@ -1,5 +1,5 @@
-import { SortOrder } from "mongoose";
-import Answer, { IAnswerDocument } from "../models/answer";
+import { SortOrder } from 'mongoose';
+import Answer, { IAnswerDocument } from '../models/answer';
 
 export const AnswerRepository = {
   async create(data: Partial<IAnswerDocument>) {
@@ -7,15 +7,15 @@ export const AnswerRepository = {
       const answer = new Answer(data);
       const newAnswer = await answer.save();
       await newAnswer.populate({
-        path: "user_id",
-        select: "username",
-        model: "User",
+        path: 'user_id',
+        select: 'username',
+        model: 'User',
       });
 
       await newAnswer.populate({
-        path: "quizz_id",
-        select: "title imageLink",
-        model: "Quizz",
+        path: 'quizz_id',
+        select: 'title imageLink',
+        model: 'Quizz',
       });
 
       return newAnswer;
@@ -29,21 +29,21 @@ export const AnswerRepository = {
     skip: number,
     limit: number,
     sortBy: string,
-    sortOrder: SortOrder
+    sortOrder: SortOrder,
   ) {
     const answers = await Answer.find(filter, { __v: 0 })
       .limit(limit)
       .skip(skip)
       .sort({ [sortBy]: sortOrder })
       .populate({
-        path: "user_id",
-        select: "username",
-        model: "User",
+        path: 'user_id',
+        select: 'username',
+        model: 'User',
       })
       .populate({
-        path: "quizz_id",
-        select: "title imageLink",
-        model: "Quizz",
+        path: 'quizz_id',
+        select: 'title imageLink',
+        model: 'Quizz',
       });
 
     const total = await Answer.countDocuments(filter);
@@ -54,14 +54,14 @@ export const AnswerRepository = {
   async findById(_id: string) {
     return Answer.findById(_id, { __v: 0 })
       .populate({
-        path: "user_id",
-        select: "username",
-        model: "User",
+        path: 'user_id',
+        select: 'username',
+        model: 'User',
       })
       .populate({
-        path: "quizz_id",
-        select: "title imageLink",
-        model: "Quizz",
+        path: 'quizz_id',
+        select: 'title imageLink',
+        model: 'Quizz',
       });
   },
 };

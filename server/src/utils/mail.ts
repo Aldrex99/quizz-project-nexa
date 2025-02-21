@@ -1,5 +1,5 @@
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -14,12 +14,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Fonction pour envoyer un email
-export const sendEmail = async (
-  to: string,
-  subject: string,
-  text: string,
-  html?: string
-) => {
+export const sendEmail = async (to: string, subject: string, text: string, html?: string) => {
   try {
     const mailOptions = {
       from: process.env.EMAIL_NO_REPLY, // Expéditeur

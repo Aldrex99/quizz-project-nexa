@@ -1,8 +1,8 @@
-import Button from "@/components/buttons/Button";
-import CustomSwitch from "@/components/buttons/CustomSwitch";
-import { TQuestion } from "@/pages/user/UpsertQuizz";
-import TextInputLength from "@/components/inputs/TextInputLength";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import Button from '@/components/buttons/Button';
+import CustomSwitch from '@/components/buttons/CustomSwitch';
+import { TQuestion } from '@/pages/user/UpsertQuizz';
+import TextInputLength from '@/components/inputs/TextInputLength';
+import { TrashIcon } from '@heroicons/react/24/outline';
 
 type TQuizzQuestionsProps = {
   question: TQuestion;
@@ -11,7 +11,7 @@ type TQuizzQuestionsProps = {
   index: number;
 };
 
-const optionsKey = ["A", "B", "C", "D", "E", "F"];
+const optionsKey = ['A', 'B', 'C', 'D', 'E', 'F'];
 
 export default function QuizzQuestionsOptions({
   question,
@@ -28,7 +28,7 @@ export default function QuizzQuestionsOptions({
           ...question.options,
           {
             key: optionsKey[question.options.length],
-            value: "",
+            value: '',
           },
         ],
       },
@@ -49,7 +49,7 @@ export default function QuizzQuestionsOptions({
           key: optionsKey[i],
         })),
         correctAnswer: question.correctAnswer.filter(
-          (key) => key !== question.options[optionIndex].key,
+          (key) => key !== question.options[optionIndex].key
         ),
       },
       ...questions.slice(index + 1),
@@ -70,7 +70,7 @@ export default function QuizzQuestionsOptions({
     }
 
     const correctAnswerIndex = question.correctAnswer.indexOf(
-      question.options[optionIndex].key,
+      question.options[optionIndex].key
     );
 
     if (correctAnswerIndex === -1) {

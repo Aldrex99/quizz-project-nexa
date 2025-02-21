@@ -1,26 +1,26 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { UserProvider } from "@contexts/UserProvider";
-import { PrivateRoute } from "@utils/PrivateRoute";
-import { ThemeContext } from "@contexts/ThemeContext";
-import { useContext } from "react";
-import { ToastContainer } from "react-toastify";
-import UserRouteWrapper from "@layouts/wrappers/UserRouteWrapper";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { UserProvider } from '@contexts/UserProvider';
+import { PrivateRoute } from '@utils/PrivateRoute';
+import { ThemeContext } from '@contexts/ThemeContext';
+import { useContext } from 'react';
+import { ToastContainer } from 'react-toastify';
+import UserRouteWrapper from '@layouts/wrappers/UserRouteWrapper';
 
-import Login from "@/pages/visitor/Login";
-import Register from "@/pages/visitor/Register";
-import ForgotPassword from "@/pages/visitor/ForgotPassword";
-import ResetPassword from "@/pages/visitor/ResetPassword";
+import Login from '@/pages/visitor/Login';
+import Register from '@/pages/visitor/Register';
+import ForgotPassword from '@/pages/visitor/ForgotPassword';
+import ResetPassword from '@/pages/visitor/ResetPassword';
 
-import NotFound from "@/pages/common/NotFound";
+import NotFound from '@/pages/common/NotFound';
 
-import Logout from "@/pages/user/Logout";
-import Home from "@/pages/user/Home";
-import Me from "@/pages/user/Me";
-import UpsertQuizz from "@/pages/user/UpsertQuizz";
-import UserQuizz from "@/pages/user/UserQuizz";
-import AnswerQuizz from "@/pages/user/AnswerQuizz";
+import Logout from '@/pages/user/Logout';
+import Home from '@/pages/user/Home';
+import Me from '@/pages/user/Me';
+import UpsertQuizz from '@/pages/user/UpsertQuizz';
+import UserQuizz from '@/pages/user/UserQuizz';
+import AnswerQuizz from '@/pages/user/AnswerQuizz';
 
-import Stats from "@/pages/admin/Stats";
+import Stats from '@/pages/admin/Stats';
 
 function App() {
   const { theme, themeColor } = useContext(ThemeContext)!;
@@ -45,7 +45,7 @@ function App() {
             </Route>
             <Route
               element={
-                <PrivateRoute acceptedRole={["user", "moderator", "admin"]} />
+                <PrivateRoute acceptedRole={['user', 'moderator', 'admin']} />
               }
             >
               <Route
@@ -74,7 +74,7 @@ function App() {
               />
               <Route path="/logout" element={<Logout />} />
             </Route>
-            <Route element={<PrivateRoute acceptedRole={["admin"]} />}>
+            <Route element={<PrivateRoute acceptedRole={['admin']} />}>
               <Route
                 path="/stats"
                 element={<UserRouteWrapper children={<Stats />} />}

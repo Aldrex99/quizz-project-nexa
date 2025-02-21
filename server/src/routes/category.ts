@@ -1,31 +1,23 @@
-import { Router } from "express";
-import { checkRole } from "../middlewares/role";
-import * as categoryValidator from "../validators/category";
-import * as categoryController from "../controllers/category";
+import { Router } from 'express';
+import { checkRole } from '../middlewares/role';
+import * as categoryValidator from '../validators/category';
+import * as categoryController from '../controllers/category';
 
 const router = Router();
 
 router.post(
-  "/create",
-  checkRole(["moderator", "admin"]),
+  '/create',
+  checkRole(['moderator', 'admin']),
   categoryValidator.create,
-  categoryController.createCategory
+  categoryController.createCategory,
 );
-router.get(
-  "/all",
-  categoryValidator.getCategories,
-  categoryController.getCategories
-);
-router.get(
-  "/:id",
-  categoryValidator.getById,
-  categoryController.getCategoryById
-);
+router.get('/all', categoryValidator.getCategories, categoryController.getCategories);
+router.get('/:id', categoryValidator.getById, categoryController.getCategoryById);
 router.delete(
-  "/:id",
-  checkRole(["moderator", "admin"]),
+  '/:id',
+  checkRole(['moderator', 'admin']),
   categoryValidator.deleteById,
-  categoryController.deleteCategoryById
+  categoryController.deleteCategoryById,
 );
 
 export default router;

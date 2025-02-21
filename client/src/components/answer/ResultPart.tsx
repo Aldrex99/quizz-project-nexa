@@ -1,15 +1,15 @@
-import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { IResult } from "@/types/answer";
-import { IQuizz } from "@/types/quizz";
-import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+import { IResult } from '@/types/answer';
+import { IQuizz } from '@/types/quizz';
+import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 type TResultPartProps = {
   result: IResult;
-  questions: IQuizz["questions"];
+  questions: IQuizz['questions'];
 };
 
 export default function ResultPart({ result, questions }: TResultPartProps) {
-  useDocumentTitle("Résultat");
+  useDocumentTitle('Résultat');
   return (
     <div className="space-y-4">
       <h1 className="text-center text-3xl font-bold text-primary">
@@ -28,7 +28,7 @@ export default function ResultPart({ result, questions }: TResultPartProps) {
                 <h3 className="text-lg font-semibold text-themedText">
                   {
                     questions!.find(
-                      (question) => question._id === answer.question_id,
+                      (question) => question._id === answer.question_id
                     )?.text
                   }
                 </h3>
@@ -47,26 +47,26 @@ export default function ResultPart({ result, questions }: TResultPartProps) {
                       className={`flex items-center space-x-2 rounded-md px-4 py-2 ${
                         answer.correctAnswer.includes(option.key) &&
                         answer.answer.includes(option.key)
-                          ? "bg-green-200"
-                          : ""
+                          ? 'bg-green-200'
+                          : ''
                       } ${
                         answer.correctAnswer.includes(option.key) &&
                         !answer.answer.includes(option.key)
-                          ? "bg-red-200"
-                          : ""
+                          ? 'bg-red-200'
+                          : ''
                       }`}
                     >
                       <p
                         className={`${
                           answer.correctAnswer.includes(option.key) &&
                           answer.answer.includes(option.key)
-                            ? "text-black"
-                            : "text-themedText"
+                            ? 'text-black'
+                            : 'text-themedText'
                         } ${
                           answer.correctAnswer.includes(option.key) &&
                           !answer.answer.includes(option.key)
-                            ? "text-black"
-                            : "text-themedText"
+                            ? 'text-black'
+                            : 'text-themedText'
                         } font-semibold`}
                       >
                         {option.value}

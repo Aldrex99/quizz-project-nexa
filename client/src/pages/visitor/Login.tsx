@@ -1,43 +1,43 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { fetcher } from "@utils/fetch";
-import { useUser } from "@/hooks/useUser";
-import TextInput from "@components/inputs/TextInput";
-import Button from "@components/buttons/Button";
-import ButtonLink from "@/components/buttons/ButtonLink";
-import useDocumentTitle from "@/hooks/useDocumentTitle";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { fetcher } from '@utils/fetch';
+import { useUser } from '@/hooks/useUser';
+import TextInput from '@components/inputs/TextInput';
+import Button from '@components/buttons/Button';
+import ButtonLink from '@/components/buttons/ButtonLink';
+import useDocumentTitle from '@/hooks/useDocumentTitle';
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const { getMe, isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  useDocumentTitle("Se connecter");
+  useDocumentTitle('Se connecter');
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/home");
+      navigate('/home');
     }
   }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (!email || !password) {
-      setError("Veuillez remplir tous les champs");
+      setError('Veuillez remplir tous les champs');
       return;
     }
 
     try {
-      await fetcher("/auth/login", {
-        method: "POST",
+      await fetcher('/auth/login', {
+        method: 'POST',
         body: JSON.stringify({ email, password }),
       });
 
       await getMe();
 
-      navigate("/home");
+      navigate('/home');
     } catch (error) {
       setError((error as Error).message ?? "Une erreur s'est produite");
     }

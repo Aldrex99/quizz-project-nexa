@@ -1,12 +1,12 @@
-import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { useState, useContext } from "react";
-import { useUser } from "@/hooks/useUser";
-import Button from "@/components/buttons/Button";
-import Avatar from "@/components/modals/user/Avatar";
-import EditProfile from "@/components/modals/user/EditProfile";
-import { ThemeContext } from "@/contexts/ThemeContext";
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+import { useState, useContext } from 'react';
+import { useUser } from '@/hooks/useUser';
+import Button from '@/components/buttons/Button';
+import Avatar from '@/components/modals/user/Avatar';
+import EditProfile from '@/components/modals/user/EditProfile';
+import { ThemeContext } from '@/contexts/ThemeContext';
 
-const themeColorList = ["purple", "red", "green", "orange", "turquoise"];
+const themeColorList = ['purple', 'red', 'green', 'orange', 'turquoise'];
 
 export default function Me() {
   const [showAvatarModal, setShowAvatarModal] = useState(false);
@@ -14,7 +14,7 @@ export default function Me() {
   const { user } = useUser();
   const { changeThemeColor } = useContext(ThemeContext)!;
 
-  useDocumentTitle("Mon profil");
+  useDocumentTitle('Mon profil');
 
   const handleThemeColorChange = (color: string) => {
     changeThemeColor(color);
@@ -69,7 +69,7 @@ export default function Me() {
         </div>
         <div className="flex gap-4 p-2">
           <button
-            onClick={() => handleThemeColorChange("")}
+            onClick={() => handleThemeColorChange('')}
             className={`h-10 w-10 rounded-full bg-[#3498db] hover:bg-[#3498dbbf]`}
           ></button>
           {themeColorList.map((color) => (

@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { fetcher } from "@/utils/fetch";
-import useDocumentTitle from "@/hooks/useDocumentTitle";
-import QuizzCard from "@/components/quizz/QuizzCard";
-import Loading from "../common/Loading";
-import { useUser } from "@/hooks/useUser";
-import { IQuizz } from "@/types/quizz";
+import { useEffect, useState } from 'react';
+import { fetcher } from '@/utils/fetch';
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+import QuizzCard from '@/components/quizz/QuizzCard';
+import Loading from '../common/Loading';
+import { useUser } from '@/hooks/useUser';
+import { IQuizz } from '@/types/quizz';
 
 export default function UserQuizz() {
   const { user } = useUser();
   const [quizz, setQuizz] = useState<IQuizz[]>([]);
   const [loading, setLoading] = useState(true);
-  useDocumentTitle("Vos quizz");
+  useDocumentTitle('Vos quizz');
 
   useEffect(() => {
     const fetchQuizz = async () => {

@@ -10,7 +10,9 @@
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write ."
   },
   "keywords": [],
   "author": "Alexandre",
@@ -43,6 +45,7 @@
     "@types/node": "^22.13.4",
     "@types/nodemailer": "^6.4.17",
     "nodemon": "^3.1.9",
+    "prettier": "^3.5.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.3"

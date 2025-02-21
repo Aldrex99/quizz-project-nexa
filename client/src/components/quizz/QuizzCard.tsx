@@ -1,6 +1,6 @@
-import { IQuizz } from "@/types/quizz";
-import { Link } from "react-router-dom";
-import ButtonLink from "../buttons/ButtonLink";
+import { IQuizz } from '@/types/quizz';
+import { Link } from 'react-router-dom';
+import ButtonLink from '../buttons/ButtonLink';
 
 type TQuizzCardProps = {
   quizz: IQuizz;
@@ -50,7 +50,7 @@ export default function QuizzCard({
         <p className="text-xs text-themedText">
           <span>Par</span>
           <span className="font-semibold text-primary">
-            {" "}
+            {' '}
             {quizz.author?.username}
           </span>
         </p>

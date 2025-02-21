@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useUser } from "@/hooks/useUser";
-import BaseModal from "@components/modals/BaseModal";
-import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
-import Button from "@/components/buttons/Button";
-import { DialogTitle } from "@headlessui/react";
-import { fetcher } from "@/utils/fetch";
-import { toast } from "react-toastify";
+import { useState } from 'react';
+import { useUser } from '@/hooks/useUser';
+import BaseModal from '@components/modals/BaseModal';
+import { CloudArrowUpIcon } from '@heroicons/react/24/outline';
+import Button from '@/components/buttons/Button';
+import { DialogTitle } from '@headlessui/react';
+import { fetcher } from '@/utils/fetch';
+import { toast } from 'react-toastify';
 
 type TAvatarProps = {
   open: boolean;
@@ -25,33 +25,33 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
   const handleUpload = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!selectedFile) {
-      toast.error("Veuillez sélectionner un fichier", {
+      toast.error('Veuillez sélectionner un fichier', {
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
         closeButton: false,
-        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+        className: 'bg-themedFg text-themedText shadow-theme top-14 sm:right-1',
       });
       return;
     }
 
     const formData = new FormData();
-    formData.append("avatar", selectedFile);
+    formData.append('avatar', selectedFile);
 
     try {
       await fetcher(`/user/avatar`, {
-        method: "POST",
+        method: 'POST',
         body: formData,
         headers: {
-          Accept: "application/json",
+          Accept: 'application/json',
         },
       });
 
       await getMe();
 
-      toast.success("Avatar changé", {
+      toast.success('Avatar changé', {
         autoClose: 4000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -59,7 +59,7 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
         draggable: true,
         progress: undefined,
         closeButton: false,
-        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+        className: 'bg-themedFg text-themedText shadow-theme top-14 sm:right-1',
       });
     } catch (error) {
       toast.error((error as Error).message ?? "Une erreur s'est produite", {
@@ -69,7 +69,7 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
         draggable: true,
         progress: undefined,
         closeButton: false,
-        className: "bg-themedFg text-themedText shadow-theme top-14 sm:right-1",
+        className: 'bg-themedFg text-themedText shadow-theme top-14 sm:right-1',
       });
     }
   };
@@ -87,7 +87,7 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
           <div className="flex w-full flex-col items-center justify-center space-y-2 object-cover">
             {selectedFile && (
               <p className="flex flex-col text-center text-lg text-themedText">
-                Mettre comme photo de profil :{" "}
+                Mettre comme photo de profil :{' '}
                 <span className="font-semibold text-primary">
                   {selectedFile?.name}
                 </span>

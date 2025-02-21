@@ -1,19 +1,19 @@
-import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { fetcher } from "@/utils/fetch";
-import { IAnswer, IResult } from "@/types/answer";
-import { IQuizz } from "@/types/quizz";
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useUser } from "@/hooks/useUser";
-import Loading from "../common/Loading";
-import MultipleAnswer from "@/components/answer/MultipleAnswer";
-import UniqueAnswer from "@/components/answer/UniqueAnswer";
-import Button from "@/components/buttons/Button";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import ResultPart from "@/components/answer/ResultPart";
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+import { fetcher } from '@/utils/fetch';
+import { IAnswer, IResult } from '@/types/answer';
+import { IQuizz } from '@/types/quizz';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useUser } from '@/hooks/useUser';
+import Loading from '../common/Loading';
+import MultipleAnswer from '@/components/answer/MultipleAnswer';
+import UniqueAnswer from '@/components/answer/UniqueAnswer';
+import Button from '@/components/buttons/Button';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import ResultPart from '@/components/answer/ResultPart';
 
 export default function AnswerQuizz() {
-  useDocumentTitle("Répondre au Quizz");
+  useDocumentTitle('Répondre au Quizz');
   const { quizzId } = useParams();
   const { user } = useUser();
   const [quizz, setQuizz] = useState<IQuizz | null>(null);
@@ -31,7 +31,7 @@ export default function AnswerQuizz() {
         const data = await fetcher(`/quizz/for-user/${quizzId}`);
 
         if (!data) {
-          setError("Quizz introuvable.");
+          setError('Quizz introuvable.');
           return;
         }
 
@@ -51,14 +51,14 @@ export default function AnswerQuizz() {
   }, [navigate, quizzId, user?.id]);
 
   const handleChangePage = (index: number, next: boolean) => {
-    setError("");
+    setError('');
 
     const questionAnswered = answers.find(
-      (answer) => answer.question_id === quizz?.questions![index]._id,
+      (answer) => answer.question_id === quizz?.questions![index]._id
     );
 
     if (!questionAnswered && next) {
-      setError("Vous devez répondre à cette question.");
+      setError('Vous devez répondre à cette question.');
       return;
     }
 
@@ -72,7 +72,7 @@ export default function AnswerQuizz() {
   const handleSubmit = async () => {
     try {
       const data = await fetcher(`/answer/${quizzId}`, {
-        method: "POST",
+        method: 'POST',
         body: JSON.stringify({ answers: answers }),
       });
 
@@ -121,12 +121,12 @@ export default function AnswerQuizz() {
                       )}
                     </div>
                   </div>
-                ),
+                )
             )}
             <div className="flex justify-between">
               <Button
                 type="button"
-                variant={questionIndex === 0 ? "none" : "primary"}
+                variant={questionIndex === 0 ? 'none' : 'primary'}
                 onClick={() => handleChangePage(questionIndex, false)}
                 disabled={questionIndex === 0}
                 className="w-1/3 rounded-md border-2 border-primary text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"

@@ -87,7 +87,7 @@
     --color-border: rgba(177, 177, 177, 0.33);
   }
 
-  input[type="number"] {
+  input[type='number'] {
     -moz-appearance: textfield;
   }
 

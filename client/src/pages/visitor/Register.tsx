@@ -1,28 +1,28 @@
-import { useEffect, useState } from "react";
-import { useUser } from "@/hooks/useUser";
-import { useNavigate } from "react-router-dom";
-import { fetcher } from "@utils/fetch";
-import TextInput from "@components/inputs/TextInput";
-import Button from "@components/buttons/Button";
-import ButtonLink from "@/components/buttons/ButtonLink";
-import useDocumentTitle from "@/hooks/useDocumentTitle";
+import { useEffect, useState } from 'react';
+import { useUser } from '@/hooks/useUser';
+import { useNavigate } from 'react-router-dom';
+import { fetcher } from '@utils/fetch';
+import TextInput from '@components/inputs/TextInput';
+import Button from '@components/buttons/Button';
+import ButtonLink from '@/components/buttons/ButtonLink';
+import useDocumentTitle from '@/hooks/useDocumentTitle';
 
 export default function Register() {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
 
-  useDocumentTitle("Créer un compte");
+  useDocumentTitle('Créer un compte');
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/home");
+      navigate('/home');
     }
   }, [isAuthenticated, navigate]);
 
@@ -30,25 +30,25 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     if (!email || !password || !confirmPassword) {
-      setError("Veuillez remplir tous les champs");
+      setError('Veuillez remplir tous les champs');
       return;
     }
     if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas");
+      setError('Les mots de passe ne correspondent pas');
       return;
     }
 
     try {
       await fetcher(
-        "/auth/register",
+        '/auth/register',
         {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({ email, username, password, confirmPassword }),
         },
-        false,
+        false
       );
 
-      navigate("/login");
+      navigate('/login');
     } catch (error) {
       setError((error as Error).message ?? "Une erreur s'est produite");
     } finally {
@@ -104,7 +104,7 @@ export default function Register() {
           className="w-full"
           variant="primary"
         >
-          {loading ? "Chargement..." : "Créer un compte"}
+          {loading ? 'Chargement...' : 'Créer un compte'}
         </Button>
         {error && (
           <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">

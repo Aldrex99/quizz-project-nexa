@@ -1,11 +1,11 @@
-import { TQuestion } from "@/pages/user/UpsertQuizz";
-import { classNames } from "@/utils/style";
-import TextInputLength from "@components/inputs/TextInputLength";
-import TextInput from "@components/inputs/TextInput";
-import Button from "@components/buttons/Button";
-import CustomSwitch from "@components/buttons/CustomSwitch";
-import { TrashIcon } from "@heroicons/react/24/outline";
-import QuizzQuestionsOptions from "@components/quizz/QuizzQuestionsOptions";
+import { TQuestion } from '@/pages/user/UpsertQuizz';
+import { classNames } from '@/utils/style';
+import TextInputLength from '@components/inputs/TextInputLength';
+import TextInput from '@components/inputs/TextInput';
+import Button from '@components/buttons/Button';
+import CustomSwitch from '@components/buttons/CustomSwitch';
+import { TrashIcon } from '@heroicons/react/24/outline';
+import QuizzQuestionsOptions from '@components/quizz/QuizzQuestionsOptions';
 
 type TQuizzQuestionsProps = {
   questions: TQuestion[];
@@ -23,9 +23,9 @@ export default function QuizzQuestions({
           key={index}
           className={classNames(
             index != questions.length - 1
-              ? "border-b-2 border-themedBorder pb-4"
-              : "",
-            "flex flex-col space-y-4",
+              ? 'border-b-2 border-themedBorder pb-4'
+              : '',
+            'flex flex-col space-y-4'
           )}
         >
           <div className="flex items-center justify-between space-x-2">
@@ -62,8 +62,8 @@ export default function QuizzQuestions({
                 />
                 <span className="w-28 text-primary">
                   {question.isMultipleChoice
-                    ? "Choix multiple"
-                    : "Choix unique"}
+                    ? 'Choix multiple'
+                    : 'Choix unique'}
                 </span>
               </div>
               <Button

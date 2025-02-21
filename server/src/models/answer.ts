@@ -1,4 +1,4 @@
-import { Document, Model, model, ObjectId, Schema } from "mongoose";
+import { Document, Model, model, ObjectId, Schema } from 'mongoose';
 
 export interface IAnswer {
   user_id: string | ObjectId;
@@ -27,8 +27,8 @@ export interface IAnswer {
 export interface IAnswerDocument extends IAnswer, Document {}
 
 export const AnswerSchema = new Schema<IAnswerDocument>({
-  user_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  quizz_id: { type: Schema.Types.ObjectId, ref: "Quizz", required: true },
+  user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  quizz_id: { type: Schema.Types.ObjectId, ref: 'Quizz', required: true },
   answers: [
     {
       question_id: { type: String, required: true },
@@ -41,9 +41,6 @@ export const AnswerSchema = new Schema<IAnswerDocument>({
   totalScore: { type: Number, required: true },
 });
 
-const AnswerModel: Model<IAnswerDocument> = model<IAnswerDocument>(
-  "Answer",
-  AnswerSchema
-);
+const AnswerModel: Model<IAnswerDocument> = model<IAnswerDocument>('Answer', AnswerSchema);
 
 export default AnswerModel;

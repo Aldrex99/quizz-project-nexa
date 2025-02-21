@@ -1,11 +1,8 @@
-import { CustomError } from "../utils/customError";
-import {
-  generateResetPasswordToken,
-  verifyResetPasswordToken,
-} from "../utils/token";
-import { IUser } from "../models/user";
-import { UserRepository } from "../repositories/user";
-import { checkPassword, hashPassword } from "../utils/password";
+import { CustomError } from '../utils/customError';
+import { generateResetPasswordToken, verifyResetPasswordToken } from '../utils/token';
+import { IUser } from '../models/user';
+import { UserRepository } from '../repositories/user';
+import { checkPassword, hashPassword } from '../utils/password';
 
 export const register = async (data: Partial<IUser>) => {
   try {
@@ -16,10 +13,7 @@ export const register = async (data: Partial<IUser>) => {
     return;
   } catch (error: any) {
     if (error.code === 11000) {
-      throw new CustomError(
-        "L'adresse email ou le nom d'utilisateur est déjà utilisé",
-        409
-      );
+      throw new CustomError("L'adresse email ou le nom d'utilisateur est déjà utilisé", 409);
     }
 
     throw error;
@@ -30,20 +24,12 @@ export const login = async (email: string, password: string) => {
   try {
     const user = await UserRepository.findOneForLogin(email);
     if (!user) {
-      throw new CustomError(
-        "L'email ou le mot de passe est incorrect",
-        401,
-        "INVALID_CREDENTIALS"
-      );
+      throw new CustomError("L'email ou le mot de passe est incorrect", 401, 'INVALID_CREDENTIALS');
     }
 
     const isMatch = await checkPassword(password, user.password as string);
     if (!isMatch) {
-      throw new CustomError(
-        "L'email ou le mot de passe est incorrect",
-        401,
-        "INVALID_CREDENTIALS"
-      );
+      throw new CustomError("L'email ou le mot de passe est incorrect", 401, 'INVALID_CREDENTIALS');
     }
 
     user.password = undefined;
@@ -60,9 +46,9 @@ export const forgotPassword = async (email: string) => {
     const user = await UserRepository.findOneForLogin(email);
     if (!user) {
       throw new CustomError(
-        "Aucun utilisateur trouvé avec cette adresse email",
+        'Aucun utilisateur trouvé avec cette adresse email',
         404,
-        "USER_NOT_FOUND"
+        'USER_NOT_FOUND',
       );
     }
 
@@ -80,7 +66,7 @@ export const resetPassword = async (token: string, password: string) => {
   try {
     const rawToken = verifyResetPasswordToken(token);
     if (!rawToken) {
-      throw new CustomError("Token invalide", 400, "INVALID_TOKEN");
+      throw new CustomError('Token invalide', 400, 'INVALID_TOKEN');
     }
 
     const hashedPassword = await hashPassword(password);
