@@ -7,6 +7,7 @@ export interface IUser {
   password?: string;
   resetPasswordToken?: string;
   avatarLink?: string;
+  avatarKey?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,6 +21,7 @@ export const UserSchema = new Schema<IUserDocument>({
   role: { type: String, required: true, default: 'user' },
   resetPasswordToken: { type: String },
   avatarLink: { type: String },
+  avatarKey: { type: String },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

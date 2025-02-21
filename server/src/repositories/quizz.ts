@@ -5,8 +5,8 @@ export const QuizzRepository = {
   async create(data: Partial<IQuizzDocument>) {
     try {
       const quizz = new Quizz(data);
-      await quizz.save();
-      return quizz._id;
+      const newQuizz = await quizz.save();
+      return newQuizz as IQuizzDocument;
     } catch (error: any) {
       throw error;
     }

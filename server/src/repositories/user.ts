@@ -28,8 +28,8 @@ export const UserRepository = {
     return User.findById(_id, { __v: 0, password: 0, resetPasswordToken: 0 });
   },
 
-  async updateAvatar(_id: string, avatarLink: string) {
-    return User.findByIdAndUpdate(_id, { avatarLink });
+  async updateAvatar(_id: string, avatarLink: string, avatarKey: string) {
+    return User.findByIdAndUpdate(_id, { avatarLink, avatarKey });
   },
 
   async updateProfile(_id: string, data: Partial<IUserDocument>) {

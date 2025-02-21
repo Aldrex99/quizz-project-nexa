@@ -151,30 +151,26 @@ export default function UpsertQuizz() {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const postUrl = quizzToEdit ? `/quizz/update/${quizzId}` : '/quizz/create';
+    const formData = new FormData();
 
     try {
-      const data = await fetcher(postUrl, {
-        method: quizzToEdit ? 'PUT' : 'POST',
-        body: JSON.stringify({
-          title,
-          description,
-          categories,
-          questions,
-        }),
-      });
-
-      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('categories', JSON.stringify(categories));
+      formData.append('questions', JSON.stringify(questions));
       if (selectedFile) {
-        formData.append('quizz', selectedFile!);
-
-        await fetcher(`/quizz/upload/${quizzToEdit ? quizzId : data.quizzId}`, {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Accept: 'application/json',
-          },
-        });
+        formData.append('quizzImage', selectedFile!);
       }
+
+      await fetcher(
+        postUrl,
+        {
+          method: quizzToEdit ? 'PUT' : 'POST',
+          body: formData,
+        },
+        true,
+        false
+      );
 
       toast.success(quizzToEdit ? 'Quizz modifié' : 'Quizz créé', {
         autoClose: 4000,

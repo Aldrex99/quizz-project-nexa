@@ -119,7 +119,7 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
               <input
                 id="dropzone-file"
                 type="file"
-                accept="image/*"
+                accept="image/png, image/jpeg, image/webp"
                 className="hidden"
                 onChange={handleFileChange}
               />

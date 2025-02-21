@@ -4,6 +4,7 @@ export interface IQuizz {
   title: string;
   description: string;
   imageLink?: string;
+  imageKey?: string;
   questions: {
     _id?: string | ObjectId;
     text: string;
@@ -11,7 +12,7 @@ export interface IQuizz {
       _id?: string | ObjectId;
       key: string;
       value: string;
-    };
+    }[];
     isMultipleChoice: boolean;
     correctAnswer: string[];
     points: number;
@@ -39,6 +40,7 @@ export const QuizzSchema = new Schema<IQuizzDocument>({
   title: { type: String, required: true },
   description: { type: String, required: true },
   imageLink: { type: String },
+  imageKey: { type: String },
   questions: [
     {
       text: { type: String, required: true },

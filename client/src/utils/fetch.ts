@@ -3,7 +3,8 @@ export const fetcher = async (
   options: RequestInit = {
     method: 'GET',
   },
-  needAuth = true
+  needAuth = true,
+  needJson = true
 ) => {
   const API_URL =
     import.meta.env.MODE === 'development'
@@ -14,10 +15,17 @@ export const fetcher = async (
     credentials: needAuth ? 'include' : 'omit',
     headers: {
       ...options.headers,
-      'Content-Type': 'application/json',
     },
     ...options,
   };
+
+  if (needJson) {
+    queryOptions.headers = {
+      ...queryOptions.headers,
+      'Content-Type': 'application/json',
+    };
+  }
+
   const response = await fetch(`${API_URL}${url}`, queryOptions);
   let json;
   switch (response.status) {

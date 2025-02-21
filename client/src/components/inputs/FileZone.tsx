@@ -56,7 +56,7 @@ export default function FileZone({
           <input
             id="dropzone-file"
             type="file"
-            accept="image/*"
+            accept="image/png, image/jpeg, image/webp"
             className="hidden"
             disabled={!!selectedFile}
             onChange={handleFileChange}

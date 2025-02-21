@@ -7,7 +7,7 @@ export const getMe = async (id: string) => {
     const user = await UserRepository.findById(id);
 
     if (user && !user.avatarLink) {
-      user.avatarLink = `${process.env.FILE_LINK}/default-avatar.webp`;
+      user.avatarLink = `${process.env.DEFAULT_AVATAR_LINK}`;
     }
 
     return user;
@@ -20,9 +20,9 @@ export const getMe = async (id: string) => {
   }
 };
 
-export const updateAvatar = async (id: string, avatarLink: string) => {
+export const updateAvatar = async (id: string, avatarLink: string, avatarKey: string) => {
   try {
-    await UserRepository.updateAvatar(id, avatarLink);
+    await UserRepository.updateAvatar(id, avatarLink, avatarKey);
   } catch (error: any) {
     throw error;
   }

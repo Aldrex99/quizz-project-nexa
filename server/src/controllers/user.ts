@@ -1,6 +1,6 @@
 import * as userService from '../services/user';
 import { Request, Response, NextFunction } from 'express';
-import { utapi } from '../utils/uploadthing';
+import { utapi, fileUploader } from '../utils/uploadthing';
 import { CustomError } from '../utils/customError';
 
 export const getMe = async (req: Request, res: Response, next: NextFunction) => {
@@ -14,14 +14,35 @@ export const getMe = async (req: Request, res: Response, next: NextFunction) => 
 
 export const updateAvatar = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const files = req.files;
+    const avatarFile = req.files?.avatar;
 
-    if (!files) {
+    if (!avatarFile) {
       next(new CustomError('No file uploaded.', 400, 'NO_FILE_UPLOADED'));
       return;
     }
 
-    res.status(200).json({});
+    const fileArray = Array.isArray(avatarFile) ? avatarFile : [avatarFile];
+    const fileExtension = fileArray[0].mimetype.split('/')[1];
+
+    const userForAvatarKey = await userService.getMe(req.user?.id ?? '');
+    if (userForAvatarKey) {
+      await utapi.deleteFiles(`${userForAvatarKey.avatarKey}`);
+    } else {
+      next(new CustomError('User not found.', 404, 'USER_NOT_FOUND'));
+      return;
+    }
+
+    const { url, key } = await fileUploader(
+      [fileArray[0].data],
+      `${req.user?.id}.${fileExtension[1]}`,
+      {
+        type: fileArray[0].mimetype,
+      },
+    );
+
+    await userService.updateAvatar(req.user?.id ?? '', url, key);
+
+    res.status(200).json({ url });
   } catch (error) {
     next(
       new CustomError('An error occurred while updating the avatar.', 500, 'UPDATE_AVATAR_ERROR'),
