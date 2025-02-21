@@ -1,28 +1,17 @@
 import { IQuizz } from '@/types/quizz';
 import { Link } from 'react-router-dom';
-import ButtonLink from '../buttons/ButtonLink';
 
 type TQuizzCardProps = {
   quizz: IQuizz;
-  quizzLink: string;
-  forUpdate: boolean;
-  forReponse?: boolean;
 };
 
-export default function QuizzCard({
-  quizz,
-  quizzLink,
-  forUpdate,
-  forReponse = false,
-}: TQuizzCardProps) {
+export default function QuizzCard({ quizz }: TQuizzCardProps) {
   return (
     <article className="lg:max-w-auto relative mx-auto flex max-w-64 flex-col space-y-2 rounded-lg bg-themedBg p-4 shadow-theme">
-      {forUpdate && (
-        <Link
-          to={quizzLink}
-          className="absolute left-0 top-0 z-20 h-full w-full rounded-lg border-2 border-transparent hover:border-primary"
-        />
-      )}
+      <Link
+        to={`/quizz/view/${quizz._id}`}
+        className="absolute left-0 top-0 z-20 h-full w-full rounded-lg border-2 border-transparent hover:border-primary"
+      />
       <div className="relative h-56 w-56 rounded-lg">
         <img
           src={quizz.imageLink}
@@ -55,7 +44,7 @@ export default function QuizzCard({
           </span>
         </p>
       </div>
-      {forReponse && (
+      {/* {forReponse && (
         <ButtonLink
           to={`/quizz/response/${quizz._id}`}
           className="w-full"
@@ -63,7 +52,7 @@ export default function QuizzCard({
         >
           Répondre
         </ButtonLink>
-      )}
+      )} */}
     </article>
   );
 }

@@ -7,12 +7,12 @@ const router = Router();
 router.post('/:quizz_id', answerValidator.answer, answerController.answerQuizz);
 router.get('/:id', answerValidator.getAnswerById, answerController.getAnswerById);
 router.get(
-  '/answers-by-user/:user_id',
+  '/by-user/:user_id',
   answerValidator.getAnswersByUserId,
   answerController.getFilteredAndPaginatedAnswersByUserId,
 );
 router.get(
-  '/answers-by-quizz/:quizz_id',
+  '/by-quizz/:quizz_id',
   answerValidator.getAnswersByQuizzId,
   answerController.getFilteredAndPaginatedAnswersByQuizzId,
 );
