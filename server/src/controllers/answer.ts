@@ -77,8 +77,8 @@ export const getFilteredAndPaginatedAnswersByUserId = async (
 
     const answers = await answerService.getAnswers(
       { user_id },
-      Number(page) || 1,
       Number(limit) || 10,
+      Number(page) || 1,
       sortBy as string,
       sortOrder as 'asc' | 'desc',
     );
@@ -106,8 +106,8 @@ export const getFilteredAndPaginatedAnswersByQuizzId = async (
 
     const answers = await answerService.getAnswers(
       { quizz_id },
-      Number(page) || 1,
       Number(limit) || 10,
+      Number(page) || 1,
       sortBy as string,
       sortOrder as 'asc' | 'desc',
     );

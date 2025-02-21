@@ -56,6 +56,8 @@ export const QuizzSchema = new Schema<IQuizzDocument>({
       points: { type: Number, required: true },
     },
   ],
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
 const QuizzModel: Model<IQuizzDocument> = model<IQuizzDocument>('Quizz', QuizzSchema);

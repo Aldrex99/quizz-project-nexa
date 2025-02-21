@@ -16,6 +16,7 @@ import NotFound from '@/pages/common/NotFound';
 import Logout from '@/pages/user/Logout';
 import Home from '@/pages/user/Home';
 import Me from '@/pages/user/Me';
+import QuizzInfo from '@/pages/user/QuizzInfo';
 import UpsertQuizz from '@/pages/user/UpsertQuizz';
 import UserQuizz from '@/pages/user/UserQuizz';
 import AnswerQuizz from '@/pages/user/AnswerQuizz';
@@ -51,6 +52,10 @@ function App() {
               <Route
                 path="/home"
                 element={<UserRouteWrapper children={<Home />} />}
+              />
+              <Route
+                path="/quizz/view/:quizzId"
+                element={<UserRouteWrapper children={<QuizzInfo />} />}
               />
               <Route
                 path="/quizz/create"

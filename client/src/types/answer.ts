@@ -28,4 +28,6 @@ export interface IResult {
     title: string;
     imageLink: string;
   };
+  createdAt?: Date;
+  updatedAt?: Date;
 }
