@@ -71,12 +71,12 @@ export default function AnswerQuizz() {
 
   const handleSubmit = async () => {
     try {
-      const data = await fetcher(`/answer/${quizzId}`, {
+      const { data } = await fetcher(`/answer/${quizzId}`, {
         method: 'POST',
         body: JSON.stringify({ answers: answers }),
       });
 
-      setResult(data);
+      setResult(data as IResult);
     } catch (error) {
       setError((error as Error).message || "Une erreur s'est produite.");
     }
@@ -87,7 +87,7 @@ export default function AnswerQuizz() {
       <section className="space-y-6 rounded-lg bg-themedFg p-4">
         {loading && <Loading width="full" height="52" />}
         {error && (
-          <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">
+          <div className="rounded-md bg-red-100 px-4 py-2 text-red-700">
             {error}
           </div>
         )}

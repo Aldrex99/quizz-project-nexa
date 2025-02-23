@@ -15,11 +15,14 @@ export const createQuizz = async (req: Request, res: Response, next: NextFunctio
   try {
     const { title, description, categories, questions } = req.body;
 
+    const parsedCategories = JSON.parse(categories);
+    const parsedQuestions = JSON.parse(questions);
+
     const newQuizz = await quizzService.createQuizz({
       title,
       description,
-      category_ids: categories,
-      questions,
+      category_ids: parsedCategories,
+      questions: parsedQuestions,
       author_id: req.user?.id as string,
     });
 
