@@ -41,13 +41,15 @@ export default function Avatar({ open, setOpen }: TAvatarProps) {
     formData.append('avatar', selectedFile);
 
     try {
-      await fetcher(`/user/avatar`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          Accept: 'application/json',
+      await fetcher(
+        `/user/avatar`,
+        {
+          method: 'POST',
+          body: formData,
         },
-      });
+        true,
+        false
+      );
 
       await getMe();
 

@@ -36,10 +36,10 @@ export default function QuizzInfo() {
   const [quizz, setQuizz] = useState<IQuizz | null>(null);
   const [answers, setAnswers] = useState<IResult[] | null>(null);
   const [totalAnswers, setTotalAnswers] = useState<number>(0);
-  const [answerLimit, setAnswerLimit] = useState<number>(5);
   const [answerPage, setAnswerPage] = useState<number>(1);
-  const [answersortBy, setAnswerSortBy] = useState<string>('createdAt');
-  const [answersortOrder, setAnswerSortOrder] = useState<string>('desc');
+  const answerLimit = 5;
+  const answersortBy = 'createdAt';
+  const answersortOrder = 'desc';
 
   useEffect(() => {
     const fetchQuizz = async () => {
@@ -94,14 +94,14 @@ export default function QuizzInfo() {
     <div className="relative flex flex-col space-y-4 pb-4">
       <section
         id="upsert-quizz-general"
-        className="flex space-y-6 rounded-lg bg-themedFg p-4"
+        className="flex space-y-6 rounded-lg bg-themedFg px-4 py-6"
       >
         {loading.general ? (
           <Loading width="full" height="h-96" />
         ) : (
-          <div className="flex w-full flex-col space-y-4">
+          <div className="flex w-full flex-col space-y-6">
             <div className="relative flex w-full items-center justify-center">
-              <h1 className="w-full text-center text-2xl font-bold text-themedText">
+              <h1 className="w-full text-center text-3xl font-bold text-themedText">
                 {quizz?.title}
               </h1>
               {quizz?.author_id !== user?.id ? (
@@ -122,6 +122,24 @@ export default function QuizzInfo() {
                 </ButtonLink>
               )}
             </div>
+            <div className="flex flex-col space-x-8 px-4 md:flex-row">
+              <img
+                src={quizz?.imageLink}
+                alt={quizz?.title}
+                className="size-56 rounded-md object-cover"
+              />
+              <div>
+                <p className="text-themedText">{quizz?.description}</p>
+                {quizz?.categories?.map((category) => (
+                  <span
+                    key={category._id}
+                    className="mr-2 mt-2 inline-block rounded-full bg-primary px-2 py-1 text-sm font-semibold text-primary-text"
+                  >
+                    {category.name}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </section>
@@ -135,11 +153,15 @@ export default function QuizzInfo() {
               className="flex flex-col rounded-lg bg-themedFg p-4"
             >
               <h2 className="pb-4 text-lg font-bold text-themedText">
-                Réponses
+                Déjà {totalAnswers} réponses
               </h2>
               <div className="flex flex-col rounded-md border border-themedBorder">
                 {loading.changePage ? (
                   <Loading width="full" height="h-12" />
+                ) : answers.length === 0 ? (
+                  <p className="p-4 text-center text-themedText">
+                    Pour le moment, il n'y a pas de réponses.
+                  </p>
                 ) : (
                   answers.map((answer, index) => (
                     <Disclosure key={answer._id}>
@@ -236,58 +258,70 @@ export default function QuizzInfo() {
                   ))
                 )}
               </div>
-              <nav className="flex items-center justify-between pt-4 sm:px-0 lg:px-4">
-                <div className="-mt-px flex w-0 flex-1">
-                  <Button
-                    type="button"
-                    onClick={() => setAnswerPage((prev) => prev - 1)}
-                    disabled={answerPage === 1}
-                    className=""
-                  >
-                    <ArrowLongLeftIcon
-                      aria-hidden="true"
-                      className="mr-3 size-5 text-themedText"
-                    />
-                    Précédent
-                  </Button>
-                </div>
-                <div className="hidden md:-mt-px md:flex">
-                  {Array.from({ length: Math.ceil(totalAnswers / answerLimit) })
-                    .map((_, index) => index + 1)
-                    .map((page) => (
-                      <Button
-                        type="button"
-                        variant="none"
-                        key={page}
-                        className={classNames(
-                          page === answerPage
-                            ? 'border-primary text-primary'
-                            : 'border-transparent text-themedText hover:border-primary hover:text-primary',
-                          'inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium'
-                        )}
-                        onClick={() => setAnswerPage(page)}
-                      >
-                        {page}
-                      </Button>
-                    ))}
-                </div>
-                <div className="-mt-px flex w-0 flex-1 justify-end">
-                  <Button
-                    type="button"
-                    onClick={() => setAnswerPage((prev) => prev + 1)}
-                    disabled={
-                      answerPage === Math.ceil(totalAnswers / answerLimit)
-                    }
-                    className=""
-                  >
-                    Suivant
-                    <ArrowLongRightIcon
-                      aria-hidden="true"
-                      className="ml-3 size-5 text-themedText"
-                    />
-                  </Button>
-                </div>
-              </nav>
+              {answers.length > 0 && (
+                <nav className="flex items-center justify-between pt-4 sm:px-0 lg:px-4">
+                  <div className="-mt-px flex w-0 flex-1">
+                    <Button
+                      type="button"
+                      variant={answerPage === 1 ? 'none' : 'primary'}
+                      onClick={() => setAnswerPage((prev) => prev - 1)}
+                      disabled={answerPage === 1}
+                      className="rounded-md border-2 border-primary text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed"
+                    >
+                      <ArrowLongLeftIcon
+                        aria-hidden="true"
+                        className="size-5 text-themedText"
+                      />
+                      <span className="hidden md:ml-3 md:inline">
+                        Précédent
+                      </span>
+                    </Button>
+                  </div>
+                  <div className="hidden md:-mt-px md:flex">
+                    {Array.from({
+                      length: Math.ceil(totalAnswers / answerLimit),
+                    })
+                      .map((_, index) => index + 1)
+                      .map((page) => (
+                        <Button
+                          type="button"
+                          variant="none"
+                          key={page}
+                          className={classNames(
+                            page === answerPage
+                              ? 'border-primary text-primary'
+                              : 'border-transparent text-themedText hover:border-primary hover:text-primary',
+                            'inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium'
+                          )}
+                          onClick={() => setAnswerPage(page)}
+                        >
+                          {page}
+                        </Button>
+                      ))}
+                  </div>
+                  <div className="-mt-px flex w-0 flex-1 justify-end">
+                    <Button
+                      type="button"
+                      variant={
+                        answerPage === Math.ceil(totalAnswers / answerLimit)
+                          ? 'none'
+                          : 'primary'
+                      }
+                      onClick={() => setAnswerPage((prev) => prev + 1)}
+                      disabled={
+                        answerPage === Math.ceil(totalAnswers / answerLimit)
+                      }
+                      className="rounded-md border-2 border-primary text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed"
+                    >
+                      <span className="hidden md:mr-3 md:inline">Suivant</span>
+                      <ArrowLongRightIcon
+                        aria-hidden="true"
+                        className="size-5 text-themedText"
+                      />
+                    </Button>
+                  </div>
+                </nav>
+              )}
             </section>
           )
         ))}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { classNames } from '@/utils/style';
 
 type TTextInputProps = {
   label: string;
@@ -8,6 +9,7 @@ type TTextInputProps = {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  error?: boolean;
 };
 
 export default function TextInput({
@@ -17,6 +19,7 @@ export default function TextInput({
   value,
   onChange,
   className,
+  error = false,
 }: TTextInputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -44,7 +47,10 @@ export default function TextInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="block w-full rounded-md bg-themedFg px-3 py-1.5 text-base text-themedText outline outline-1 -outline-offset-1 outline-themedBorder placeholder:text-themedPlaceholder focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6"
+        className={classNames(
+          error ? 'outline-red-500' : 'outline-themedBorder',
+          'block w-full truncate rounded-md bg-themedFg py-1.5 pl-3 pr-10 text-base text-themedText outline outline-1 -outline-offset-1 placeholder:text-themedPlaceholder focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6'
+        )}
       />
       {type === 'password' && (
         <button onClick={handleShowPassword} className="absolute right-2 top-2">

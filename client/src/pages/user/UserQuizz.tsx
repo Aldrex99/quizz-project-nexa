@@ -38,13 +38,7 @@ export default function UserQuizz() {
         ) : (
           <div className="grid grid-cols-1 gap-4 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
             {quizz.map((item) => (
-              <QuizzCard
-                key={item._id}
-                quizz={item}
-                forUpdate={user?.id === item.author?._id}
-                forReponse={user?.id !== item.author?._id}
-                quizzLink={`/quizz/update/${item._id}`}
-              />
+              <QuizzCard key={item._id} quizz={item} />
             ))}
           </div>
         )}

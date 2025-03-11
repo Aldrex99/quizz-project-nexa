@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { fetcher } from '@utils/fetch';
 import { useUser } from '@/hooks/useUser';
 import TextInput from '@components/inputs/TextInput';
@@ -59,16 +59,18 @@ export default function Login() {
           }
         />
         <div className="flex flex-col items-end">
-          <TextInput
-            label="Mot de passe"
-            type="password"
-            placeholder="Mot de passe"
-            className="w-full"
-            value={password}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
-          />
+          <div className="relative w-full">
+            <TextInput
+              label="Mot de passe"
+              type="password"
+              placeholder="Mot de passe"
+              className="w-full"
+              value={password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
+            />
+          </div>
           {/* <Link
             to="/forgot-password"
             className="pt-1 text-sm text-primary hover:text-primary-gradient"
@@ -77,7 +79,7 @@ export default function Login() {
           </Link> */}
         </div>
         {error && (
-          <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">
+          <div className="rounded-md bg-red-100 px-4 py-2 text-red-700">
             {error}
           </div>
         )}

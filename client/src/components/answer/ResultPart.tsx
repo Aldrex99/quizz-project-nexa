@@ -1,6 +1,7 @@
 import useDocumentTitle from '@/hooks/useDocumentTitle';
 import { IResult } from '@/types/answer';
 import { IQuizz } from '@/types/quizz';
+import { classNames } from '@/utils/style';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 type TResultPartProps = {
@@ -57,17 +58,15 @@ export default function ResultPart({ result, questions }: TResultPartProps) {
                       }`}
                     >
                       <p
-                        className={`${
-                          answer.correctAnswer.includes(option.key) &&
-                          answer.answer.includes(option.key)
+                        className={classNames(
+                          (answer.correctAnswer.includes(option.key) &&
+                            answer.answer.includes(option.key)) ||
+                            (answer.correctAnswer.includes(option.key) &&
+                              !answer.answer.includes(option.key))
                             ? 'text-black'
-                            : 'text-themedText'
-                        } ${
-                          answer.correctAnswer.includes(option.key) &&
-                          !answer.answer.includes(option.key)
-                            ? 'text-black'
-                            : 'text-themedText'
-                        } font-semibold`}
+                            : 'text-themedText',
+                          'font-semibold'
+                        )}
                       >
                         {option.value}
                       </p>

@@ -6,13 +6,14 @@ import TextInput from '@components/inputs/TextInput';
 import Button from '@components/buttons/Button';
 import ButtonLink from '@/components/buttons/ButtonLink';
 import useDocumentTitle from '@/hooks/useDocumentTitle';
+import { ICustomError } from '@/types/error';
 
 export default function Register() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState<ICustomError>();
   const [loading, setLoading] = useState(false);
 
   const { isAuthenticated } = useUser();
@@ -26,20 +27,48 @@ export default function Register() {
     }
   }, [isAuthenticated, navigate]);
 
+  const updatingErroredField = (field: string) => {
+    if (error?.validationErrors?.find((e) => e.path === field)) {
+      const newError = { ...error };
+      newError.validationErrors = error.validationErrors.filter(
+        (e) => e.path !== field
+      );
+      setError(newError);
+    }
+  };
+
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setLoading(true);
-    if (!email || !password || !confirmPassword) {
-      setError('Veuillez remplir tous les champs');
+    if (!email || !username || !password || !confirmPassword) {
+      const missingFields = [
+        !email && { path: 'email', errors: ['Email requis'] },
+        !username && { path: 'username', errors: ["Nom d'utilisateur requis"] },
+        !password && { path: 'password', errors: ['Mot de passe requis'] },
+        !confirmPassword && {
+          path: 'confirmPassword',
+          errors: ['Confirmation du mot de passe requise'],
+        },
+      ].filter(Boolean) as ICustomError['validationErrors'];
+      setError({
+        message: 'Veuillez remplir tous les champs',
+        name: 'MissingFields',
+        validationErrors: missingFields,
+      });
+      setLoading(false);
       return;
     }
     if (password !== confirmPassword) {
-      setError('Les mots de passe ne correspondent pas');
+      setError({
+        message: 'Les mots de passe ne correspondent pas',
+        name: 'PasswordMismatch',
+      });
+      setLoading(false);
       return;
     }
 
     try {
-      await fetcher(
+      const { error } = await fetcher(
         '/auth/register',
         {
           method: 'POST',
@@ -48,9 +77,17 @@ export default function Register() {
         false
       );
 
+      if (error) {
+        setError(error);
+        return;
+      }
+
       navigate('/login');
     } catch (error) {
-      setError((error as Error).message ?? "Une erreur s'est produite");
+      setError({
+        message: (error as Error).message ?? "Une erreur s'est produite",
+        name: 'UnknownError',
+      });
     } finally {
       setLoading(false);
     }
@@ -62,42 +99,99 @@ export default function Register() {
         <h1 className="mb-4 flex justify-center text-2xl font-semibold text-primary">
           Créer un compte
         </h1>
-        <TextInput
-          label="Email"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(e.target.value)
-          }
-        />
-        <TextInput
-          label="Nom d'utilisateur"
-          type="text"
-          placeholder="Nom d'utilisateur"
-          value={username}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setUsername(e.target.value)
-          }
-        />
-        <TextInput
-          label="Mot de passe"
-          type="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(e.target.value)
-          }
-        />
-        <TextInput
-          label="Confirmer le mot de passe"
-          type="password"
-          placeholder="Confirmer le mot de passe"
-          value={confirmPassword}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setConfirmPassword(e.target.value)
-          }
-        />
+        <div className="relative w-full">
+          <TextInput
+            label="Email"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setEmail(e.target.value);
+              updatingErroredField('email');
+            }}
+            error={!!error?.validationErrors?.find((e) => e.path === 'email')}
+          />
+          {error?.validationErrors?.find((e) => e.path === 'email') && (
+            <span className="text-sm text-red-500">Adresse email invalide</span>
+          )}
+        </div>
+        <div className="relative w-full">
+          <TextInput
+            label="Nom d'utilisateur"
+            type="text"
+            placeholder="Nom d'utilisateur"
+            value={username}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setUsername(e.target.value);
+              updatingErroredField('username');
+            }}
+            error={
+              !!error?.validationErrors?.find((e) => e.path === 'username')
+            }
+          />
+          {error?.validationErrors?.find((e) => e.path === 'username') && (
+            <span className="text-sm text-red-500">
+              Nom d'utilisateur invalide
+            </span>
+          )}
+        </div>
+        <div className="relative w-full">
+          <TextInput
+            label="Mot de passe"
+            type="password"
+            placeholder="Mot de passe"
+            value={password}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPassword(e.target.value);
+              updatingErroredField('password');
+            }}
+            error={
+              !!error?.validationErrors?.find((e) => e.path === 'password')
+            }
+          />
+          {error?.validationErrors?.find((e) => e.path === 'password') &&
+            (error.name === 'ValidationError' ? (
+              <span className="text-sm text-red-500">
+                Le mot de passe :
+                <ul className="list-inside list-disc">
+                  {error.validationErrors
+                    .filter((e) => e.path === 'password')
+                    .flatMap((e) => e.errors)
+                    .map((e, i) => (
+                      <li key={i}>{e}</li>
+                    ))}
+                </ul>
+              </span>
+            ) : (
+              <span className="text-sm text-red-500">
+                Le mot de passe est requis
+              </span>
+            ))}
+        </div>
+        <div className="relative w-full">
+          <TextInput
+            label="Confirmer le mot de passe"
+            type="password"
+            placeholder="Confirmer le mot de passe"
+            value={confirmPassword}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setConfirmPassword(e.target.value);
+              updatingErroredField('confirmPassword');
+            }}
+          />
+          {error?.validationErrors?.find(
+            (e) => e.path === 'confirmPassword'
+          ) && (
+            <span className="text-sm text-red-500">
+              Les mots de passe ne correspondent pas
+            </span>
+          )}
+        </div>
+        {error && (
+          <div className="rounded-md bg-red-100 px-4 py-2 text-red-700">
+            {error.message}
+          </div>
+        )}
         <Button
           type="button"
           onClick={handleSubmit}
@@ -106,11 +200,6 @@ export default function Register() {
         >
           {loading ? 'Chargement...' : 'Créer un compte'}
         </Button>
-        {error && (
-          <div className="rounded-md bg-red-100 px-4 py-2 text-red-500">
-            {error}
-          </div>
-        )}
         <ButtonLink to="/login" className="w-full" variant="primaryFlat">
           Se connecter
         </ButtonLink>

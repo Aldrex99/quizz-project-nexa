@@ -7,15 +7,16 @@ import * as http from 'http';
 import * as app from './app';
 import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import path from 'path';
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 /* Creating the server */
 const server: http.Server = http.createServer(app.default);
 
 /* Connecting to the database */
 mongoose
-  .connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/test-db')
+  .connect(process.env.MONGO_DB_URI || 'mongodb://127.0.0.1:27017/test-db')
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB', err));
 

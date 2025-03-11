@@ -1,0 +1,47 @@
+services:
+  client:
+    container_name: client
+    build: ./client
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    env_file:
+      - /.env
+    networks:
+      - app_network
+
+  server:
+    container_name: server
+    build: ./server
+    restart: always
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - /.env
+    depends_on:
+      - mongodb
+    networks:
+      - app_network
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    networks:
+      - app_network
+
+volumes:
+  mongodb_data:
+
+networks:
+  app_network:
+    driver: bridge

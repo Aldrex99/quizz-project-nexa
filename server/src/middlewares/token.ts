@@ -1,13 +1,17 @@
 import { Request, NextFunction, Response } from 'express';
 import { verifyAccessToken, verifyRefreshToken } from '../utils/token';
+import { CustomError } from '../utils/customError';
 
 export const checkAccessToken = async (req: Request, res: Response, next: NextFunction) => {
   const accessToken = req.cookies['accessToken'];
   if (!accessToken) {
-    res.status(401).json({
-      code: 401,
-      message: "Vous n'êtes pas autorisé à accéder à cette ressource",
-    });
+    next(
+      new CustomError(
+        "Vous n'êtes pas autorisé à accéder à cette ressource",
+        401,
+        'UNDEFINED_ACCESS_TOKEN',
+      ),
+    );
     return;
   }
 
@@ -15,10 +19,7 @@ export const checkAccessToken = async (req: Request, res: Response, next: NextFu
     const rawUser = await verifyAccessToken(accessToken);
 
     if (typeof rawUser === 'string') {
-      res.status(403).json({
-        code: 403,
-        message: "Votre token n'est pas valide",
-      });
+      next(new CustomError("Votre token n'est pas valide", 403, 'INVALID_ACCESS_TOKEN'));
       return;
     }
 
@@ -33,17 +34,11 @@ export const checkAccessToken = async (req: Request, res: Response, next: NextFu
   } catch (err) {
     if (err) {
       if ((err as Error).name === 'TokenExpiredError') {
-        res.status(403).json({
-          code: 432,
-          message: 'accessToken expiré',
-        });
+        next(new CustomError('accessToken expiré', 432, 'ACCESS_TOKEN_EXPIRED'));
         return;
       }
 
-      res.status(403).json({
-        code: 403,
-        message: "Votre token n'est pas valide",
-      });
+      next(new CustomError("Votre token n'est pas valide", 403, 'INVALID_ACCESS_TOKEN'));
       return;
     }
   }
@@ -52,10 +47,13 @@ export const checkAccessToken = async (req: Request, res: Response, next: NextFu
 export const checkRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
   const refreshToken = req.cookies['refreshToken'];
   if (!refreshToken) {
-    res.status(401).json({
-      code: 401,
-      message: "Vous n'êtes pas autorisé à accéder à cette ressource",
-    });
+    next(
+      new CustomError(
+        "Vous n'êtes pas autorisé à accéder à cette ressource",
+        401,
+        'UNDEFINED_REFRESH_TOKEN',
+      ),
+    );
     return;
   }
 
@@ -63,10 +61,7 @@ export const checkRefreshToken = async (req: Request, res: Response, next: NextF
     const rawUser = await verifyRefreshToken(refreshToken);
 
     if (typeof rawUser === 'string') {
-      res.status(403).json({
-        code: 403,
-        message: "Votre token n'est pas valide",
-      });
+      next(new CustomError("Votre token n'est pas valide", 403, 'INVALID_REFRESH_TOKEN'));
       return;
     }
 
@@ -81,17 +76,11 @@ export const checkRefreshToken = async (req: Request, res: Response, next: NextF
   } catch (err) {
     if (err) {
       if ((err as Error).name === 'TokenExpiredError') {
-        res.status(403).json({
-          code: 433,
-          message: 'refreshToken expiré',
-        });
+        next(new CustomError('refreshToken expiré', 433, 'REFRESH_TOKEN_EXPIRED'));
         return;
       }
 
-      res.status(403).json({
-        code: 403,
-        message: "Votre token n'est pas valide",
-      });
+      next(new CustomError("Votre token n'est pas valide", 403, 'INVALID_REFRESH_TOKEN'));
       return;
     }
   }
