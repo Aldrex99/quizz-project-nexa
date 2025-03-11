@@ -8,7 +8,6 @@ import applyMiddlewares from './middlewares/index';
 import { checkAccessToken } from './middlewares/token';
 import { errorHandler } from './middlewares/errorHandler';
 import { CustomError } from './utils/customError';
-import path from 'path';
 
 import authRouter from './routes/auth';
 import userRouter from './routes/user';
@@ -38,11 +37,8 @@ app.use(errorHandler);
 /* Route for public files */
 app.use('/public', express.static('public'));
 
-app.use(express.static(path.join(__dirname, '../../client/dist')));
-
-/* Setting up the client */
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/dist', 'index.html'));
+app.use((req, res) => {
+  res.status(404).send('Route not found');
 });
 
 /* Exporting the application */

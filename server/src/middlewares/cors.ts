@@ -10,7 +10,7 @@ import { Request, Response, NextFunction } from 'express';
 export default {
   async handle(req: Request, res: Response, next: NextFunction) {
     const origin: string = req.headers.origin as string;
-    const allowedOrigins: string[] = [process.env.FRONTEND_HOST as string];
+    const allowedOrigins: string[] = [process.env.CORS_ORIGIN as string];
     if (allowedOrigins.indexOf(origin) > -1) {
       res.header('Access-Control-Allow-Origin', origin);
       res.header(
